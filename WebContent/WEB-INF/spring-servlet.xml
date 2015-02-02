@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans    
+    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd    
+    http://www.springframework.org/schema/tx    
+    http://www.springframework.org/schema/tx/spring-tx-4.0.xsd   
+    http://www.springframework.org/schema/context   
+    http://www.springframework.org/schema/context/spring-context-4.0.xsd   
+    http://www.springframework.org/schema/mvc   
+    http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+
+	<!-- 自动扫描的包名 -->
+	<context:component-scan base-package="net.itaem"></context:component-scan>
+
+	<!-- 默认的注解映射的支持 -->
+	<mvc:annotation-driven />
+
+	<mvc:interceptors>
+		
+		<!-- 
+		<bean class="net.itaem.base.interceptor.CheckRequestPermission"></bean>
+		 -->
+		<!-- 定义一个Interceptor，验证用户权限 -->
+		<mvc:interceptor>
+			<!-- 需要拦截的url -->
+			<mvc:mapping path="/user/*.do" />
+			<mvc:mapping path="/resource/*.do" />
+			<mvc:mapping path="/role/*.do" />
+			<mvc:mapping path="/menu/*.do" />
+			<mvc:mapping path="/department/*.do" />
+			
+			<!-- 不需要拦截的url -->
+		    <mvc:exclude-mapping path="/user/login.do"/>
+		    <mvc:exclude-mapping path="/random.jsp"/>
+		    <mvc:exclude-mapping path="/info.jsp"/>
+		    
+			<bean class="net.itaem.base.interceptor.CheckRequestPermission"></bean>
+		</mvc:interceptor>
+		
+	</mvc:interceptors>
+
+	<!-- 视图解释类 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+</beans> 
