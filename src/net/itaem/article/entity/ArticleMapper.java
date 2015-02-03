@@ -20,7 +20,12 @@ import org.springframework.stereotype.Repository;
 @Repository(value = "articleMapper")  
 public interface ArticleMapper {  
 
-	@Select(value = "select * from article where article_del_flag=0")  
+	/**
+	 * 列出某个类别的全部article
+	 * @param articleTypeId 文章类别
+	 * @return
+	 * */
+	@Select(value = "select * from article where article_type_id=#{articleTypeId} article_del_flag=0")  
 	@Results(value = { 
 			@Result(id = true, property = "id", column = "id"),  
 			@Result(property = "title", column = "article_title"),
@@ -34,7 +39,7 @@ public interface ArticleMapper {
 			@Result(property = "updatedTime", column = "article_updated_time"),
 			@Result(property = "updator", column = "article_updator")
 	})  
-	List<Article> listAll();  
+	List<Article> listAll(String articleTypeId);  
 	
 	@Insert("insert into sys_privilege (id, privilege_name, privilege_url, privilege_desc, privilege_created_time, privilege_creator, privilege_parent_id) "
 			+ "values(#{id}, #{name}, #{url}, #{desc}, #{createdTime}, #{creator}, #{parentId})")

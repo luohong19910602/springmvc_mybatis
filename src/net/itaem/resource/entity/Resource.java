@@ -47,7 +47,6 @@ public class Resource extends BaseEntity{
 		this.desc = desc;
 	}
 	
-	
 	@Override
 	public String toString() {
 		return super.toString() + "Resource [name=" + name + ", url=" + url + ", desc=" + desc + ", menuId=" + menuId
