@@ -92,4 +92,5 @@ public interface IToGridJson {
 	 * @return 返回liger ui grid json数据
 	 * */
 	public String roleToGrid(Role role);
+	
 }

@@ -15,13 +15,29 @@ import net.itaem.article.entity.ArticleTypeMapper;
  * */
 @Repository
 public class ArticleTypeDaoImpl implements IArticleTypeDao {
-    
+
 	@Resource(name = "articleTypeMapper")
 	private ArticleTypeMapper articleTypeMapper;
-    
+
 	@Override
 	public List<ArticleType> listAll() {
 		return articleTypeMapper.listAll();
 	}
-    
+
+	@Override
+	public void add(ArticleType articleType) {
+		articleTypeMapper.add(articleType);
+	}
+
+	@Override
+	public void delete(String[] ids) {
+		for(String id: ids)
+			articleTypeMapper.delete(id);
+	}
+
+	@Override
+	public void update(ArticleType articleType) {
+		articleTypeMapper.update(articleType);
+	}
+
 }

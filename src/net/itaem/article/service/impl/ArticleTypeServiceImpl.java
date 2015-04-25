@@ -11,10 +11,27 @@ import net.itaem.article.service.IArticleTypeService;
 
 @Service
 public class ArticleTypeServiceImpl implements IArticleTypeService{
-    @Autowired
+    
+	@Autowired
 	IArticleTypeDao articleTypeDao;
+    
 	@Override
 	public List<ArticleType> listAll() {
 		return articleTypeDao.listAll();
+	}
+
+	@Override
+	public void add(ArticleType articleType) {
+		articleTypeDao.add(articleType);
+	}
+
+	@Override
+	public void delete(String[] ids) {
+		articleTypeDao.delete(ids);
+	}
+
+	@Override
+	public void update(ArticleType articleType) {
+		articleTypeDao.update(articleType);		
 	}
 }

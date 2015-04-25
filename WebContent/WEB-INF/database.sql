@@ -15,7 +15,7 @@ CREATE TABLE `sys_menu` (
 create table sys_resource(
 	id varchar(50) primary key, 
 	resource_name varchar(50) not null,
-	resource_url varchar(50),
+	resource_url varchar(200),
 	resource_desc varchar(50),
 	resource_menu_id varchar(50), 
 	resource_created_time varchar(50),
@@ -48,7 +48,7 @@ create table sys_user(
     user_super_user_flag int(1) default 0
 );
 
---用户可以访问的url
+
 create table sys_user_resource(
     id varchar(50) primary key,
     user_resource_user_id varchar(50) not null,
@@ -57,7 +57,6 @@ create table sys_user_resource(
 	on delete cascade on update cascade
 );
 
---角色
 create table sys_role(
     id varchar(50) primary key,
     role_name varchar(50) not null,
@@ -156,7 +155,7 @@ create table sys_article(
     id varchar(50) primary key,
     article_title varchar(50),
     article_content varchar(500),
-    article_url varchar(100),
+    article_url varchar(200),
     article_view_count int,
     article_reference int,
     article_type_id varchar(50),
@@ -169,8 +168,12 @@ create table sys_article(
 	on delete cascade on update cascade
 );
 
---初始化菜单数据
+
+
+
+insert into sys_user(id,user_login_name,user_password,user_super_user_flag) values('root','admin','21232F297A57A5A743894A0E4A801FC3', 1);
 insert into sys_menu(id, menu_name) values('root', '基础服务');
+
 
 insert into sys_privilege(id,privilege_name,privilege_url,privilege_desc) values('1', '菜单管理', 'http://localhost/springmvc_mybatis/menu/list.do','这里是菜单管理的链接，列出全部菜单');
 insert into sys_privilege(id,privilege_name,privilege_url,privilege_desc) values('2', '权限管理', 'http://localhost/springmvc_mybatis/privilege/list.do','这里是权限管理的链接，列出全部权限');

@@ -30,7 +30,6 @@ public class DeleteMenuController extends BaseController {
 	 * @param resp
 	 * @throws IOException 
 	 * */
-	@Transactional
 	@RequestMapping("/menu/delete.do")
 	public void delete(String menuId, HttpServletResponse resp) throws IOException{
 		if(menuId == null || menuId.equals("root")){

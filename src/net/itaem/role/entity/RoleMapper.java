@@ -60,7 +60,7 @@ public interface RoleMapper {
       *group by sys_user.id
 	  * */
 	@Select(value = "select distinct sys_role.id, role_name, role_parent_id, role_created_time, role_creator from sys_role,sys_role_user "
-			+ "where sys_role.id=sys_role_user.role_id and sys_role_user.user_id=#{userId}")  
+			+ "where sys_role.id=sys_role_user.role_id and sys_role_user.user_id=#{userId}")
 	@Results(value = { 
 			@Result(id = true, property = "id", column = "id"),  
 			@Result(property = "name", column = "role_name"),

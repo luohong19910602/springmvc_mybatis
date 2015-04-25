@@ -91,7 +91,7 @@
 								name : 'desc'
 							} ],
 							dataAction : "server",
-							url : "${baseURL}/article/listJson.do",
+							url : "${baseURL}/articleType/listJson.do",
 							height : "98%",
 							pageSize : 30,
 							width : "98%",
@@ -123,7 +123,7 @@
 										},
 										{
 											text : '修改',
-											click : updateArticle,
+											click : updateArticleType,
 											icon : 'modify'
 										},
 										{
@@ -131,7 +131,7 @@
 										},
 										{
 											text : '删除',
-											click : deletePrivilege,
+											click : deleteArticleType,
 											img : '${baseURL}/ligerUI/lib/ligerUI/skins/icons/delete.gif'
 										} ]
 							}
@@ -184,8 +184,8 @@
 			$.ligerDialog.open({
 				height : 400,
 				width : 600,
-				title : '添加权限类别',
-				url : '${baseURL}/article/addType.do',
+				title : '添加文章类别',
+				url : '${baseURL}/articleType/add.do',
 				showMax : false,
 				showToggle : true,
 				showMin : false,
@@ -198,10 +198,11 @@
 		}
 
 		//delete selected row
-		function deletePrivilege() {
+		function deleteArticleType() {
 			var ids = getSelectedRow();
 			
-			var url = "${baseURL}/privilege/delete.do?idsStr=" + ids;
+			var url = "${baseURL}/articleType/delete.do?ids=" + ids;
+			
 			$.ajax({
 				type : "POST",
 				url : url,
@@ -227,25 +228,28 @@
 				ids += "," + selectedRows[row].id;
 			}
 			ids = ids.substring(1, ids.length);
+			
 			return ids;
 		}
 
-		function updateArticle() {
+		function updateArticleType() {
 			var id = getSelectedRow();
+			
 			if(id.indexOf(",") != -1){
-				alert("不能同时更新多个权限");
+				alert("不能同时更新多个文章类别");
 				return;
 			}
 			
 			if(!id || id.length==0){
-				alert("请选择要更新的权限");
+				alert("请选择要更新的文章类别");
 				return;
 			}
+			
 			$.ligerDialog.open({
 				height : 400,
 				width : 600,
-				title : '更新权限类别',
-				url : '${baseURL}/privilege/edit.do?id=' + id,
+				title : '更新文章类别',
+				url : '${baseURL}/articleType/edit.do?id=' + id,
 				showMax : false,
 				showToggle : true,
 				showMin : false,

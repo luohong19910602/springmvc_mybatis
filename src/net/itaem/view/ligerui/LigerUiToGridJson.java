@@ -207,6 +207,7 @@ public class LigerUiToGridJson implements IToGridJson {
 			JSONArray articleTypeListJson = new JSONArray();
 			for(ArticleType at: articleTypeList){
 	            JSONObject articleTypeJson = new JSONObject();
+	            articleTypeJson.put("id", at.getId());
 	            articleTypeJson.put("name", at.getName());
 	            articleTypeJson.put("desc", at.getDesc());
 	            articleTypeListJson.add(articleTypeJson);

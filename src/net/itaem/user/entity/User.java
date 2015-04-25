@@ -48,8 +48,8 @@ public class User extends BaseEntity{
 		return roleNames;
 	}
 
-	
-	
+
+
 
 	public List<Role> getRoleList() {
 		return roleList;
@@ -57,14 +57,14 @@ public class User extends BaseEntity{
 
 	public void setRoleList(List<Role> roleList) {
 		if(roleList == null) return;
-		
+
 		this.roleList = roleList;
 		StringBuilder sb = new StringBuilder();
 		for(Role role: roleList){
 			sb.append(role.getName() + ",");
 		}
-		
-		roleNames = sb.substring(0, sb.length() - 1);
+		if(sb.length() > 0)	
+			roleNames = sb.substring(0, sb.length() - 1);
 	}
 
 	public String getName() {

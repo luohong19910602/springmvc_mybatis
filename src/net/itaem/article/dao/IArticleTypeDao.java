@@ -10,4 +10,10 @@ import net.itaem.article.entity.ArticleType;
  * */
 public interface IArticleTypeDao {
     public List<ArticleType> listAll();
+    
+    public void add(ArticleType articleType);
+
+	public void delete(String[] ids);
+
+	public void update(ArticleType articleType);
 }

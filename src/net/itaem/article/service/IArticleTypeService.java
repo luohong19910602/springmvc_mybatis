@@ -8,4 +8,9 @@ public interface IArticleTypeService {
 	
 	public List<ArticleType> listAll();
 	
+	public void add(ArticleType articleType);
+	
+	public void delete(String[] ids);
+
+	public void update(ArticleType articleType);
 }
