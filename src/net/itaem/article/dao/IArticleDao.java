@@ -14,5 +14,14 @@ public interface IArticleDao {
 	 * @param articleTypeId 文章类别
 	 * @return
 	 * */
-	public List<Article> listAll(String articleTypeId);
+	public List<Article> listBy(String articleTypeId);
+	
+	/**
+	 * 获取全部文章
+	 * */
+	public List<Article> listAll();
+
+	public void add(Article article);
+
+	public void delete(String[] ids);
 }

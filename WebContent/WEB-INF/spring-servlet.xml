@@ -31,6 +31,9 @@
 			<mvc:mapping path="/role/*.do" />
 			<mvc:mapping path="/menu/*.do" />
 			<mvc:mapping path="/department/*.do" />
+			<mvc:mapping path="/article/*.do" />
+			<mvc:mapping path="/articleType/*.do" />
+			
 			
 			<!-- 不需要拦截的url -->
 		    <mvc:exclude-mapping path="/user/login.do"/>

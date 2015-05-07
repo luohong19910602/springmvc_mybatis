@@ -38,8 +38,9 @@ public class AddArticleTypeController extends BaseController {
 		articleType.setId(UUIDUtil.uuid());
 		articleType.setCreatedTime(DateUtil.getNowDate(null));
 		User u = (User) req.getSession().getAttribute("user");
-		articleType.setCreator(u.getName());
-		
+		if(u != null){
+		    articleType.setCreator(u.getName());
+		}
 		articleTypeService.add(articleType);
 		
 		println(resp, JsonUtil.createJson("success", "add article type successful"));

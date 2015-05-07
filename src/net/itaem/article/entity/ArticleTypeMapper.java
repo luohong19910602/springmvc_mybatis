@@ -31,7 +31,20 @@ public interface ArticleTypeMapper {
 			@Result(property = "updator", column = "article_type_updator"),
 			@Result(property = "delFlag", column = "article_type_del_flag")
 	})  
-	List<ArticleType> listAll();  
+	List<ArticleType> listAll(); 
+	
+	@Select(value = "select * from sys_article_type where article_type_del_flag=0 and id=#{id}")  
+	@Results(value = { 
+			@Result(id = true, property = "id", column = "id"),  
+			@Result(property = "name", column = "article_type_name"),
+			@Result(property = "desc", column = "article_type_desc"),
+			@Result(property = "createdTime", column = "article_type_created_time"),
+			@Result(property = "creator", column = "article_type_creator"),
+			@Result(property = "updatedTime", column = "article_type_updated_time"),
+			@Result(property = "updator", column = "article_type_updator"),
+			@Result(property = "delFlag", column = "article_type_del_flag")
+	})
+	ArticleType findBy(String id);
 	
 	@Insert("insert into sys_article_type (id, article_type_name, "
 			+ "article_type_desc, article_type_created_time, article_type_creator, article_type_updated_time, article_type_updator) "

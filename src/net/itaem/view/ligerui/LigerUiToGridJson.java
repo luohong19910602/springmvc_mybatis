@@ -2,6 +2,7 @@ package net.itaem.view.ligerui;
 
 import java.util.List;
 
+import net.itaem.article.entity.Article;
 import net.itaem.article.entity.ArticleType;
 import net.itaem.menu.entity.Menu;
 import net.itaem.privilege.entity.Privilege;
@@ -21,13 +22,13 @@ import net.sf.json.JSONObject;
 public class LigerUiToGridJson implements IToGridJson {
 
 	private static final LigerUiToGridJson instance = new LigerUiToGridJson();
-	
+
 	private LigerUiToGridJson(){}
-	
+
 	public static LigerUiToGridJson getInstance(){
 		return instance;
 	}
-	
+
 	/**
 	 * 
 	 * @param privilegeList
@@ -35,16 +36,16 @@ public class LigerUiToGridJson implements IToGridJson {
 	 * */
 	public String privilegeListToGrid(List<Privilege> privilegeList, int total){
 		if(privilegeList == null || total == 0) return new JSONObject().toString();
-		
+
 		JSONObject json = new JSONObject();
 		JSONArray children = new JSONArray();
 		for(Privilege child: privilegeList){
 			children.add(privilegeToGrid(child));
 		}
-		
+
 		json.put("Rows", children);
 		json.put("Total", total);
-		
+
 		return json.toString();
 	}
 
@@ -58,14 +59,14 @@ public class LigerUiToGridJson implements IToGridJson {
 		}
 
 		json.put("Rows", children);
-		
-        json.put("Total", "11");
+
+		json.put("Total", "11");
 		return json.toString();
 	}
 
 	public String userToGrid(User user) {
 		JSONObject json = new JSONObject();
-        
+
 		json.put("id", user.getId());
 		json.put("name", user.getName());
 		json.put("email", user.getEmail());
@@ -80,7 +81,7 @@ public class LigerUiToGridJson implements IToGridJson {
 		return json.toString();
 	}
 
-	
+
 	public String menuListToGrid(List<Menu> menuList){
 		JSONObject json = new JSONObject();
 
@@ -96,12 +97,12 @@ public class LigerUiToGridJson implements IToGridJson {
 
 	public String menuToGrid(Menu menu){
 		JSONObject json = new JSONObject();
-        
+
 		json.put("id", menu.getId());
 		json.put("name", menu.getName());
 		json.put("desc", menu.getDesc());
-        json.put("url", "");
-        
+		json.put("url", "");
+
 		JSONArray children = new JSONArray();
 
 		//递归遍历子节点menu
@@ -116,11 +117,11 @@ public class LigerUiToGridJson implements IToGridJson {
 				children.add(resourceToGrid(resource));
 			}
 		}
-		
+
 		//如果有节点或者子资源，那么久加入到children中
 		if(children.size() > 0)
 			json.put("children", children);
-		
+
 		return json.toString();
 	}
 
@@ -167,7 +168,7 @@ public class LigerUiToGridJson implements IToGridJson {
 		JSONObject json = new JSONObject();
 
 		JSONArray children = new JSONArray();
-        
+
 		for(Role role: roleList){
 			children.add(roleToGrid(role));
 		}
@@ -182,8 +183,8 @@ public class LigerUiToGridJson implements IToGridJson {
 
 		json.put("id", role.getId());
 		json.put("name", role.getName());
-		
-		
+
+
 		if(role.getChildren() == null){
 			return json.toString();			
 		}else{
@@ -206,16 +207,44 @@ public class LigerUiToGridJson implements IToGridJson {
 			JSONObject json = new JSONObject();
 			JSONArray articleTypeListJson = new JSONArray();
 			for(ArticleType at: articleTypeList){
-	            JSONObject articleTypeJson = new JSONObject();
-	            articleTypeJson.put("id", at.getId());
-	            articleTypeJson.put("name", at.getName());
-	            articleTypeJson.put("desc", at.getDesc());
-	            articleTypeListJson.add(articleTypeJson);
+				JSONObject articleTypeJson = new JSONObject();
+				articleTypeJson.put("id", at.getId());
+				articleTypeJson.put("name", at.getName());
+				articleTypeJson.put("desc", at.getDesc());
+				articleTypeListJson.add(articleTypeJson);
 			}
 			json.put("Rows", articleTypeListJson);
 			json.put("Total", articleTypeList.size());
 			return json.toString();
 		}
+	}
+
+	@Override
+	public String articleListToGrid(List<Article> articleList) {
+		JSONObject json = new JSONObject();
+
+		JSONArray children = new JSONArray();
+
+		for(Article article: articleList){
+			children.add(articleToGrid(article));
+		}
+
+		json.put("Rows", children);
+
+		return json.toString();
+	}
+
+	private Object articleToGrid(Article article) {
+		JSONObject json = new JSONObject();
+
+		json.put("id", article.getId());
+		json.put("title", article.getTitle());
+		json.put("content", article.getContent());
+		
+		if(article.getType() != null)
+			json.put("typeId", article.getType().getName());
+
+		return json.toString();
 	}
 
 }

@@ -44,6 +44,7 @@ public class CheckRequestPermission implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest req, HttpServletResponse resp,
 			Object arg2) throws Exception {
+		
 		//登录
 		if(!isLogin(req)){
 			req.getRequestDispatcher("/login.jsp").forward(req, resp);
@@ -59,19 +60,9 @@ public class CheckRequestPermission implements HandlerInterceptor {
 		if(canAccess(req)){
 			return true;
 		}else{
-			//req.getRequestDispatcher("/noPrivilegeToAccess.jsp").forward(req, resp);
-			String scheme = req.getScheme();
-			String serverName = req.getServerName();
-			String contextPath = req.getContextPath();
-			int port = req.getServerPort();
-
-			//网站的访问跟路径
-			String baseURL = scheme + "://" + serverName + ":"+ port + contextPath;
-			
-			resp.sendRedirect(baseURL + "/noPrivilegeToAccess.jsp");
+			req.getRequestDispatcher("/noPrivilegeToAccess.jsp").forward(req, resp);
 			return false;
 		}
-		
 	}
 
 	/**
@@ -90,7 +81,7 @@ public class CheckRequestPermission implements HandlerInterceptor {
 		for(Privilege privilege: privilegeList){
 			if(privilege.getChildren() != null && privilege.getChildren().size() > 0){
 				for(Privilege child: privilege.getChildren()){
-					if(child.getUrl().contains(reqUri)){
+					if(child.getUrl().equalsIgnoreCase(reqUri)){
 						return true;
 					}
 				}
@@ -98,11 +89,10 @@ public class CheckRequestPermission implements HandlerInterceptor {
 			
 			if(privilege.getUrl() == null || "".equals(privilege.getUrl())) continue;
 			
-			if(privilege.getUrl().contains(reqUri)){
+			if(privilege.getUrl().equalsIgnoreCase(reqUri)){
 				return true;
 			}
 		}
-		
 		return false;
 	}
 

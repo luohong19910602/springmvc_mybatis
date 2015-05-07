@@ -81,22 +81,25 @@
 				.ligerGrid(
 						{
 							columns : [ {
-								display : 'name',
-								name : 'name',
+								display : 'title',
+								name : 'title',
 								width : 200,
 								align: 'left'
 							}, {
-								display : 'url',
-								name : 'url',
+								display : 'content',
+								name : 'content',
 								width : 400,
 								align:"left"
-							}, {
-								display : 'desc',
-								width: 200,
-								name : 'desc'
-							} ],
+							},
+							{
+								display : 'type',
+								name : 'typeId',
+								width : 200,
+								align:"left"
+							}
+							],
 							dataAction : "server",
-							url : "${baseURL}/privilege/listJson.do",
+							url : "${baseURL}/article/listJson.do",
 							height : "98%",
 							pageSize : 30,
 							width : "98%",
@@ -111,16 +114,7 @@
 							toolbar : {
 								items : [
 										{
-											text : '增加新类别',
-											click : addResource,
-											icon : 'add'
-										},
-										{
-											line : true
-										},
-										{
-											text : '增加子权限',
-											click : addChildResource,
+											text : "<a href=${baseURL}/article/add.do target=blank'>添加文章</a>",
 											icon : 'add'
 										},
 										{
@@ -136,17 +130,13 @@
 										},
 										{
 											text : '删除',
-											click : deletePrivilege,
+											click : deleteArticle,
 											img : '${baseURL}/ligerUI/lib/ligerUI/skins/icons/delete.gif'
 										} ]
 							}
 						});
 
 		$("#pageloading").hide();
-
-		function addResource() {
-			f_open();
-		}
 		
 		function addChildResource(){
 			var selectedRows = grid.getSelectedRows();
@@ -203,10 +193,10 @@
 		}
 
 		//delete selected row
-		function deletePrivilege() {
+		function deleteArticle() {
 			var ids = getSelectedRow();
 			
-			var url = "${baseURL}/privilege/delete.do?idsStr=" + ids;
+			var url = "${baseURL}/article/delete.do?ids=" + ids;
 			$.ajax({
 				type : "POST",
 				url : url,

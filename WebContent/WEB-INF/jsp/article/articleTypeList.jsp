@@ -114,11 +114,6 @@
 											line : true
 										},
 										{
-											text : '增加文章',
-											click : addArticle,
-											icon : 'add'
-										},
-										{
 											line : true
 										},
 										{
@@ -144,31 +139,11 @@
 		}
 		
 		function addArticle(){
-			var selectedRows = grid.getSelectedRows();
-			if(selectedRows.length > 1){
-				alert("不能同时选择多个父亲节点");
-				return;
-			}
-			
-            var parentId = selectedRows[0].id;
-            
-			if(!parentId){
-				alert("请选择要添加的父亲结点");
-				return;
-			}
-			
-			if(parentId.indexOf(",") != -1){
-				alert("不能同时选择多个父亲节点");
-				return;
-			}
-			
-			
-			
 			$.ligerDialog.open({
 				height : 400,
 				width : 600,
-				title : '添加子模块权限',
-				url : '${baseURL}/privilege/addChild.do?parentId='+parentId,
+				title : '添加文章',
+				url : '${baseURL}/article/add.do',
 				showMax : false,
 				showToggle : true,
 				showMin : false,

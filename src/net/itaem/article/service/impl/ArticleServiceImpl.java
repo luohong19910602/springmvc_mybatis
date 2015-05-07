@@ -16,7 +16,22 @@ public class ArticleServiceImpl implements IArticleService {
 	private IArticleDao articleDao;
 	
 	@Override
-	public List<Article> listAll(String articleTypeId) {
-		return articleDao.listAll(articleTypeId);
+	public List<Article> listBy(String articleTypeId) {
+		return articleDao.listBy(articleTypeId);
+	}
+
+	@Override
+	public List<Article> listAll() {
+		return articleDao.listAll();
+	}
+
+	@Override
+	public void add(Article article) {
+		articleDao.add(article);
+	}
+
+	@Override
+	public void delete(String[] ids) {
+		articleDao.delete(ids);
 	}
 }

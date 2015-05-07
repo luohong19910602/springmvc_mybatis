@@ -67,7 +67,6 @@ public class ListMenuController extends BaseController {
 	@RequestMapping("/menu/listJsonWithResource.do")
 	public void listJsonWithResource(HttpServletResponse resp) throws IOException{
 		List<Menu> menuList = menuService.listAll(true);
-
 		ResponseUtil.println(resp, treeJson.menuListToTreeJson(menuList));
 	}
 

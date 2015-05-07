@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.itaem.article.entity.ArticleType;
 import net.itaem.article.service.IArticleTypeService;
 import net.itaem.base.controller.BaseController;
-import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,5 +33,18 @@ public class ArticleTypeController extends BaseController {
 	public void listJson(HttpServletResponse resp) throws IOException{
 		List<ArticleType> articleTypeList = articleTypeService.listAll();
 		println(resp, gridJson.articleTypeListToGrid(articleTypeList));
+	}
+	
+	@RequestMapping("/articleType/listNameJson.do")
+	public void listTypeNameJson(HttpServletResponse resp) throws IOException{
+		List<ArticleType> articleTypeList = articleTypeService.listAll();
+		
+		StringBuilder sb = new StringBuilder();
+		for(ArticleType articleType: articleTypeList){
+			sb.append(articleType.getId() + ":");
+			sb.append(articleType.getName() + ",");
+		}
+		
+		println(resp, sb.subSequence(0, sb.length() - 1).toString());
 	}
 }

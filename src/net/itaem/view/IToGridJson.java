@@ -2,6 +2,7 @@ package net.itaem.view;
 
 import java.util.List;
 
+import net.itaem.article.entity.Article;
 import net.itaem.article.entity.ArticleType;
 import net.itaem.menu.entity.Menu;
 import net.itaem.privilege.entity.Privilege;
@@ -92,5 +93,7 @@ public interface IToGridJson {
 	 * @return 返回liger ui grid json数据
 	 * */
 	public String roleToGrid(Role role);
+
+	public String articleListToGrid(List<Article> articleList);
 	
 }

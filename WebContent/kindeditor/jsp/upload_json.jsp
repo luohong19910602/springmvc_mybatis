@@ -1,10 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.*,java.io.*" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="org.apache.commons.fileupload.*" %>
-<%@ page import="org.apache.commons.fileupload.disk.*" %>
-<%@ page import="org.apache.commons.fileupload.servlet.*" %>
-<%@ page import="org.json.simple.*" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ page import="java.util.*,java.io.*"%>
+<%@ page import="java.text.SimpleDateFormat"%>
+<%@ page import="org.apache.commons.fileupload.*"%>
+<%@ page import="org.apache.commons.fileupload.disk.*"%>
+<%@ page import="org.apache.commons.fileupload.servlet.*"%>
+<%@ page import="org.json.simple.*"%>
 <%
 
 /**
@@ -29,7 +30,7 @@ extMap.put("media", "swf,flv,mp3,wav,wma,wmv,mid,avi,mpg,asf,rm,rmvb");
 extMap.put("file", "doc,docx,xls,xlsx,ppt,htm,html,txt,zip,rar,gz,bz2");
 
 //最大文件大小
-long maxSize = 1000000;
+long maxSize = 10000000l;
 
 response.setContentType("text/html; charset=UTF-8");
 
@@ -37,12 +38,13 @@ if(!ServletFileUpload.isMultipartContent(request)){
 	out.println(getError("请选择文件。"));
 	return;
 }
+
 //检查目录
 File uploadDir = new File(savePath);
 if(!uploadDir.isDirectory()){
-	out.println(getError("上传目录不存在。"));
-	return;
+	uploadDir.mkdir();
 }
+
 //检查目录写权限
 if(!uploadDir.canWrite()){
 	out.println(getError("上传目录没有写权限。"));
@@ -57,9 +59,12 @@ if(!extMap.containsKey(dirName)){
 	out.println(getError("目录名不正确。"));
 	return;
 }
+
 //创建文件夹
 savePath += dirName + "/";
 saveUrl += dirName + "/";
+
+
 File saveDirFile = new File(savePath);
 if (!saveDirFile.exists()) {
 	saveDirFile.mkdirs();
@@ -107,6 +112,8 @@ while (itr.hasNext()) {
 
 		JSONObject obj = new JSONObject();
 		obj.put("error", 0);
+		
+		System.out.println("url is " + saveUrl + newFileName);
 		obj.put("url", saveUrl + newFileName);
 		out.println(obj.toJSONString());
 	}

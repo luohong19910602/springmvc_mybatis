@@ -130,7 +130,7 @@ public interface MenuMapper {
 	@Select(value = "select distinct "
 			+ "sys_resource.id,sys_resource.resource_name,sys_resource.resource_url,"
 			+ "sys_resource.resource_desc,sys_resource.resource_url,sys_resource.resource_created_time,sys_resource.resource_creator,"
-			+ "sys_resource.resource_pic,sys_resource.resource_updated_time,sys_resource.resource_updator "
+			+ "sys_resource.resource_updated_time,sys_resource.resource_updator "
 			+ "from sys_user_menu,sys_menu,sys_resource,sys_user "
 			+ "where sys_user_menu.menu_id=sys_menu.id "
 			+ "and sys_user.id=sys_user_menu.user_id "
@@ -149,8 +149,7 @@ public interface MenuMapper {
 			@Result(property = "creator", column = "resource_creator"),
 			@Result(property = "updatedTime", column = "resource_updated_time"),
 			@Result(property = "updator", column = "resource_updator"),
-			@Result(property = "delFlag", column = "resource_del_flag"),
-			@Result(property = "pic", column = "resource_pic")
+			@Result(property = "delFlag", column = "resource_del_flag")
 	})  
 	public List<net.itaem.resource.entity.Resource> findByUserAndMenu(UserMenu userMenu);
 	
@@ -162,7 +161,7 @@ public interface MenuMapper {
 	@Select(value = "select distinct "
 			+ "sys_resource.id,sys_resource.resource_name,sys_resource.resource_url,"
 			+ "sys_resource.resource_desc,sys_resource.resource_url,sys_resource.resource_created_time,sys_resource.resource_creator,"
-			+ "sys_resource.resource_pic,sys_resource.resource_updated_time,sys_resource.resource_updator "
+			+ "sys_resource.resource_updated_time,sys_resource.resource_updator "
 			+ "from sys_role_menu,sys_menu,sys_resource,sys_role "
 			+ "where sys_role_menu.menu_id=sys_menu.id "
 			+ "and sys_role.id=sys_role_menu.role_id "
