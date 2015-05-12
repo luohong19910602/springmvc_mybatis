@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.itaem.privilege.entity.Privilege;
 import net.itaem.privilege.service.IPrivilegeService;
 import net.itaem.user.entity.User;
+import net.itaem.user.service.IUserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -31,11 +33,13 @@ public class CheckRequestPermission implements HandlerInterceptor {
 	@Autowired
 	private IPrivilegeService privilegeService;
 
+	@Autowired
+	private IUserService userService;
+
 	@Override
 	public void afterCompletion(HttpServletRequest req,
 			HttpServletResponse resp, Object arg2, Exception arg3)
 					throws Exception {
-
 	}
 
 	@Override
@@ -46,13 +50,44 @@ public class CheckRequestPermission implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest req, HttpServletResponse resp,
 			Object arg2) throws Exception {
-        return check(req, resp);
-//		return true;
+		return check(req, resp);
 	}
 
 	private boolean check(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		//登录
 		if(!isLogin(req)){
+			//cookie验证
+			Cookie[] cookies = req.getCookies();
+			String[] cooks = null;  
+			String loginName = null;
+			String password = null;
+			
+			System.out.println("使用cookie登录中...");
+			if (cookies != null) {
+				System.out.println(cookies);
+				for (Cookie coo : cookies) {
+					if(coo.getName().equals("user")){
+						String aa = coo.getValue();
+						cooks = aa.split("==", -1); 
+						if (cooks.length == 2) {  
+							loginName = cooks[0];  
+							password = cooks[1];
+							
+							User user = new User();
+							user.setLoginName(loginName);
+							user.setPassword(password);
+							user = userService.exists(user);
+							System.out.println(user);
+							if(user != null && user.getId() != null && !"".equals(user.getId())){
+								req.getSession().setAttribute("user", user);
+								System.out.println("has been login");
+								req.getRequestDispatcher("/WEB-INF/jsp/index.jsp").forward(req, resp);
+								return true;
+							}
+						}  	
+					}
+				}  
+			}
 			req.getRequestDispatcher("/login.jsp").forward(req, resp);
 			return false;
 		}
@@ -61,7 +96,8 @@ public class CheckRequestPermission implements HandlerInterceptor {
 		if(isSuperUser(req)){
 			return true;
 		}
-
+        
+		System.out.println("难道是已经登录了？");
 		//判断用户是否具备访问权限
 		if(canAccess(req)){
 			return true;
@@ -70,6 +106,8 @@ public class CheckRequestPermission implements HandlerInterceptor {
 			return false;
 		}
 	}
+	
+	
 
 	/**
 	 * 判断用户的请求是否合法

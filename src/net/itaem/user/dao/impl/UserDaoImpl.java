@@ -35,8 +35,7 @@ public class UserDaoImpl implements IUserDao {
     
 	@Override
 	public User exists(User user) {
-		String sql = "select * from sys_user where user_login_name='" + user.getLoginName() + "' and user_password = '" + user.getPassword() +"'";
-		return userMapper.exists(sql);
+		return userMapper.exists(user);
 	}
 
 	@Override

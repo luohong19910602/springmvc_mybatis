@@ -33,13 +33,13 @@
 			<mvc:mapping path="/department/*.do" />
 			<mvc:mapping path="/article/*.do" />
 			<mvc:mapping path="/articleType/*.do" />
-			
+			<mvc:mapping path="/index.do" />
 			
 			<!-- 不需要拦截的url -->
 		    <mvc:exclude-mapping path="/user/login.do"/>
+		    <mvc:exclude-mapping path="/user/logout.do"/>
 		    <mvc:exclude-mapping path="/random.jsp"/>
 		    <mvc:exclude-mapping path="/info.jsp"/>
-		    
 			<bean class="net.itaem.base.interceptor.CheckRequestPermission"></bean>
 		</mvc:interceptor>
 		

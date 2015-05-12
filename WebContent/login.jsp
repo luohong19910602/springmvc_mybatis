@@ -99,6 +99,25 @@ request.setAttribute("baseURL", baseURL);
 							<img src="${baseURL}/random.jsp" id="changeRandomImage" alt="验证码"/>
 						</div>
 					</div>
+					
+					<div class="fm-item pos-r">
+						<div class="item item-fore3">
+							<div class="safe">
+								<span> 
+								    <input 
+								        style="float:none; vertical-align: middle; margin:0 3px 0 0;" id="autoLogin" 
+								        name="chkRememberMe" type="checkbox" class="jdcheckbox"> 
+									<label style="float:none;color:white; font-size:12px">自动登录</label>
+								</span>
+								
+								<span style="margin-left:60px" class="forget-pw-safe">
+								<a	style="color:white;font-size:12px; text-decoration: none;" 
+								    href="${baseURL }/user/forgot.do" 
+								    target="_blank">忘记密码?</a>
+								</span>
+							</div>
+						</div>
+					</div>
 
 					<div class="fm-item">
 						<label for="logonId" class="form-label"></label> <input

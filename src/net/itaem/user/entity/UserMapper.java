@@ -23,7 +23,7 @@ import org.springframework.stereotype.Repository;
 @Repository(value = "userMapper")  
 public interface UserMapper {  
 
-	@Select(value = "${sql}")  
+	@Select(value = "select * from sys_user where user_login_name=#{loginName} and user_password=#{password}")  
 	@Results(value = { 
 			@Result(id = true, property = "id", column = "id"),  
 			@Result(property = "name", column = "user_name"),
@@ -45,7 +45,7 @@ public interface UserMapper {
 			@Result(property = "delFlag", column = "user_del_flag"),
 			@Result(property = "superUserFlag", column = "user_super_user_flag")
 	})  
-    User exists(@Param(value = "sql") String sql);
+    User exists(User user);
 
 	/**
 	 * 获取角色的所属用户列表
@@ -157,19 +157,10 @@ public interface UserMapper {
 	@Delete(value = "delete from sys_user where id=#{id}")
 	void delete(String id);
 	
-	@Update(value = "update sys_user set user_name=#{name},"
-			+ "user_email=#{email},"
-			+ "user_tel=#{tel},"
-			+ "user_login_name=#{loginName},"
-			+ "user_password=#{password},"
-			+ "user_blog=#{blog},"
-			+ "user_address=#{address},"
-			+ "user_current_address=#{currentAddress},"
-			+ "user_birthday=#{birthday},"
-			+ "user_qq=#{qq},"
-			+ "user_login_count=#{loginCount},"
-			+ "user_updated_time=#{updatedTime},"
-			+ "user_updator=#{updator} "
+	@Update(value = "update sys_user set user_name=#{name},user_email=#{email},user_tel=#{tel},"
+			+ "user_login_name=#{loginName},user_password=#{password},"
+			+ "user_blog=#{blog},user_address=#{address},user_current_address=#{currentAddress},user_birthday=#{birthday},"
+			+ "user_qq=#{qq},user_login_count=#{loginCount},user_updated_time=#{updatedTime},user_updator=#{updator} "
 			+ "where id=#{id}")
 	void update(User user);
 } 

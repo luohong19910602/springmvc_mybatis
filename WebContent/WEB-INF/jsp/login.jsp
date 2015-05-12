@@ -120,31 +120,31 @@ request.setAttribute("baseURL", baseURL);
 					<div class="fm-item">
 						<label for="logonId" class="form-label">登陆密码：</label> <input
 							type="password" value="" maxlength="100" id="password"
-							class="i-text" datatype="*6-16" nullmsg="请设置密码！"
-							errormsg="密码范围在6~16位之间！">
+							class="i-text">
 						<div class="ui-form-explain"></div>
 					</div>
 
 					<div class="fm-item pos-r">
 						<label for="logonId" class="form-label">验证码</label> <input
-							type="text" value="输入验证码" maxlength="100" id="yzm"
-							class="i-text yzm" nullmsg="请输入验证码！">
+							type="text" 
+							value="输入验证码" 
+							maxlength="100" 
+							id="yzm"
+							class="i-text yzm">
 						<div class="ui-form-explain">
 							<img src="${baseURL}/images/login/yzm.jpg" class="yzm-img" />
 						</div>
 					</div>
-
 					<div class="fm-item">
-						<label for="logonId" class="form-label"></label> <input
+						<label for="logonId" class="form-label">
+						</label> <input
 							type="submit" value="" tabindex="4" id="send-btn"
 							class="btn-login">
 						<div class="ui-form-explain"></div>
 					</div>
-
 				</form>
 
 			</div>
-
 		</div>
 
 		<div class="bd">
