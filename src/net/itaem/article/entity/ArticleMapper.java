@@ -78,6 +78,7 @@ public interface ArticleMapper {
 			@Result(property = "title", column = "article_title"),
 			@Result(property = "content", column = "article_content"),
 			@Result(property = "url", column = "article_url"),
+			@Result(property = "summary", column = "article_summary"),
 			@Result(property = "viewCount", column = "article_view_count"),
 			@Result(property = "reference", column = "article_reference"),
 			@Result(property = "typeId", column = "article_type_id"),

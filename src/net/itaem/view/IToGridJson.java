@@ -94,6 +94,11 @@ public interface IToGridJson {
 	 * */
 	public String roleToGrid(Role role);
 
+	/**
+	 * 文章列表标称liger ui组件的json数据
+	 * @param articleList
+	 * @return 返回liger ui grid json数据
+	 * */
 	public String articleListToGrid(List<Article> articleList);
 	
 }

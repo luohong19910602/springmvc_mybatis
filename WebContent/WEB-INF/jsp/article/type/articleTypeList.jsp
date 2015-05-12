@@ -81,15 +81,16 @@
 				.ligerGrid(
 						{
 							columns : [ {
-								display : 'name',
+								display : '名字',
 								name : 'name',
 								width : 200,
 								align: 'left'
 							}, {
-								display : 'desc',
+								display : '备注',
 								width: 200,
 								name : 'desc'
-							} ],
+							}
+							],
 							dataAction : "server",
 							url : "${baseURL}/articleType/listJson.do",
 							height : "98%",
@@ -109,9 +110,6 @@
 											text : '增加新类别',
 											click : addArticleType,
 											icon : 'add'
-										},
-										{
-											line : true
 										},
 										{
 											line : true
@@ -207,9 +205,7 @@
 			return ids;
 		}
 
-		function updateArticleType() {
-			var id = getSelectedRow();
-			
+		function updateArticleTypeById(id){
 			if(id.indexOf(",") != -1){
 				alert("不能同时更新多个文章类别");
 				return;
@@ -234,6 +230,11 @@
 					"grid" : grid
 				}
 			});
+		}
+		
+		function updateArticleType() {
+			var id = getSelectedRow();
+			updateArticleTypeById(id);
 		}
 	});
 	

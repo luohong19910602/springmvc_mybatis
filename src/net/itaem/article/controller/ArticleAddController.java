@@ -93,7 +93,7 @@ public class ArticleAddController extends BaseController {
 	
 	
 	@RequestMapping("/article/addSubmit.do")
-	public void addSubmit(HttpServletRequest req, HttpServletResponse resp, Article article) throws ServletException, IOException{
+	public String addSubmit(HttpServletRequest req, HttpServletResponse resp, Article article) throws ServletException, IOException{
 		User user = super.getLoginUser(req);
 		article.setUserId(user.getId());
 		article.setId(UUIDUtil.uuid());
@@ -105,7 +105,8 @@ public class ArticleAddController extends BaseController {
 		req.setAttribute("content", article.getContent());
 		req.setAttribute("title", article.getTitle());
 		
-		req.getRequestDispatcher("/WEB-INF/jsp/article/article.jsp").forward(req, resp);
+		return "article/detail";
+		
 	}
 	
 	/**

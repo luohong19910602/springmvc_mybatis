@@ -30,7 +30,7 @@ public class ArticleDetailController extends BaseController{
     		req.setAttribute("title", article.getTitle());
     		req.setAttribute("content", article.getContent());
     	}
-    	return "article/article";
+    	return "article/detail";
     }
     
     @RequestMapping("/article/listDetailByAndroid.do")

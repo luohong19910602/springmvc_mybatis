@@ -89,8 +89,8 @@
 									return "<a target=_blank href=${baseURL}/article/detail.do?id=" + obj.id + ">" + obj.title+ "</a>";
 								}
 							}, {
-								display : 'content',
-								name : 'content',
+								display : '简介',
+								name : 'summary',
 								width : 400,
 								align:"left"
 							},
@@ -98,15 +98,15 @@
 								display : 'type',
 								name : 'typeId',
 								width : 100,
-								align:"left"
+								align:"center"
 							},
 							{
 								display : '操作',
 								name : 'id',
 								width : 100,
-								align:"left",
+								align:"center",
 								render:function(obj){
-									return "<a target=_blank href=${baseURL}/article/edit.do?id=" + obj.id + ">" + obj.title+ "</a>";
+									return "<a target=_blank href=${baseURL}/article/edit.do?id=" + obj.id + ">" + "更新" + "</a>";
 								}
 							}
 							],
@@ -128,14 +128,6 @@
 										{
 											text : "<a href=${baseURL}/article/add.do target=blank'>添加文章</a>",
 											icon : 'add'
-										},
-										{
-											line : true
-										},
-										{
-											text : '修改',
-											click : updateArticle,
-											icon : 'modify'
 										},
 										{
 											line : true

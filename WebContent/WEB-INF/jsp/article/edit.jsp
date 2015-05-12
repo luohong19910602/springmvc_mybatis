@@ -89,11 +89,8 @@ KindEditor.ready(function(K) {
 	<div id="wrap">
 		<div id="editType" style="display: none">0</div>
 		<form id="example" name="example" method="post"
-			action="${baseURL }/article/addSubmit.do">
-
+			action="${baseURL }/article/editSubmit.do">
 			<p class="subtit">文章标题</p>
-
-            
 			<div class="section">
 			    <input type="hidden" name="id" value="${article.id }"/>
 			    
@@ -103,8 +100,7 @@ KindEditor.ready(function(K) {
 
 			<p class="subtit">文章简要介绍</p>
 			<div class="section">
-				<textarea cols="120" value="${article.summary }" rows="5" id="summary" name="summary">
-					</textarea>
+				<textarea cols="120" rows="5" id="summary" name="summary">${article.summary }</textarea>
 			</div>
 
 			<p class="subtit">文章内容</p>
