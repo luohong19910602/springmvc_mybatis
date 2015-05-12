@@ -15,7 +15,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>添加角色权限</title>
+<title>登录用户信息</title>
 <link
 	href="${baseURL}/ligerUI/lib/ligerUI/skins/Aqua/css/ligerui-all.css"
 	rel="stylesheet" type="text/css" />
@@ -82,8 +82,9 @@
 
 </head>
 
-<body>
+<body style="margin:10px">
 	<p>用户基本信息</p>
+	<br/>
 	<form id="form1" name="form1" method="post" action="#">
 		<div></div>
 		<table cellpadding="0" cellspacing="0" class="l-table-edit">
@@ -122,29 +123,38 @@
 					type="text" ltype="date" id="birthday" disabled="disabled" value="${user.birthday}"> </td>
 				<td align="left"></td>
 			</tr>
+			
+			<tr>
+				<td align="right" class="l-table-edit-td">博客:</td>
+				<td align="left" class="l-table-edit-td"><input name="blog"
+					type="text" id="birthday" maxlength="200" disabled="disabled" value="${user.blog }"></td>
+				<td align="left"></td>
+				
+			</tr>
 
 			<tr>
 				<td align="right" class="l-table-edit-td">现居地址:</td>
 				<td align="left" class="l-table-edit-td"><textarea
-						name="currentAddress" disabled="disabled" name="currentAddress" cols="50" rows="2">${user.currentAddress}
-						</textarea></td>
+						name="currentAddress" disabled="disabled" name="currentAddress" cols="50" rows="2">${user.currentAddress}</textarea></td>
 				<td align="left"></td>
 			
 				<td align="right" class="l-table-edit-td">出生地址:</td>
 				<td align="left" class="l-table-edit-td"><textarea
-						name="address" disabled="disabled" id="address" cols="50" rows="2">
-						${user.address }</textarea></td>
+						name="address" disabled="disabled" id="address" cols="50" rows="2">${user.address }</textarea></td>
 				<td align="left"></td>
 			</tr>
 		</table>
 	</form>
 	<br/>
 	
+	
 	<p>用户角色</p>
+	<br/>
 	<div>${user.roleNames }</div>
 	
 	<br/>
 	<p>用户权限</p>
+	<br/>
 	<div>${user.roleNames }</div>
 	
 	<div style="display: none">

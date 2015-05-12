@@ -49,7 +49,7 @@ public class LigerUiToGridJson implements IToGridJson {
 		return json.toString();
 	}
 
-	public String userListToGrid(List<User> userList){
+	public String userListToGrid(List<User> userList, int total){
 		JSONObject json = new JSONObject();
 
 		JSONArray children = new JSONArray();
@@ -60,7 +60,7 @@ public class LigerUiToGridJson implements IToGridJson {
 
 		json.put("Rows", children);
 
-		json.put("Total", "11");
+		json.put("Total", total + "");
 		return json.toString();
 	}
 

@@ -40,7 +40,7 @@ public class DeleteMenuController extends BaseController {
 		/**
 		 * 系统默认菜单不能删除
 		 * */
-		if(menuId.equals("root") || menuId.equals("article") || menuId.equals("article_type")){
+		if(menuId.equals("root") || menuId.equals("article")){
 			println(resp, JsonUtil.createJson("error", "默认菜单不能删除"));
 			return;
 		}

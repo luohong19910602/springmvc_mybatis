@@ -157,10 +157,19 @@ public interface UserMapper {
 	@Delete(value = "delete from sys_user where id=#{id}")
 	void delete(String id);
 	
-	@Update(value = "update sys_user set user_name=#{name},user_email=#{email},user_tel=#{tel},"
-			+ "user_login_name=#{loginName},user_password=#{password},"
-			+ "user_blog=#{blog},user_address=#{address},user_current_address=#{currentAddress},user_birthday=#{birthday},"
-			+ "user_qq=#{qq},user_login_count=#{loginCount},user_updated_time=#{updatedTime},user_updator=#{updator} "
+	@Update(value = "update sys_user set user_name=#{name},"
+			+ "user_email=#{email},"
+			+ "user_tel=#{tel},"
+			+ "user_login_name=#{loginName},"
+			+ "user_password=#{password},"
+			+ "user_blog=#{blog},"
+			+ "user_address=#{address},"
+			+ "user_current_address=#{currentAddress},"
+			+ "user_birthday=#{birthday},"
+			+ "user_qq=#{qq},"
+			+ "user_login_count=#{loginCount},"
+			+ "user_updated_time=#{updatedTime},"
+			+ "user_updator=#{updator} "
 			+ "where id=#{id}")
 	void update(User user);
 } 

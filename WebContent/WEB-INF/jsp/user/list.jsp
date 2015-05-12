@@ -88,44 +88,43 @@
 							columns : [ {
 								display : '姓名',
 								name : 'name',
-								width : 120
+								width : 100
 							},
 							{
 							    display: 'qq',
 							    name: 'qq',
-							    width: 120
+							    width: 100
 							},
 							{
 							    display: '博客地址',
 							    name: 'blog',
-							    width: 120
+							    width: 100
 							},
 							
 							{
 							    display: '手机号码',
 							    name: 'tel',
-							    width: 120
+							    width: 100
 							},
 							{
 							    display: '出生地址',
 							    name: 'address',
-							    width: 120
+							    width: 100
 							},{
 							    display: '生日',
 							    name: 'birthday',
-							    width: 120
+							    width: 100
 							},
 							{
 								display: '登录名',
 								name: 'loginName',
-								width: 120,
+								width: 100,
 							},
 							{
 								display: '居住地址',
 								name: 'currentAddress',
-								width: 120,
+								width: 100,
 							}
-							
 							],
 							dataAction : "server",
 							url : "${baseURL}/user/listJson.do",

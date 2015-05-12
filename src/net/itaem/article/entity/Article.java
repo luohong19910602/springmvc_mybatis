@@ -2,8 +2,6 @@ package net.itaem.article.entity;
 
 import net.itaem.base.entity.BaseEntity;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-
 /**
  * 文章entity
  * @author luohong 846705189@qq.com 2015-02-01

@@ -214,6 +214,12 @@
 				<td align="left" class="l-table-edit-td"><input name="birthday"
 					type="text" ltype="date" id="birthday"></td>
 				<td align="left"></td>
+				
+				<td align="right" class="l-table-edit-td">博客:</td>
+				<td align="left" class="l-table-edit-td"><input name="blog"
+					type="text" id="birthday"></td>
+				<td align="left"></td>
+				
 			</tr>
 
 			<tr>
@@ -238,7 +244,7 @@
 				<td align="left"></td>
 			</tr>
 		</table>
-		<br /> <input style="margin-left: 40px" type="submit" value="提交"
+		<br /> <input style="margin-left: 40px" type="button" value="提交"
 			id="Button1" class="l-button l-button-submit" /> <input type="reset"
 			value="重置" class="l-button l-button-reset" />
 	</form>

@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @email 846705189@qq.com 
  * */
 @Controller
-public class UserController extends BaseController{
+public class UserListController extends BaseController{
 	
 	@Autowired
 	private IUserService userService;
@@ -66,7 +66,8 @@ public class UserController extends BaseController{
 		Page page = getPage(req);
 		List<User> userList = null;
 		userList = userService.listAll(page);
-		ResponseUtil.println(resp, gridJson.userListToGrid(userList));
+		int total = userService.countAll();
+		ResponseUtil.println(resp, gridJson.userListToGrid(userList, total));
 	}
 
 	/**

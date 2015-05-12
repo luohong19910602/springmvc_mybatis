@@ -215,8 +215,28 @@
 				<td align="left" class="l-table-edit-td"><input name="birthday"
 					value="${userInfo.birthday }" ltype="date" id="birthday"></td>
 				<td align="left"></td>
+				
+				<td align="right" class="l-table-edit-td">博客:</td>
+				<td align="left" class="l-table-edit-td"><input name="blog"
+					type="text" id="birthday" value="${userInfo.blog }"></td>
+				<td align="left"></td>
+				
 			</tr>
 
+            <tr>
+				<td align="right" class="l-table-edit-td">现居地址:</td>
+				<td align="left" class="l-table-edit-td"><textarea
+						name="currentAddress" name="currentAddress" cols="50" rows="3">${userInfo.currentAddress }</textarea></td>
+				<td align="left"></td>
+			</tr>
+
+			<tr>
+				<td align="right" class="l-table-edit-td">出生地址:</td>
+				<td align="left" class="l-table-edit-td"><textarea
+						name="address" id="address" cols="50" rows="3">${userInfo.address }</textarea></td>
+				<td align="left"></td>
+			</tr>
+			
 			<tr>
 				<td align="right" class="l-table-edit-td">角色列表:</td>
 				<td align="left" class="l-table-edit-td"><input

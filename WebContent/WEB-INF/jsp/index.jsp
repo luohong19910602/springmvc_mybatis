@@ -34,6 +34,7 @@ request.setAttribute("baseURL", baseURL);
             var accordion = null;
             var tree = null;
             var tabItems = [];
+            var addChangePassword = "changePassword";
             $(function ()
             {
 
@@ -41,7 +42,7 @@ request.setAttribute("baseURL", baseURL);
                 $("#layout1").ligerLayout({ leftWidth: 190, height: '100%',heightDiff:-34,space:4, onHeightChanged: f_heightChanged });
 
                 var height = $(".l-layout-center").height();
-
+                
                 //Tab
                 $("#framecenter").ligerTab({
                     height: height,
@@ -70,6 +71,18 @@ request.setAttribute("baseURL", baseURL);
                         var tabid = tabdata.tabid;
                         addFrameSkinLink(tabid);
                     }
+                });
+                
+                /**
+                 * 修改密码
+                 */
+                $("#changePassword").click(function(){
+                	if(tab.isTabItemExist(addChangePassword)){
+                	    tab.selectTabItem(addChangePassword);
+                	    tab.reload(addChangePassword);
+                	}else{
+                         f_addTab(addChangePassword, "修改密码", "${baseURL}/user/changePassword.do");
+                	}
                 });
 
                 //面板
@@ -408,15 +421,11 @@ body {
 	<div id="topmenu" class="l-topmenu">
 		<div class="l-topmenu-logo">后台管理界面</div>
 		<div class="l-topmenu-welcome">
-			<label> 皮肤切换：</label> <select id="skinSelect">
-				<option value="aqua">默认</option>
-				<option value="silvery">Silvery</option>
-				<option value="gray">Gray</option>
-				<option value="gray2014">Gray2014</option>
-			</select> 
+			<span style="color:white">欢迎:${user.name }</span>
+			<span class="space">|</span>
 			<a href="${baseURL }/user/logout.do" class="l-link2">退出</a> 
 			<span class="space">|</span>
-			<span class="l-link2">欢迎:${user.name }</span>
+			<a style="cursor:pointer" class="l-link2" id="changePassword">修改密码</a>
 		</div>
 	</div>
 
@@ -429,7 +438,7 @@ body {
 		</div>
 
 		<div position="center" id="framecenter">
-			<div tabid="home" title="使用手册" style="height: 300px">
+			<div tabid="home" title="用户登录信息" style="height: 300px">
 				<iframe frameborder="0" name="home" id="home"
 					src="${baseURL }/info.jsp"></iframe>
 			</div>

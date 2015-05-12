@@ -46,7 +46,7 @@ public interface IToGridJson {
 	 * @return 返回liger ui grid json数据
 	 * @see IToGridJson#userToGrid(Privilege)
 	 * */
-	public String userListToGrid(List<User> userList);
+	public String userListToGrid(List<User> userList, int total);
 
 	/**
 	 * 将用户变成liger ui grid组件的json数据

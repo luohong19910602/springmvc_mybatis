@@ -1,14 +1,11 @@
 package net.itaem.article.controller.user;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
 import net.itaem.base.controller.BaseController;
 import net.itaem.resource.service.IResourceService;
-import net.itaem.role.entity.RoleUser;
 import net.itaem.user.entity.User;
 import net.itaem.user.entity.UserMenu;
 import net.itaem.user.service.IUserService;
