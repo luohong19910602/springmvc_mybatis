@@ -16,8 +16,23 @@ public class Article extends BaseEntity {
     private int viewCount;    //访问次数
     private int reference;  //转载次数
     private ArticleType type;  //文章所属类别
-    private String typeId;
+    private String typeId;  //文章类别
+    private String userId;  //文章所属用户
+    private String summary; //文章简介
     
+    
+	public String getSummary() {
+		return summary;
+	}
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 	public ArticleType getType() {
 		return type;
 	}
@@ -66,8 +81,9 @@ public class Article extends BaseEntity {
 	
 	@Override
 	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
+		return "Article [title=" + title + ", url=" + url + ", content="
+				+ content + ", viewCount=" + viewCount + ", reference="
+				+ reference + ", type=" + type + ", typeId=" + typeId
+				+ ", userId=" + userId + ", summary=" + summary + "]";
 	}
-    
-    
 }

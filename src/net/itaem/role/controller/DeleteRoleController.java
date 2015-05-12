@@ -33,8 +33,8 @@ public class DeleteRoleController {
 	@RequestMapping("/role/delete.do")
 	@Transactional
 	public void delete(String roleId, HttpServletResponse resp) throws IOException{
-		if(roleId == null) return;
-		if(roleId == "root") return;
+		if(roleId == null || "".equals(roleId)) return;
+		if(roleId.equals("root")) return;
 
 		roleService.delete(roleId);
 		JSONObject json = new JSONObject();

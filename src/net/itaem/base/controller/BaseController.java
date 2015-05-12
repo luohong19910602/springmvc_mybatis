@@ -126,19 +126,8 @@ public class BaseController {
 	 * */
 	public void alert(String content, HttpServletResponse resp) throws IOException{
 		resp.setCharacterEncoding("UTF-8");
-		resp.setContentType("text/html");
-		
-		resp.getWriter().write(""
-				+ "<!DOCTYPE html>"
-				+ "<html>"
-				+ "<head>"
-				+ "<script type='text/javascipt'>"
-				+ "alert(\"" + content + "\");"
-				+ "</script>"
-				+ "</head>"
-				+ "<body>"
-				+ "</body>"
-				+ "</html>");
+		resp.getWriter().write("<script language='javascript'>alert('"+ content +");" + "');"
+				+ "</script>");
 	    resp.getWriter().flush();
 	}
 	
@@ -160,5 +149,19 @@ public class BaseController {
 		}else{
 			return u.getName();
 		}
+	}
+	
+	/**
+	 * 获得网站的更目录
+	 * 
+	 * */
+	public String getBaseURL(HttpServletRequest req){
+		String scheme = req.getScheme();
+		String serverName = req.getServerName();
+		String contextPath = req.getContextPath();
+		int port = req.getServerPort();
+		//网站的访问跟路径
+		String baseURL = scheme + "://" + serverName + ":"+ port + contextPath;
+		return baseURL;
 	}
 }

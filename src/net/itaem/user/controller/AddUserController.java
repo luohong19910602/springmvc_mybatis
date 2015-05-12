@@ -1,6 +1,8 @@
 package net.itaem.user.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -89,26 +91,36 @@ public class AddUserController extends BaseController {
 		User u = (User) req.getSession().getAttribute("user");
 		user.setCreatedTime(DateUtil.getNowDate(null));
 		user.setCreator(u.getName());
-
 		user.setId(UUIDUtil.uuid());
 
 		//加密密码
 		user.setPassword(MD5Util.strToMD5(user.getPassword()));
-		//添加用户
-		userService.add(user);
-
-		String[] roleIds = roleIdList.split(",");
-
+	
 		//添加用户角色
+		String[] roleIds = roleIdList.split(",");	
+		List<RoleUser> roleUsers = new ArrayList<RoleUser>();
+		boolean hasDefaultRole = false;
 		for(String roleId: roleIds){
+			if(roleId.equals("root")){
+				hasDefaultRole = true;
+			}
 			RoleUser roleUser = new RoleUser();
 			roleUser.setRoleId(roleId);
 			roleUser.setId(UUIDUtil.uuid());
 			roleUser.setUserId(user.getId());
-
-			roleService.addRoleUser(roleUser);
+			roleUsers.add(roleUser);			
 		}
-
+		
+		//如果没有选择默认角色，将默认角色加入
+		if(!hasDefaultRole){
+			RoleUser defaultRole = new RoleUser();
+		    defaultRole.setRoleId("root");
+		    defaultRole.setId(UUIDUtil.uuid());
+		    defaultRole.setUserId(user.getId());
+		}
+		user.setRoleUsers(roleUsers);
+		
+		userService.add(user);
 		ResponseUtil.println(resp, JsonUtil.createJson("success", "add a user successful"));
 	}
 }

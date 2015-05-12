@@ -6,9 +6,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.itaem.base.controller.BaseController;
 import net.itaem.user.entity.User;
 import net.itaem.user.service.IUserService;
+import net.itaem.util.JsonUtil;
 import net.itaem.util.MD5Util;
+import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +25,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @email 846705189@qq.com
  * */
 @Controller
-public class UserLoginController {
+public class UserLoginController extends BaseController {
+	
 	@Autowired
 	private IUserService userService;
 	
@@ -84,6 +88,38 @@ public class UserLoginController {
             req.setAttribute("error", "用户不存在");			
             req.getRequestDispatcher("/login.jsp").forward(req, resp);
             return;
+		}
+	}
+	
+	/**
+	 * 移动端登录
+	 * @throws IOException 
+	 * */
+	@RequestMapping("/user/loginByAndroid.do")
+	public void loginByAndroid(User user, HttpServletResponse resp) throws IOException{
+		
+		if(StringUtils.isEmpty(user.getLoginName())){
+		    println(resp, JsonUtil.createJson("error", "用户名不能为空"));
+			return;
+		}
+		
+		if(StringUtils.isEmpty(user.getPassword())){
+			println(resp, JsonUtil.createJson("error", "密码不能为空"));
+			return;
+		}
+		
+		user.setPassword(MD5Util.strToMD5(user.getPassword()));
+		User u = userService.exists(user);
+		if(u != null){
+			JSONObject json = new JSONObject();
+			json.put("status", "success");
+			json.put("id", u.getId());
+			json.put("name", "name");
+			json.put("loginName", u.getLoginName());
+			System.out.println(json.toString());
+			println(resp, json.toString());
+		}else{
+			println(resp, JsonUtil.createJson("error", "用户不存在"));
 		}
 	}
 	

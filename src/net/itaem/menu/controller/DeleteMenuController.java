@@ -32,8 +32,16 @@ public class DeleteMenuController extends BaseController {
 	 * */
 	@RequestMapping("/menu/delete.do")
 	public void delete(String menuId, HttpServletResponse resp) throws IOException{
-		if(menuId == null || menuId.equals("root")){
+		if(menuId == null || "".equals(menuId)){
 			println(resp, JsonUtil.createJson("error", "菜单id不能为空"));
+			return;
+		}
+		
+		/**
+		 * 系统默认菜单不能删除
+		 * */
+		if(menuId.equals("root") || menuId.equals("article") || menuId.equals("article_type")){
+			println(resp, JsonUtil.createJson("error", "默认菜单不能删除"));
 			return;
 		}
 		

@@ -18,20 +18,15 @@
 <head>
 
 
-<link rel="stylesheet"
-	href="${baseURL }/css/main_article.css" />
-<link rel="stylesheet"
-	href="${baseURL }/css/style(1).css" />
-		
+<link rel="stylesheet" href="${baseURL }/css/main_article.css" />
+<link rel="stylesheet" href="${baseURL }/css/style(1).css" />
 
-<link rel="stylesheet"
-	href="${baseURL }/css/style.css"/>
 
-<link rel="stylesheet"
-	href="${baseURL }/css/ui.css" />
+<link rel="stylesheet" href="${baseURL }/css/style.css" />
 
-<link rel="stylesheet"
-	href="${baseURL }/css/write.css" />
+<link rel="stylesheet" href="${baseURL }/css/ui.css" />
+
+<link rel="stylesheet" href="${baseURL }/css/write.css" />
 
 <link rel="stylesheet"
 	href="${baseURL }/kindeditor/themes/default/default.css" />
@@ -96,17 +91,21 @@ KindEditor.ready(function(K) {
 		<form id="example" name="example" method="post"
 			action="${baseURL }/article/addSubmit.do">
 
-			<p class="subtit">
-				文章标题
-			</p>
+			<p class="subtit">文章标题</p>
 
 			<div class="section">
 				<input type="text" id="txtTitle" name="title"
 					style="width: 560px; height: 20px; float: left;" maxlength="100">
 			</div>
 
+			<p class="subtit">文章简要介绍</p>
+			<div class="section">
+				<textarea cols="120" rows="5" id="summary" name="summary">
+					</textarea>
+			</div>
+
 			<p class="subtit">文章内容</p>
-			
+
 			<div class="section">
 				<textarea name="content" cols="150" rows="50"
 					style="width: 900px; height: 600px; visibility: hidden;">
@@ -122,8 +121,7 @@ KindEditor.ready(function(K) {
 						<div id="tagbox">
 							<table id="tagtb" cellspacing="0">
 								<tbody>
-									<tr>
-										${typeList }
+									<tr>${typeList }
 									</tr>
 								</tbody>
 							</table>
@@ -132,7 +130,7 @@ KindEditor.ready(function(K) {
 				</div>
 				<p class="subtit"></p>
 			</div>
-            
+
 			<div class="section">
 				<!-- 
 				<input id="btnPublish" type="submit" class="input_btn_1"
@@ -140,10 +138,8 @@ KindEditor.ready(function(K) {
 					type="button" class="input_btn_1" value="舍弃"> <span
 					id="sp_note" class="savenote" style="display: none;"></span>
 					 -->
-			    <input type="submit"
-					value="发表文章" title="保存并跳转"> 
-				<input id="btnCancel"
-					type="reset" value="舍弃">
+				<input type="submit" value="发表文章" title="保存并跳转"> <input
+					id="btnCancel" type="reset" value="舍弃">
 			</div>
 		</form>
 		<div class="clear"></div>

@@ -42,6 +42,8 @@ public class DateUtil {
 	}
 
 	public static void main(String[] args) throws ParseException {
-		System.out.println(getNowDate("yyyy/MM/dd"));
+//		System.out.println(getNowDate("yyyy/MM/dd"));
+		String str = "a2078a64_db6c_4a05_aa39_189b6ac6af59:sdafasdfa,db1c3f33_6e78_4626_a677_01557a31d674:asdfsdfs,f0846e30_bec8_448f_b0b1_edb6b8f6a863:dddd";
+		System.out.println(str.split(",", -1)[0].split(":")[0]);
 	}
 }

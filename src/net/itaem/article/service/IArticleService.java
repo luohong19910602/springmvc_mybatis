@@ -18,4 +18,10 @@ public interface IArticleService {
 	public void add(Article article);
 	
 	public void delete(String[] ids);
+	
+	public Article findById(String id);
+	
+	public void update(Article article);
+	
+	public List<Article> findByUserId(String userId);
 }

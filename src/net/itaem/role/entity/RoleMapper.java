@@ -19,7 +19,7 @@ import org.apache.ibatis.annotations.Update;
  * */
 @Resource(name = "roleMapper")
 public interface RoleMapper {
-	@Select(value = "${sql}")  
+	@Select(value = "select * from sys_role where role_del_flag = 0")  
 	@Results(value = { 
 			@Result(id = true, property = "id", column = "id"),  
 			@Result(property = "name", column = "role_name"),
@@ -30,7 +30,7 @@ public interface RoleMapper {
 			@Result(property = "updator", column = "role_updator"),
 			@Result(property = "delFlag", column = "role_del_flag")
 	})  
-	List<Role> listAll(@Param(value = "sql") String sql);  
+	List<Role> listAll();  
 	
 	@Update("update sys_role set role_del_flag=1 where id=#{id}")
 	void delete(String id);
@@ -59,8 +59,10 @@ public interface RoleMapper {
       *where sys_user.id=sys_role_user.user_id and sys_role_user.role_id=sys_role.id
       *group by sys_user.id
 	  * */
-	@Select(value = "select distinct sys_role.id, role_name, role_parent_id, role_created_time, role_creator from sys_role,sys_role_user "
-			+ "where sys_role.id=sys_role_user.role_id and sys_role_user.user_id=#{userId}")
+	@Select(value = "select distinct sys_role.id, role_name, role_parent_id, role_created_time, role_creator "
+			+ "from sys_role,sys_role_user "
+			+ "where sys_role.id=sys_role_user.role_id "
+			+ "and sys_role_user.user_id=#{userId} and role_del_flag=0")
 	@Results(value = { 
 			@Result(id = true, property = "id", column = "id"),  
 			@Result(property = "name", column = "role_name"),
@@ -72,18 +74,4 @@ public interface RoleMapper {
 			@Result(property = "delFlag", column = "role_del_flag")
 	})  
 	List<Role> listByUserId(String userId);
-    
-//	@Select(value = "select sys_role.id, role_name, role_parent_id, role_created_time, role_creator from sys_role,sys_role_user "
-//			+ "where sys_role.id=sys_role_user.role_id and sys_role_user.user_id=#{id}")  
-//	@Results(value = { 
-//			@Result(id = true, property = "id", column = "id"),  
-//			@Result(property = "name", column = "role_name"),
-//			@Result(property = "parentId", column = "role_parent_id"),
-//			@Result(property = "createdTime", column = "role_created_time"),
-//			@Result(property = "creator", column = "role_creator"),
-//			@Result(property = "updatedTime", column = "role_updated_time"),
-//			@Result(property = "updator", column = "role_updator"),
-//			@Result(property = "delFlag", column = "role_del_flag")
-//	})  
-//	List<Role> listByUserId(String userId);
 }

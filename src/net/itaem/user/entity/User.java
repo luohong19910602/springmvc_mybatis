@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.itaem.base.entity.BaseEntity;
 import net.itaem.role.entity.Role;
+import net.itaem.role.entity.RoleUser;
 
 /**
  * 资源实体类
@@ -36,6 +37,19 @@ public class User extends BaseEntity{
 	private int loginCount;  //登录总次数
 	private String roleNames;  //用户角色，这里使用','来分割每个角色名字
 	private int superUserFlag = NOT_SUPER_USER;  //标识符，标识用户是否是超级用户
+	private List<RoleUser> roleUsers;
+	
+	public List<RoleUser> getRoleUsers() {
+		return roleUsers;
+	}
+
+
+
+
+	public void setRoleUsers(List<RoleUser> roleUsers) {
+		this.roleUsers = roleUsers;
+	}
+
 	/**
 	 * 用户的角色列表
 	 * */

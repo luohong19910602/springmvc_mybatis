@@ -42,9 +42,8 @@ public class RoleDaoImpl implements IRoleDao {
 	
 	@Override
 	public List<Role> listAll() {
-		String sql = "select * from sys_role where role_del_flag = 0";
-	    
-		List<Role> roleList = roleMapper.listAll(sql);
+		
+		List<Role> roleList = roleMapper.listAll();
 		
 		List<Role> parentRoleList = new ArrayList<Role>();  //取出没有父亲结点的菜单
 		

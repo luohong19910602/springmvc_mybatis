@@ -1,7 +1,9 @@
 package net.itaem.base.interceptor;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -25,15 +27,15 @@ import org.springframework.web.servlet.ModelAndView;
  * @date 2014-12-25
  * */
 public class CheckRequestPermission implements HandlerInterceptor {
-	
+
 	@Autowired
 	private IPrivilegeService privilegeService;
-	
+
 	@Override
 	public void afterCompletion(HttpServletRequest req,
 			HttpServletResponse resp, Object arg2, Exception arg3)
-			throws Exception {
-		
+					throws Exception {
+
 	}
 
 	@Override
@@ -44,18 +46,22 @@ public class CheckRequestPermission implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest req, HttpServletResponse resp,
 			Object arg2) throws Exception {
-		
+        return check(req, resp);
+//		return true;
+	}
+
+	private boolean check(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		//登录
 		if(!isLogin(req)){
 			req.getRequestDispatcher("/login.jsp").forward(req, resp);
 			return false;
 		}
-		
+
 		//超级用户
 		if(isSuperUser(req)){
 			return true;
 		}
-		
+
 		//判断用户是否具备访问权限
 		if(canAccess(req)){
 			return true;
@@ -74,10 +80,10 @@ public class CheckRequestPermission implements HandlerInterceptor {
 	private boolean canAccess(HttpServletRequest req) {
 		User u = (User) req.getSession().getAttribute("user");
 		if(u == null) return false;
-		
+
 		List<Privilege> privilegeList =privilegeService.listByUserId(u.getId());
 		String reqUri = req.getRequestURL().toString();
-		
+
 		for(Privilege privilege: privilegeList){
 			if(privilege.getChildren() != null && privilege.getChildren().size() > 0){
 				for(Privilege child: privilege.getChildren()){
@@ -86,9 +92,9 @@ public class CheckRequestPermission implements HandlerInterceptor {
 					}
 				}
 			}
-			
+
 			if(privilege.getUrl() == null || "".equals(privilege.getUrl())) continue;
-			
+
 			if(privilege.getUrl().equalsIgnoreCase(reqUri)){
 				return true;
 			}

@@ -1,87 +1,154 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%
-String scheme = request.getScheme();
-String serverName = request.getServerName();
-String contextPath = request.getContextPath();
-int port = request.getServerPort();
+	String scheme = request.getScheme();
+	String serverName = request.getServerName();
+	String contextPath = request.getContextPath();
+	int port = request.getServerPort();
 
-//网站的访问跟路径
-String baseURL = scheme + "://" + serverName + ":"+ port + contextPath;
-request.setAttribute("baseURL", baseURL);
+	//网站的访问跟路径
+	String baseURL = scheme + "://" + serverName + ":" + port
+			+ contextPath;
+	request.setAttribute("baseURL", baseURL);
+%>
 
-%>	
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>操作手册</title>
+<title>添加角色权限</title>
+<link
+	href="${baseURL}/ligerUI/lib/ligerUI/skins/Aqua/css/ligerui-all.css"
+	rel="stylesheet" type="text/css" />
+<link href="${baseURL}/ligerUI/lib/ligerUI/skins/Silvery/css/style.css"
+	rel="stylesheet" type="text/css" />
+<script src="${baseURL}/ligerUI/lib/jquery/jquery-1.3.2.min.js"
+	type="text/javascript"></script>
+<script src="${baseURL}/ligerUI/lib/ligerUI/js/core/base.js"
+	type="text/javascript"></script>
+<script src="${baseURL}/ligerUI/lib/ligerUI/js/plugins/ligerForm.js"
+	type="text/javascript"></script>
+<script
+	src="${baseURL}/ligerUI/lib/ligerUI/js/plugins/ligerDateEditor.js"
+	type="text/javascript"></script>
+<script src="${baseURL}/ligerUI/lib/ligerUI/js/plugins/ligerComboBox.js"
+	type="text/javascript"></script>
+<script src="${baseURL}/ligerUI/lib/ligerUI/js/plugins/ligerCheckBox.js"
+	type="text/javascript"></script>
+<script src="${baseURL}/ligerUI/lib/ligerUI/js/plugins/ligerButton.js"
+	type="text/javascript"></script>
+<script src="${baseURL}/ligerUI/lib/ligerUI/js/plugins/ligerDialog.js"
+	type="text/javascript"></script>
+<script src="${baseURL}/ligerUI/lib/ligerUI/js/plugins/ligerRadio.js"
+	type="text/javascript"></script>
+<script src="${baseURL}/ligerUI/lib/ligerUI/js/plugins/ligerSpinner.js"
+	type="text/javascript"></script>
+<script src="${baseURL}/ligerUI/lib/ligerUI/js/plugins/ligerTextBox.js"
+	type="text/javascript"></script>
+<script src="${baseURL}/ligerUI/lib/ligerUI/js/plugins/ligerTip.js"
+	type="text/javascript"></script>
+<script
+	src="${baseURL}/ligerUI/lib/jquery-validation/jquery.validate.min.js"
+	type="text/javascript"></script>
+<script
+	src="${baseURL}/ligerUI/lib/jquery-validation/jquery.metadata.js"
+	type="text/javascript"></script>
+<script src="${baseURL}/ligerUI/lib/jquery-validation/messages_cn.js"
+	type="text/javascript"></script>
+
+<style type="text/css">
+.l-table-edit {
+	
+}
+
+.l-table-edit-td {
+	padding: 4px;
+}
+
+.l-button-submit,.l-button-reset {
+	width: 80px;
+	float: left;
+	margin-left: 10px;
+	padding-bottom: 2px;
+}
+</style>
+
+
+<script type="text/javascript">
+	//设置menuId到表单中
+	$(function() {
+		$("#form1").ligerForm();
+	});
+</script>
+
 </head>
 
 <body>
-    <p>
-        通用权限设计
+	<p>用户基本信息</p>
+	<form id="form1" name="form1" method="post" action="#">
+		<div></div>
+		<table cellpadding="0" cellspacing="0" class="l-table-edit">
+			<tr>
+				<td align="right" class="l-table-edit-td">名字:</td>
+				<td align="left" class="l-table-edit-td"><input name="name"
+					id="name" value="${user.name }" disabled="disabled"></td>
+				<td align="left"></td>
+				<td align="right" class="l-table-edit-td">登录名:</td>
+				<td align="left" class="l-table-edit-td"><input
+					name="loginName" id="loginName" disabled="disabled" value="${user.loginName }"></td>
+				<td align="left"></td>
+			</tr>
 
-每一个网站，都有着相似的后台界面，现在比较流行的DWZ、LIGERUI、EXTJS等js框架，都提供了相似的界面。同时，后台网站的安全也是非常重要的。那么，为了开发上的方便，很有必要将一个后台网站做成一个通用的网站固件。这样子带来的好处：可以动态配置后台网站，极大简便了重复造轮子的功夫。
+			<tr>
+				<td align="right" class="l-table-edit-td">邮箱:</td>
+				<td align="left" class="l-table-edit-td"><input name="email"
+					id="email" disabled="disabled" value="${user.email}"></td>
+				<td align="left"></td>
 
-主要内容
-界面组件
-授权和验证权限
+				<td align="right" class="l-table-edit-td">QQ:</td>
+				<td align="left" class="l-table-edit-td"><input name="qq"
+					id="qq" disabled="disabled" value="${user.qq}"></td>
+				<td align="left"></td>
+			</tr>
 
-界面组件主要指的是用户可以访问的菜单与资源
-授权主要指的是授予用户可以访问的url资源链接
-验证权限程序验证用户的请求是否合法，如果不合法，那么程序将不允许用户进行访问
+			<tr>
 
-下面先抽象出几个实体
+				<td align="right" class="l-table-edit-td">电话:</td>
+				<td align="left" class="l-table-edit-td"><input disabled="disabled" value="${user.tel}" name="tel"
+					id="tel"></td>
+				<td align="left"></td>
+			
+				<td align="right" class="l-table-edit-td">生日:</td>
+				<td align="left" class="l-table-edit-td"><input name="birthday"
+					type="text" ltype="date" id="birthday" disabled="disabled" value="${user.birthday}"> </td>
+				<td align="left"></td>
+			</tr>
 
-菜单：就是用于导航与分类的界面组件，通常情况下，一个菜单可以拥有多个子菜单与资源。比如“基础服务菜单”，包含了“权限管理”、“角色管理”、“用户管理”、“菜单管理”四个资源，也简称为四个链接。
-
-资源：菜单下面的叶子节点，也是一个界面组件，代表一个可以访问的url链接。
-
-权限：用于形成网站可访问的资源集，一个集合内的权限，形成一个包，权限之间存在着层次关系。比如“用户管理权限”，包含了“添加用户”、“删除用户”、“添加用户”、“列出全部用户”四个权限。为了进一步提升体统的灵活性，这里支持设置用户的临时权限，这个权限只在某个特点的时间段下面有效。比如，在一个商城管理网站中，超级管理员可以给某个用户设置一个配置菜单的权限，让该权限在系统初期具备权限，然后一周时间之后，权限就会失效。
-
-用户：该网站的后台用户。
-
-角色：每个用户可以拥有自己的菜单与权限，所以每次添加一个新用户，都需要配置菜单、权限信息，这样子操作比较繁琐，所以抽象出一个角色实体，用于划分用户所属的类别。角色可以拥有多个子角色、用户、菜单、权限。由于每个菜单下面的资源有多个，但是每个不一样的角色都可能访问同一个菜单的不同资源，所以这个时候应该精确到具体的资源。比如：基础服务中有四个资源“权限管理”、“角色管理”、“用户管理”、“菜单管理”，超级用户可以访问到这四个资源，而后台管理员是不允许配置菜单的，所以只有“权限管理”、“角色管理”、“用户管理”三个资源。
-
-实体之间的ER关系
-
-菜单与资源：1-N关系，也就是一个菜单可以拥有多个资源。
-菜单与菜单自身：1-N
-菜单与用户：N-N，也就是一个菜单可以被多名用户访问，一个用户可以访问多个菜单
-
-角色与用户：N-N，也就是一个角色可以拥有多个用户，一个用户可以同时属于多个角色
-角色与权限：N-N，也就是一个角色可以拥有多个权限，一个权限可以同时属于多个角色
-角色与菜单：N-N，也就是一个角色可以拥有多个菜单，一个菜单可以同时属于多个角色
-
-用户与权限：N-N，也就是一个用户可以拥有多个权限，一个权限可以同时被多个用户访问
-权限与权限自身：1-N
-
-初始化信息
-
-一个网站的初始化信息，也代表最基本的信息。应该包含的内容如下：
-一个“基础服务”菜单，该菜单下面拥有四个资源，分别是：菜单管理、角色管理、用户管理、权限管理。
-这几个资源，分别代表了网站固件的一个基本模块。
-
-菜单管理：用于管理该后台网站的菜单信息，包含了添加菜单、删除菜单、更新菜单、列出全部菜单等功能
-
-角色管理：用于管理该后台网站的角色信息，包含了添加角色、删除角色、更新角色、列出全部角色、管理角色下的用户、管理角色可以访问的权限、管理角色可以访问的菜单
-
-用户管理：用户管理该后台网站的用户信息，包含了添加用户、删除用户、更新用户、流出全部用户、配置用户的角色、权限、菜单
-
-权限管理：用户管理该后台网站的权限信息，包含了添加权限、删除权限、更新权限、列出全部权限
-
-超级管理员
-为了让方便考虑，需要一个用户，具备访问该网站的全部功能模块，这个用户我们称之为超级管理员。在初始化一个后台网站时，超级管理员需要做的事情如下：
-1、添加权限
-2、配置网站的菜单信息
-3、添加角色
-4、添加用户
-5、配置用户的菜单、权限
-
-所以通常而言，超级管理员属于开发阶段的开发人员使用。每当一个新的功能加入时，就需要配置一个权限，然后将权限关联到相关菜单下面
-使用技术：spring mvc + mybatis + ligerui + javascript + css + jsp + html + mysql
-
-    </p>
+			<tr>
+				<td align="right" class="l-table-edit-td">现居地址:</td>
+				<td align="left" class="l-table-edit-td"><textarea
+						name="currentAddress" disabled="disabled" name="currentAddress" cols="50" rows="2">${user.currentAddress}
+						</textarea></td>
+				<td align="left"></td>
+			
+				<td align="right" class="l-table-edit-td">出生地址:</td>
+				<td align="left" class="l-table-edit-td"><textarea
+						name="address" disabled="disabled" id="address" cols="50" rows="2">
+						${user.address }</textarea></td>
+				<td align="left"></td>
+			</tr>
+		</table>
+	</form>
+	<br/>
+	
+	<p>用户角色</p>
+	<div>${user.roleNames }</div>
+	
+	<br/>
+	<p>用户权限</p>
+	<div>${user.roleNames }</div>
+	
+	<div style="display: none">
+		<!--  数据统计代码 -->
+	</div>
 </body>
 </html>

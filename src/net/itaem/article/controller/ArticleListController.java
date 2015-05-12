@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.itaem.article.entity.Article;
 import net.itaem.article.service.IArticleService;
 import net.itaem.base.controller.BaseController;
+import net.itaem.user.entity.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,13 +30,34 @@ public class ArticleListController extends BaseController {
 	}
 	
 	/**
+	 * android移动端列表
+	 * */
+	@RequestMapping("/article/listByAndroid.do")
+	public String listByAndroid(){
+		return "article/android/list";
+	}
+	
+	/**
 	 * 获取全部文章
 	 * @throws IOException 
 	 * */
 	@RequestMapping("/article/listJson.do")
 	public void listJson(HttpServletResponse resp) throws IOException{
 		List<Article> articleList = articleService.listAll();
-		System.out.println(articleList);
+		println(resp, gridJson.articleListToGrid(articleList));
+	}
+	
+	
+	/**
+	 * 移动端获取全部文章
+	 * @throws IOException 
+	 * */
+	@RequestMapping("/article/listJsonByAndroid.do")
+	public void listJsonByAndroid(HttpServletRequest req, HttpServletResponse resp) throws IOException{
+		User u = super.getLoginUser(req);
+		if(u == null) return;
+		
+		List<Article> articleList = articleService.findByUserId(u.getId());
 		println(resp, gridJson.articleListToGrid(articleList));
 	}
 	
@@ -47,7 +69,7 @@ public class ArticleListController extends BaseController {
 	@RequestMapping("/article/listByType.do")
 	public void listByTypeId(HttpServletRequest req, HttpServletResponse resp, String typeId) throws IOException{
 		List<Article> articleList = articleService.listBy(typeId);
-		
+		System.out.println(gridJson.articleListToGrid(articleList));
 		println(resp, gridJson.articleListToGrid(articleList));
 	}
 }

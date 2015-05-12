@@ -45,4 +45,20 @@ public class ArticleDaoImpl implements IArticleDao {
 			articleMapper.delete(id);
 		}
 	}
+
+	@Override
+	public Article findById(String id) {
+		return articleMapper.findById(id);
+	}
+
+	@Override
+	public List<Article> findByUserId(String userId) {
+		// TODO Auto-generated method stub
+		return articleMapper.findByUserId(userId);
+	}
+
+	@Override
+	public void update(Article article) {
+		articleMapper.update(article);
+	}
 }

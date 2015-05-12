@@ -34,4 +34,21 @@ public class ArticleServiceImpl implements IArticleService {
 	public void delete(String[] ids) {
 		articleDao.delete(ids);
 	}
+
+	@Override
+	public Article findById(String id) {
+		// TODO Auto-generated method stub
+		return articleDao.findById(id);
+	}
+
+	@Override
+	public List<Article> findByUserId(String userId) {
+		// TODO Auto-generated method stub
+		return articleDao.findByUserId(userId);
+	}
+
+	@Override
+	public void update(Article article) {
+		articleDao.update(article);
+	}
 }

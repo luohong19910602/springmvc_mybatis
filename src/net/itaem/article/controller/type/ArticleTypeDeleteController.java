@@ -1,4 +1,4 @@
-package net.itaem.article.controller;
+package net.itaem.article.controller.type;
 
 import java.io.IOException;
 
@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.itaem.article.service.IArticleTypeService;
 import net.itaem.base.controller.BaseController;
+import net.itaem.util.JsonUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +20,11 @@ public class ArticleTypeDeleteController extends BaseController {
 	
 	@RequestMapping("/articleType/delete.do")
 	public void delete(HttpServletResponse resp, String ids) throws IOException{
-		System.out.println(ids);
+		if(ids == null){
+			println(resp, JsonUtil.createJson("error", "删除失败，id不能为空"));
+			return;
+		}
+			
 		articleTypeService.delete(ids.split(","));
 		println(resp, "delete successful");
 	}

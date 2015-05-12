@@ -34,4 +34,10 @@ public class ArticleTypeServiceImpl implements IArticleTypeService{
 	public void update(ArticleType articleType) {
 		articleTypeDao.update(articleType);		
 	}
+
+	@Override
+	public List<ArticleType> listByUserId(String userId) {
+		// TODO Auto-generated method stub
+		return articleTypeDao.listByUserId(userId);
+	}
 }

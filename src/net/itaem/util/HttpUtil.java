@@ -184,6 +184,8 @@ public class HttpUtil {
 		return result;
 	}
 
+	
+	
 	public static void main(String[] args) {
 		System.out.println(HttpUtil.sendGet("http://192.168.1.108/springmvc_mybatis/articleType/listNameJson.do", "UTF-8"));
 	}

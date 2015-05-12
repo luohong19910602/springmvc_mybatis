@@ -12,11 +12,19 @@ import net.itaem.base.entity.BaseEntity;
  * 
  * */
 public class ArticleType extends BaseEntity {
-
+    
+	private String userId;
 	private String name;
 	private String desc;
 	private List<Article> articleList;
 	
+	
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 	public String getName() {
 		return name;
 	}

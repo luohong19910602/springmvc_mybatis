@@ -84,7 +84,10 @@
 								display : 'title',
 								name : 'title',
 								width : 200,
-								align: 'left'
+								align: 'left',
+								render:function(obj){
+									return "<a target=_blank href=${baseURL}/article/detail.do?id=" + obj.id + ">" + obj.title+ "</a>";
+								}
 							}, {
 								display : 'content',
 								name : 'content',
@@ -94,8 +97,17 @@
 							{
 								display : 'type',
 								name : 'typeId',
-								width : 200,
+								width : 100,
 								align:"left"
+							},
+							{
+								display : '操作',
+								name : 'id',
+								width : 100,
+								align:"left",
+								render:function(obj){
+									return "<a target=_blank href=${baseURL}/article/edit.do?id=" + obj.id + ">" + obj.title+ "</a>";
+								}
 							}
 							],
 							dataAction : "server",
@@ -122,7 +134,7 @@
 										},
 										{
 											text : '修改',
-											click : updateResource,
+											click : updateArticle,
 											icon : 'modify'
 										},
 										{
@@ -225,31 +237,26 @@
 			return ids;
 		}
 
-		function updateResource() {
+		function updateArticleById(id){
+			if(!id || id.length==0){
+				alert("请选择要更新的文章");
+				return;
+			}
+			window.open("${baseURL}/article/detail.do?id=" + id, "hello", false);
+		}
+		
+		function updateArticle() {
 			var id = getSelectedRow();
 			if(id.indexOf(",") != -1){
-				alert("不能同时更新多个权限");
+				alert("不能同时更新多个文章");
 				return;
 			}
 			
 			if(!id || id.length==0){
-				alert("请选择要更新的权限");
+				alert("请选择要更新的文章");
 				return;
 			}
-			$.ligerDialog.open({
-				height : 400,
-				width : 600,
-				title : '更新权限类别',
-				url : '${baseURL}/privilege/edit.do?id=' + id,
-				showMax : false,
-				showToggle : true,
-				showMin : false,
-				isResize : true,
-				slide : false,
-				data : {
-					"grid" : grid
-				}
-			});
+			window.open("${baseURL}/article/detail.do?id=" + id, "hello", false);
 		}
 	});
 	

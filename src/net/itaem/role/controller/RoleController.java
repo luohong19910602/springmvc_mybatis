@@ -63,7 +63,7 @@ public class RoleController extends BaseController {
 	@RequestMapping("/role/listJson.do")
 	public void listJson(HttpServletResponse resp) throws IOException{
 		List<Role> roleList = roleService.listAll();
-
+        
 		ResponseUtil.println(resp, treeJson.roleListToTreeJson(roleList));
 	}
 

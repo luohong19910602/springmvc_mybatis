@@ -13,4 +13,6 @@ public interface IArticleTypeService {
 	public void delete(String[] ids);
 
 	public void update(ArticleType articleType);
+	
+	public List<ArticleType> listByUserId(String userId);
 }

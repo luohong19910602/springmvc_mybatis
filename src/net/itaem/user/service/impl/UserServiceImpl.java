@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.itaem.base.entity.Page;
 import net.itaem.role.dao.IRoleDao;
+import net.itaem.role.entity.RoleUser;
 import net.itaem.user.dao.IUserDao;
 import net.itaem.user.entity.User;
 import net.itaem.user.entity.UserMenu;
@@ -24,10 +25,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl implements IUserService {
 	@Autowired
 	private IUserDao userDao;
-    
+
 	@Autowired
 	private IRoleDao roleDao;
-	
+
 	@Override
 	public User exists(User user) {
 		User u = userDao.exists(user);
@@ -46,10 +47,16 @@ public class UserServiceImpl implements IUserService {
 	public List<User> listAll(Page page) {
 		return userDao.listAll(page);
 	}
+
 	@Transactional
 	@Override
 	public void add(User user) {
 		userDao.add(user);
+		if(user.getRoleUsers() != null){
+			for(RoleUser roleUser: user.getRoleUsers()){
+				roleDao.addRoleUser(roleUser);
+			}
+		}
 	}
 
 	@Override
@@ -107,7 +114,7 @@ public class UserServiceImpl implements IUserService {
 		return userDao.hasRegisted(loginName);
 	}
 
-	
+
 	@Transactional
 	@Override
 	public void delete(String[] ids) {

@@ -24,4 +24,10 @@ public interface IArticleDao {
 	public void add(Article article);
 
 	public void delete(String[] ids);
+
+	public Article findById(String id);
+	
+	public List<Article> findByUserId(String userId);
+
+	public void update(Article article);
 }

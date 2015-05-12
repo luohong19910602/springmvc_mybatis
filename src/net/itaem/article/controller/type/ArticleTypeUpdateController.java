@@ -1,4 +1,4 @@
-package net.itaem.article.controller;
+package net.itaem.article.controller.type;
 
 import java.io.IOException;
 
@@ -24,7 +24,7 @@ public class ArticleTypeUpdateController extends BaseController {
 	@RequestMapping("/articleType/edit.do")
 	public String edit(HttpServletRequest req, String id){
 		req.setAttribute("id", id);
-		return "article/editArticleType";
+		return "article/type/editArticleType";
 	}
 	
 	

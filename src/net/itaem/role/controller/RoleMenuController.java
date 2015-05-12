@@ -37,6 +37,7 @@ public class RoleMenuController extends BaseController {
 
 	@Autowired
 	private IResourceService resourceService;
+	
 	/**
 	 * 跳转到添加角色菜单界面
 	 * */
