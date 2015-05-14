@@ -44,7 +44,6 @@ public class ArticleDaoImpl implements IArticleDao {
 	public void add(Article article) {
 		articleMapper.add(article);
 		if(article.getArticleAndTypeList() != null && article.getArticleAndTypeList().size() > 0){
-		    System.out.println("try to add");
 			for(ArticleAndType aat: article.getArticleAndTypeList()){
 		    	articleAndTypeMapper.add(aat);
 		    }
@@ -55,6 +54,7 @@ public class ArticleDaoImpl implements IArticleDao {
 	public void delete(String[] ids) {
 		for(String id: ids){
 			articleMapper.delete(id);
+			articleAndTypeMapper.deleteByArticleId(id);
 		}
 	}
 
@@ -65,13 +65,19 @@ public class ArticleDaoImpl implements IArticleDao {
 
 	@Override
 	public List<Article> findByUserId(String userId) {
-		// TODO Auto-generated method stub
 		return articleMapper.findByUserId(userId);
 	}
 
 	@Override
 	public void update(Article article) {
 		articleMapper.update(article);
+		if(article.getArticleAndTypeList() != null && article.getArticleAndTypeList().size() > 0){
+			articleAndTypeMapper.deleteByArticleId(article.getId());
+			//删除原来的关联关系
+			for(ArticleAndType aat: article.getArticleAndTypeList()){
+		    	articleAndTypeMapper.add(aat);
+		    }
+		}
 	}
 
 	@Override
@@ -87,5 +93,13 @@ public class ArticleDaoImpl implements IArticleDao {
 	public void setTop(ArticleAndType articleAndType) {
 		articleAndTypeMapper.seUnTop(articleAndType);
 		articleAndTypeMapper.setTop(articleAndType);
+	}
+	
+	/**
+	 * 取消某个文章类别的置顶
+	 * */
+	@Override
+	public void cancelTop(ArticleAndType articleAndType){
+		articleAndTypeMapper.seUnTop(articleAndType);
 	}
 }

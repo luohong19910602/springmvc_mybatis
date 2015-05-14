@@ -2,6 +2,7 @@ package net.itaem.article.controller.front;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -54,11 +55,64 @@ public class ArticleListFrontController extends BaseController {
 
 		if(index == null) index = 0;
 		if(navIndex == null) navIndex = 0;
-
 		String typeListStr = navList.get(navIndex).getArticleTypeListStr();
-
 		setArticleType(index, navIndex, typeListStr, req);
+		
 		req.getRequestDispatcher("/front/article/index.jsp").forward(req, resp);   
+	}
+
+	/**
+	 * 浏览文章
+	 * @param id 文章id
+	 * @param index 文章类别下标
+	 * @param navIndex 导航下标
+	 * @throws IOException 
+	 * @throws ServletException 
+	 * */
+	@RequestMapping("/article/front/detail.do")
+	public void detail(String id, Integer index, Integer navIndex, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+		//设置导航
+		List<Navigation> navList = setNavigation(navIndex, req);
+
+		//设置文章类别
+		if(index == null) index = 0;
+		if(navIndex == null) navIndex = 0;
+		String typeListStr = navList.get(navIndex).getArticleTypeListStr();
+		if(typeListStr != null && !"".equals(typeListStr)){
+			String[] types = typeListStr.split(Navigation.ARTICLE_TYPE_SEPORATOR);  //分割文章类别
+			if(types != null && types.length > 0){
+				StringBuilder sb = new StringBuilder();
+
+				List<ArticleType> typeList = new ArrayList<ArticleType>();
+				for(String type: types){
+					ArticleType articleType = artilceTypeService.findById(type);
+					if(articleType != null)
+						typeList.add(articleType);
+				}
+
+				if(typeList != null && typeList.size() > 0){
+					for(int i=0; i<typeList.size(); i++){
+						if(index == i)
+							sb.append("<li class='active'><a href='" + super.getBaseURL(req) + "/article/front/index.do?navIndex=" + navIndex + "&index=" +i + "'>" + typeList.get(i).getName() + "</a></li>");
+						else
+							sb.append("<li><a href='" + super.getBaseURL(req) + "/article/front/index.do?navIndex=" +navIndex + "&index=" + i + "'>" + typeList.get(i).getName() + "</a></li>");
+					}
+					req.setAttribute("type", sb.toString());
+				}
+			}
+		}
+		
+		//设置文章详细信息
+		Article article = artilceService.findById(id);
+		StringBuilder articleBuilder = new StringBuilder();
+		if(article != null){
+			articleBuilder.append("<div class='row-fluid'>");
+			articleBuilder.append(article.getContent());
+			articleBuilder.append("</div>");
+		}
+		req.setAttribute("article", articleBuilder.toString());
+		
+		req.getRequestDispatcher("/front/article/detail.jsp").forward(req, resp);
 	}
 
 	@RequestMapping("/navigation.do")
@@ -103,7 +157,6 @@ public class ArticleListFrontController extends BaseController {
 	 * @paran navIndex 选中的导航
 	 * */
 	private void setArticleType(Integer index, Integer navIndex, String typeListStr, HttpServletRequest req){
-		System.out.println("the index is " + index);
 		if(typeListStr != null && !"".equals(typeListStr)){
 			String[] types = typeListStr.split(Navigation.ARTICLE_TYPE_SEPORATOR);  //分割文章类别
 			if(types != null && types.length > 0){
@@ -117,6 +170,7 @@ public class ArticleListFrontController extends BaseController {
 				}
 
 				if(typeList != null && typeList.size() > 0){
+					Collections.sort(typeList);
 					for(int i=0; i<typeList.size(); i++){
 						if(index == i)
 							sb.append("<li class='active'><a href='" + super.getBaseURL(req) + "/article/front/index.do?navIndex=" + navIndex + "&index=" +i + "'>" + typeList.get(i).getName() + "</a></li>");
@@ -125,33 +179,48 @@ public class ArticleListFrontController extends BaseController {
 					}
 					req.setAttribute("type", sb.toString());
 
-					setArtcile(types[index], req);
+					setArtcile(index, navIndex, typeList.get(index).getId(), req);
 				}
 			}
 		}
 	}
 
 	/**
+	 * 
+	 * tip:如果只有一个文章，那么默认会把这个文章当做置顶文章
+	 * 
 	 * @param top置顶的文章
 	 * @param articleList 该类别下面的文章
+	 * 
 	 * */
-	private void setArtcile(String articleTypeId, HttpServletRequest req){
+	private void setArtcile(Integer articleTypeIndex, Integer navIndex, String articleTypeId, HttpServletRequest req){
 		List<Article> articleList = artilceService.listBy(articleTypeId);
 		if(articleList != null && articleList.size() > 0){
+			
+			//只有一个文章，默认为置顶文章
+			if(articleList.size() == 1){
+				StringBuilder topBuilder = new StringBuilder();
+				topBuilder.append("<div class='row-fluid'>");
+				topBuilder.append(articleList.get(0).getContent());
+				topBuilder.append("</div>");
+				req.setAttribute("article", topBuilder.toString());
+				return;
+			}
+			
 			StringBuilder articleBuilder = new StringBuilder();
 			articleBuilder.append("<div class='row-fluid'>");
 			int flag = 0;
-
 			//找到top置顶文章
 			Article top = artilceService.top(articleTypeId);
-            
 			for(Article article: articleList){
-				if(top != null && !article.getId().equals(top.getId())){
+				if(top == null || !article.getId().equals(top.getId())){
 					articleBuilder.append("<div class='span4 bs-docs-example'>");
 					articleBuilder.append("<h2>" + article.getTitle() + "</h2>");
 					String summary = article.getSummary();
 					articleBuilder.append("<p>" + summary + "</p>");
-					articleBuilder.append("<p><a class='btn' target='_blank' href='" + super.getBaseURL(req) + "/article/detail.do?id=" + article.getId() +  "'>查看详情</a></p>");
+					articleBuilder.append("<p><a class='btn' href='" + 
+					    super.getBaseURL(req) + "/article/front/detail.do?navIndex=" +navIndex + ""
+					    		+ "&index=" + articleTypeIndex + "&id=" + article.getId() +  "'>查看详情</a></p>");
 					articleBuilder.append("</div>");
 					flag++;
 					if(flag % 3 == 0 && flag - 1 != articleList.size()){	
@@ -160,16 +229,18 @@ public class ArticleListFrontController extends BaseController {
 					}
 				}
 			}
+			
 			articleBuilder.append("</div>");
-
+			
 			if(top != null){
 				StringBuilder topBuilder = new StringBuilder();
 				topBuilder.append("<div class='row-fluid'>");
-				topBuilder.append("<h3>"+top.getTitle()+"</h3>");
 				topBuilder.append(top.getContent());
 				topBuilder.append("</div>");
 				articleBuilder.insert(0, topBuilder.toString());
 			}
+			
+			
 			req.setAttribute("article", articleBuilder.toString());
 		}
 	}

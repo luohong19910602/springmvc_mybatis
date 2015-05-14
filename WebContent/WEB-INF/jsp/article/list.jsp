@@ -84,32 +84,22 @@
 							columns : [ {
 								display : 'title',
 								name : 'title',
-								width : 100,
+								width : 200,
 								align: 'left',
 								render:function(obj){
-									return "<a target=_blank href=${baseURL}/article/detail.do?id=" + obj.id + ">" + obj.title+ "</a>";
-								}
-							}, 
-							{
-								display : '访问url',
-								name : 'id',
-								width : 300,
-								align: 'left',
-								render:function(obj){
-									return "<a target=_blank href=${baseURL}/article/detail.do?id=" + obj.id + ">${baseURL}/article/detail.do?id=" + obj.id + "</a>";
+									return "<a target=_blank href=${baseURL}/article/front/detail.do?navIndex=0&index=0&id=" + obj.id + ">" + obj.title+ "</a>";
 								}
 							}, 
 							{
 								display : '简介',
 								name : 'summary',
-								width : 300,
+								width : 400,
 								align:"left"
 							},
-							
 							{
 								display : '是否置顶',
 								name : 'top',
-								width : 50,
+								width : 100,
 								align:"center",
 								render:function(obj){
 									if(obj.top == 1){
@@ -160,6 +150,12 @@
 											click : topArticle,
 											icon : 'add'
 										},
+										{
+											text : "取消置顶",
+											click : cancelTopArticle,
+											icon : 'add'
+										},
+										
 										{
 											line : true
 										},
@@ -266,6 +262,44 @@
 				return;
 			}
 			window.open("${baseURL}/article/detail.do?id=" + id, "hello", false);
+		}
+		
+		function cancelTopArticle(){
+			var selectedRows = grid.getSelectedRows();
+			var ids = "";
+			var articleTypeIds = "";
+			for ( var row in selectedRows) {
+				ids += "," + selectedRows[row].id;
+				articleTypeIds += "," + selectedRows[row].typeId;
+			}
+			var id = ids.substring(1, ids.length);
+			var articleTypeId = articleTypeIds.substring(1, ids.length);
+			
+			if(id.indexOf(",") != -1){
+				alert("不能同时取消置顶多个文章");
+				return;
+			}
+			
+			if(!id || id.length==0){
+				alert("请选择要取消置顶的文章");
+				return;
+			}
+			
+			$.ajax({
+				type : "POST",
+				url : "${baseURL}/article/cancelTop.do?articleTypeId="+ articleTypeId +"&id=" + id,
+				error : function(request) {
+					alert("error");
+				},
+				success : function(data) {
+					grid.reload(); //reload grid data
+					$.ligerDialog.tip( //show delete success tip
+					{
+						title : '提示信息',
+						content : '取消置顶成功'
+					});
+				}
+			});
 		}
 		
 		function topArticle() {

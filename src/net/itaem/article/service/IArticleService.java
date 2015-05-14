@@ -32,4 +32,6 @@ public interface IArticleService {
 	 * 将文章设置为置顶文章
 	 * */
 	public void setTop(ArticleAndType articleAndType);
+
+	public void cancelTop(ArticleAndType aat);
 }

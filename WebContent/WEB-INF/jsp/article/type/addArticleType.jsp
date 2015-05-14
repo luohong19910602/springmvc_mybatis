@@ -135,6 +135,15 @@
 				<td align="left"></td>
 
 			</tr>
+			
+			<tr>
+				<td align="right" class="l-table-edit-td">排序值:</td>
+				<td align="left" class="l-table-edit-td">
+				<input name="sortFlag" value="${max }"
+					type="text" id="sortFlag" ltype="text" />
+				<td align="left"></td>
+
+			</tr>
 
 			<tr>
 				<td align="right" class="l-table-edit-td">desc:</td>

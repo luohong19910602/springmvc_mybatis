@@ -39,4 +39,6 @@ public interface IArticleDao {
 	public Article top(String articleTypeId);
 	
 	public void setTop(ArticleAndType articleAndType);
+	
+	public void cancelTop(ArticleAndType articleAndType);
 }

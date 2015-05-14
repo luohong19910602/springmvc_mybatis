@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Repository;
 
 import net.itaem.article.dao.IArticleTypeDao;
+import net.itaem.article.entity.ArticleAndTypeMapper;
 import net.itaem.article.entity.ArticleMapper;
 import net.itaem.article.entity.ArticleType;
 import net.itaem.article.entity.ArticleTypeMapper;
@@ -21,6 +22,8 @@ public class ArticleTypeDaoImpl implements IArticleTypeDao {
 	private ArticleTypeMapper articleTypeMapper;
 	@Resource(name = "articleMapper")
 	private ArticleMapper articleMapper;
+	@Resource(name = "articleAndTypeMapper")
+	private ArticleAndTypeMapper articleAndTypeMapper;
 	
 
 	@Override
@@ -33,11 +36,11 @@ public class ArticleTypeDaoImpl implements IArticleTypeDao {
 		articleTypeMapper.add(articleType);
 	}
 
-	
 	@Override
 	public void delete(String[] ids) {
 		for(String id: ids){
 			articleTypeMapper.delete(id);
+			articleAndTypeMapper.deleteByArticleTypeId(id);
 			articleMapper.deleteByTypeId(id);
 		}
 	}
@@ -53,8 +56,18 @@ public class ArticleTypeDaoImpl implements IArticleTypeDao {
 	}
 
 	@Override
-	public ArticleType findById(String type) {
-		return articleTypeMapper.findBy(type);
+	public ArticleType findById(String id) {
+		return articleTypeMapper.findBy(id);
+	}
+
+	@Override
+	public List<ArticleType> listByArticleId(String articleId) {
+		return articleTypeMapper.listByArticleId(articleId);
+	}
+
+	@Override
+	public int maxSortFlag() {
+		return articleTypeMapper.maxSortFlag();
 	}
 
 }

@@ -62,4 +62,9 @@ public class ArticleServiceImpl implements IArticleService {
 	public void setTop(ArticleAndType articleAndType) {
 		articleDao.setTop(articleAndType);
 	}
+
+	@Override
+	public void cancelTop(ArticleAndType aat) {
+		articleDao.cancelTop(aat);
+	}
 }

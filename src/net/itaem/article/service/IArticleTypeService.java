@@ -16,5 +16,11 @@ public interface IArticleTypeService {
 	
 	public List<ArticleType> listByUserId(String userId);
 
-	public ArticleType findById(String type);
+	public List<ArticleType> listByArticleId(String articleId);
+
+	public ArticleType findById(String id);
+
+	public int maxSortFlag();
+	
+	
 }

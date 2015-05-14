@@ -90,7 +90,7 @@
 								width: 200,
 								name : 'desc'
 							}, {
-								display : '排序',
+								display : '排序(值越大，优先级越小)',
 								width: 200,
 								name : 'sortFlag'
 							}

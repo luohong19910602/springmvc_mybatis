@@ -47,22 +47,29 @@ public class ArticleListController extends BaseController {
 
 	/**
 	 * 获取全部文章
+	 * 这里面会按照文章类别来展示数据，并且同时计算出没有不属于任何文章类别的文章集合，最
+	 * 后加入为之类别中，这部分数据也需要展示
 	 * @throws IOException 
 	 * */
 	@RequestMapping("/article/listJson.do")
 	public void listJson(HttpServletResponse resp) throws IOException{
 		//列出全部的文章列表
+		List<Article> allArticleList = articleService.listAll();
+		//属于某个文章分类的文章列表
+		List<Article> articleHasType = new ArrayList<Article>();
+
 		List<ArticleType> articleTypeList = articleTypeService.listAll(); 
 		JSONObject result = new JSONObject();
 
 		if(articleTypeList != null && articleTypeList.size() > 0){
 			JSONArray jsonArray = new JSONArray();
-			List<Article> articleList = new ArrayList<Article>();  //汇聚全部文章
-
 			for(ArticleType articleType: articleTypeList){
 				List<Article> temp = articleService.listBy(articleType.getId());
 				Article top = articleService.top(articleType.getId());
-                System.out.println("the top is " + top);
+
+				//统计已经属于某个文章分类的全部文章
+				articleHasType.addAll(temp);
+
 				if(temp != null && temp.size() > 0){
 					for(Article art: temp){
 						if(top == null || !top.getId().equals(art.getId())){
@@ -71,7 +78,7 @@ public class ArticleListController extends BaseController {
 							json.put("id", art.getId());
 							json.put("title", art.getTitle());
 							json.put("summary", art.getSummary());
-                            json.put("top", 0);
+							json.put("top", 0);
 							json.put("typeName", articleType.getName());
 							jsonArray.add(json);
 						}else{
@@ -80,12 +87,25 @@ public class ArticleListController extends BaseController {
 							json.put("id", art.getId());
 							json.put("title", art.getTitle());
 							json.put("summary", art.getSummary());
-                            json.put("top", 1);
+							json.put("top", 1);
 							json.put("typeName", articleType.getName());
 							jsonArray.add(json);
 						}
 					}
-					articleList.addAll(temp);
+				}
+			}
+
+			allArticleList.removeAll(articleHasType);
+			if(allArticleList != null && allArticleList.size() > 0){
+				for(Article art: allArticleList){
+					JSONObject json = new JSONObject();
+					json.put("typeId", "");
+					json.put("id", art.getId());
+					json.put("title", art.getTitle());
+					json.put("summary", art.getSummary());
+					json.put("top", 0);
+					json.put("typeName", "未知类别");
+					jsonArray.add(json);
 				}
 			}
 			result.put("Rows", jsonArray);

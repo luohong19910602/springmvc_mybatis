@@ -127,16 +127,25 @@
 			<tr>
 				<td align="right" class="l-table-edit-td">名字:</td>
 				<td align="left" class="l-table-edit-td"><input name="name"
-					type="text" id="name" ltype="text" />
+					type="text" id="name" value="${articleType.name }" ltype="text" />
 				<td align="left"></td>
-				<input value="${id }" name="id" type="hidden" id="id" ltype="text" />
+				<input value="${articleType.id }" name="id" type="hidden" id="id">
 			</tr> 
+			
+			<tr>
+				<td align="right" class="l-table-edit-td">排序值:</td>
+				<td align="left" class="l-table-edit-td">
+				<input name="sortFlag" value="${articleType.sortFlag }"
+					type="text" id="sortFlag" ltype="text" />
+				<td align="left"></td>
+			</tr>
+			
 
 			<tr>
 				<td align="right" class="l-table-edit-td">desc:</td>
 				<td align="left" class="l-table-edit-td"><textarea cols="100"
 						rows="4" class="l-textarea" id="desc" name="desc"
-						style="width: 400px" validate="{required:true}"></textarea></td>
+						style="width: 400px">${articleType.desc}</textarea></td>
 				<td align="left"></td>
 			</tr>
 		</table>

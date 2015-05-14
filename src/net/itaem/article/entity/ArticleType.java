@@ -11,11 +11,20 @@ import net.itaem.base.entity.BaseEntity;
  * @author luohong 846705189@qq.com 2015-02-01
  * 
  * */
-public class ArticleType extends BaseEntity {
+public class ArticleType extends BaseEntity implements Comparable<ArticleType>{
     
 	private String userId;
 	private String name;
 	private String desc;
+	private int sortFlag;
+	
+	public int getSortFlag() {
+		return sortFlag;
+	}
+	public void setSortFlag(int sortFlag) {
+		this.sortFlag = sortFlag;
+	}
+
 	private List<Article> articleList;
 	private List<ArticleAndType> articleAndTypeList;
 	
@@ -53,5 +62,9 @@ public class ArticleType extends BaseEntity {
 	@Override
 	public String toString(){
 		return ToStringBuilder.reflectionToString(this);
+	}
+	@Override
+	public int compareTo(ArticleType o) {
+		return this.getSortFlag() - o.getSortFlag();
 	}
 }

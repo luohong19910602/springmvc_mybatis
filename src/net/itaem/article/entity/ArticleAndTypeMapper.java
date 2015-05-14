@@ -1,6 +1,7 @@
 package net.itaem.article.entity;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
@@ -37,7 +38,13 @@ public interface ArticleAndTypeMapper {
 	@Insert("insert into sys_article_article_type(id,article_id,article_type_id)"
 			+ " values(#{id},#{articleId}, #{articleTypeId})")
 	void add(ArticleAndType articleAndType);
-
+	
+	@Delete("delete from sys_article_article_type where article_id=#{articleId}")
+    void deleteByArticleId(String articleId);
+	
+	@Delete("delete from sys_article_article_type where article_type_id=#{articleTypeId}")
+	void deleteByArticleTypeId(String articleTypeId);
+	
 	@Update("update sys_article_article_type set article_top=1 where article_id=#{articleId} and article_type_id=#{articleTypeId}")
 	void setTop(ArticleAndType articleAndType);
 	

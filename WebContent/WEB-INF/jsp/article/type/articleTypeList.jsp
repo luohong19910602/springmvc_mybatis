@@ -85,7 +85,14 @@
 								name : 'name',
 								width : 200,
 								align: 'left'
-							}, {
+							}, 
+							{
+								display : '排序值(值越小，优先级越大)',
+								name : 'sortFlag',
+								width : 200,
+								align: 'left'
+							},
+							{
 								display : '备注',
 								width: 200,
 								name : 'desc'

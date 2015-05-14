@@ -19,5 +19,9 @@ public interface IArticleTypeDao {
 	
 	public List<ArticleType> listByUserId(String userId);
 
-	public ArticleType findById(String type);
+	public ArticleType findById(String id);
+
+	public List<ArticleType> listByArticleId(String articleId);
+
+	public int maxSortFlag();
 }

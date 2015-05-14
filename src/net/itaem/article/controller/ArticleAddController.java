@@ -91,9 +91,11 @@ public class ArticleAddController extends BaseController {
 		req.getRequestDispatcher("/kindeditor/jsp/index.jsp").forward(req, resp);
 	}
 
-
+	/**
+	 * 添加成功，重定向到该文章详情界面
+	 * */
 	@RequestMapping("/article/addSubmit.do")
-	public String addSubmit(HttpServletRequest req, HttpServletResponse resp, Article article) throws ServletException, IOException{
+	public void addSubmit(HttpServletRequest req, HttpServletResponse resp, Article article) throws ServletException, IOException{
 		User user = super.getLoginUser(req);
 
 		article.setUserId(user.getId());
@@ -119,8 +121,7 @@ public class ArticleAddController extends BaseController {
 		req.setAttribute("content", article.getContent());
 		req.setAttribute("title", article.getTitle());
 
-		return "article/detail";
-
+		resp.sendRedirect(super.getBaseURL(req) + "/article/front/detail.do?id=" + article.getId());
 	}
 
 	/**

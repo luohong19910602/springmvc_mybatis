@@ -41,7 +41,17 @@ public class ArticleTypeServiceImpl implements IArticleTypeService{
 	}
 
 	@Override
-	public ArticleType findById(String type) {
-		return articleTypeDao.findById(type);
+	public ArticleType findById(String id) {
+		return articleTypeDao.findById(id);
+	}
+
+	@Override
+	public List<ArticleType> listByArticleId(String articleId) {
+		return articleTypeDao.listByArticleId(articleId);
+	}
+
+	@Override
+	public int maxSortFlag() {
+		return articleTypeDao.maxSortFlag();
 	}
 }

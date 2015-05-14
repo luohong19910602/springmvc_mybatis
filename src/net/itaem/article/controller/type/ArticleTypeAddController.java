@@ -29,7 +29,9 @@ public class ArticleTypeAddController extends BaseController {
 	private IArticleTypeService articleTypeService;
 	
 	@RequestMapping("/articleType/add.do")
-	public String addArticleType(){
+	public String addArticleType(HttpServletRequest req){
+		int max = articleTypeService.maxSortFlag();
+		req.setAttribute("max", max + 1);
 		return "article/type/addArticleType";
 	}
 	
