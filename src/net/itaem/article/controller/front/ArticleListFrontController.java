@@ -14,6 +14,8 @@ import net.itaem.article.entity.ArticleType;
 import net.itaem.article.service.IArticleService;
 import net.itaem.article.service.IArticleTypeService;
 import net.itaem.base.controller.BaseController;
+import net.itaem.slide.entity.Slide;
+import net.itaem.slide.service.ISlideService;
 import net.itaem.web.entity.Navigation;
 import net.itaem.web.service.INavigationService;
 
@@ -39,6 +41,9 @@ public class ArticleListFrontController extends BaseController {
 
 	@Autowired
 	private INavigationService navService;
+	
+	@Autowired
+	private ISlideService slideService;
 
 
 	/**
@@ -52,7 +57,7 @@ public class ArticleListFrontController extends BaseController {
 	@RequestMapping("/article/front/index.do")
 	public void index(Integer index, Integer navIndex, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		List<Navigation> navList = setNavigation(navIndex, req);
-
+        setSlide(req);
 		if(index == null) index = 0;
 		if(navIndex == null) navIndex = 0;
 		String typeListStr = navList.get(navIndex).getArticleTypeListStr();
@@ -73,7 +78,7 @@ public class ArticleListFrontController extends BaseController {
 	public void detail(String id, Integer index, Integer navIndex, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		//设置导航
 		List<Navigation> navList = setNavigation(navIndex, req);
-
+		setSlide(req);
 		//设置文章类别
 		if(index == null) index = 0;
 		if(navIndex == null) navIndex = 0;
@@ -118,6 +123,7 @@ public class ArticleListFrontController extends BaseController {
 	@RequestMapping("/navigation.do")
 	public void navigation(Integer navIndex, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		List<Navigation> navList = setNavigation(navIndex, req);
+		setSlide(req);
 		if(navIndex == null)
 			navIndex = 0;
 		String typeListStr = navList.get(navIndex).getArticleTypeListStr();
@@ -243,6 +249,52 @@ public class ArticleListFrontController extends BaseController {
 			
 			req.setAttribute("article", articleBuilder.toString());
 		}
+	}
+	
+	/**
+	 * 设置slide
+	 * */
+	private void setSlide(HttpServletRequest req){
+	    List<Slide> slideList = slideService.listAll();
+	    if(slideList != null && slideList.size() > 0){
+	    	StringBuilder slideBuilder = new StringBuilder();
+	    	slideBuilder.append("<ol class='carousel-indicators'>");
+	    	
+	    	for(int i=0; i<slideList.size(); i++){
+	    		if(i == 0)
+	    		    slideBuilder.append("<li class='active' data-slide-to='0' data-target='#carousel-193625'></li>");
+	    		else{
+	    			slideBuilder.append("<li data-slide-to='" + i + "' data-target='#carousel-193625'></li>");
+	    		}
+	    	}
+	    	slideBuilder.append("</ol>");
+	    	
+	    	
+	    	slideBuilder.append("<div class='carousel-inner'>");
+	    	
+	    	for(int i=0; i<slideList.size(); i++){
+	    		if(i == 0){
+	    			slideBuilder.append("<div class='item active'>");
+	    			slideBuilder.append("<img src='"+slideList.get(0).getImgUrl()+"' />");
+	    			slideBuilder.append("<div class='carousel-caption'>");
+	    			slideBuilder.append("<h4>" + slideList.get(0).getTitle() + "</h4>");
+	    			slideBuilder.append("<p>"+slideList.get(0).getDesc()+"</p>");
+	    			slideBuilder.append("</div>");
+	    			slideBuilder.append("</div>");
+	    		}else{
+	    			slideBuilder.append("<div class='item'>");
+	    			slideBuilder.append("<img src='"+slideList.get(i).getImgUrl()+"' />");
+	    			slideBuilder.append("<div class='carousel-caption'>");
+	    			slideBuilder.append("<h4>" + slideList.get(i).getTitle() + "</h4>");
+	    			slideBuilder.append("<p>"+slideList.get(i).getDesc()+"</p>");
+	    			slideBuilder.append("</div>");
+	    			slideBuilder.append("</div>");
+	    		}
+	    	}
+	    	slideBuilder.append("</div>");
+	    	System.out.println(slideBuilder.toString());
+	    	req.setAttribute("slide", slideBuilder.toString());
+	    }
 	}
 
 }

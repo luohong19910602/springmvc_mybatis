@@ -7,6 +7,7 @@ import net.itaem.article.entity.ArticleType;
 import net.itaem.menu.entity.Menu;
 import net.itaem.privilege.entity.Privilege;
 import net.itaem.role.entity.Role;
+import net.itaem.slide.entity.Slide;
 import net.itaem.user.entity.User;
 import net.itaem.web.entity.Navigation;
 
@@ -103,5 +104,7 @@ public interface IToGridJson {
 	public String articleListToGrid(List<Article> articleList);
 	
 	public String navigationListToGrid(List<Navigation> navList);
+	
+	public String slideListToGrid(List<Slide> slideList);
 	
 }

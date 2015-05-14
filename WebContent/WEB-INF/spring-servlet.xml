@@ -19,10 +19,6 @@
 	<mvc:annotation-driven />
 
 	<mvc:interceptors>
-		
-		<!-- 
-		<bean class="net.itaem.base.interceptor.CheckRequestPermission"></bean>
-		 -->
 		<!-- 定义一个Interceptor，验证用户权限 -->
 		<mvc:interceptor>
 			<!-- 需要拦截的url -->
@@ -36,10 +32,16 @@
 			<mvc:mapping path="/index.do" />
 			
 			<!-- 不需要拦截的url -->
+		    <!-- 登录与退出 -->
 		    <mvc:exclude-mapping path="/user/login.do"/>
 		    <mvc:exclude-mapping path="/user/logout.do"/>
 		    <mvc:exclude-mapping path="/random.jsp"/>
 		    <mvc:exclude-mapping path="/info.jsp"/>
+		    <!-- 导航 -->
+		    <mvc:exclude-mapping path="/navigation.do"/>
+		    <!-- 前台请求 -->
+		    <mvc:exclude-mapping path="/article/front/*.do"/>
+		    <!-- 安装 -->
 		    <mvc:exclude-mapping path="/install.do"/>
 		    <mvc:exclude-mapping path="/installSubmit.do"/>
 		    

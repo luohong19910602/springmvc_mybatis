@@ -114,7 +114,7 @@ while (itr.hasNext()) {
 		obj.put("error", 0);
 		
 		System.out.println("url is " + saveUrl + newFileName);
-		obj.put("url", saveUrl + newFileName);
+		obj.put("imgUrl", saveUrl + newFileName);
 		out.println(obj.toJSONString());
 	}
 }

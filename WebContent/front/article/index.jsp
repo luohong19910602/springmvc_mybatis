@@ -13,11 +13,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- 
 <title>Bootstrap 101 Template</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="${baseURL }/boostrap/css/bootstrap.min.css" rel="stylesheet"
 	media="screen">
-
 <link href="${baseURL }/boostrap/css/content.min.css" rel="stylesheet"
 	media="screen">
 <link href="${baseURL }/boostrap/css/docs.css" rel="stylesheet"
@@ -27,7 +27,7 @@
 <link
 	href="http://cdn.bootcss.com/font-awesome/4.2.0/css/font-awesome.min.css"
 	rel="stylesheet">
-<link href="http://static.bootcss.com/www/assets/css/site.min.css?v5"
+<link href="${baseURL }/boostrap/css/site.min.css"
 	rel="stylesheet">
 
 <style>
@@ -50,7 +50,6 @@ body {
 }
 </style>
 
-
 <script src="${baseURL }/boostrap/js/jquery.js"></script>
 <script src="${baseURL }/boostrap/js/bootstrap.min.js"></script>
 <script>
@@ -61,6 +60,49 @@ body {
 		});
 	});
 </script>
+ -->
+<title>Bootstrap 101 Template</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="${baseURL }/boostrap/css/bootstrap.min.css" rel="stylesheet"
+	media="screen">
+<link href="${baseURL }/boostrap/css/content.min.css" rel="stylesheet"
+	media="screen">
+<style>
+body {
+	padding-top: 60px;
+	padding-bottom: 40px;
+}
+
+.sidebar-nav {
+	padding: 9px 0;
+}
+
+@media ( max-width : 980px) {
+	/* Enable use of floated navbar text */
+	.navbar-text.pull-right {
+		float: none;
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+}
+</style>
+<link href="${baseURL }/boostrap/css/bootstrap-responsive.css"
+	rel="stylesheet" media="screen">
+<link href="${baseURL }/boostrap/css/docs.css" rel="stylesheet"
+	media="screen">
+<script src="${baseURL }/boostrap/js/jquery.js"></script>
+<script src="${baseURL }/boostrap/js/bootstrap.min.js"></script>
+
+<script>
+	    $(document).ready(function(){
+            $("#navigation li").click(
+			    function(){
+				    $(this).siblings().removeClass("active");
+					$(this).addClass("active");
+				}
+			);
+        });
+	</script>
 </head>
 
 <body>
@@ -74,56 +116,20 @@ body {
 				</button>
 				<a class="brand" href="#">Project name</a>
 				<div class="nav-collapse collapse">
-					<ul class="nav">${nav}
-					</ul>
+					<ul class="nav">${nav}</ul>
 				</div>
 			</div>
 		</div>
 	</div>
 
-
-
 	<div class="container-fluid">
 		<div class="row-fluid">
-			<div class="span12">
-				<div class="carousel slide" id="carousel-704339">
-					<ol class="carousel-indicators">
-						<li class="active" data-slide-to="0"
-							data-target="#carousel-704339"></li>
-						<li data-slide-to="1" data-target="#carousel-704339"></li>
-						<li data-slide-to="2" data-target="#carousel-704339"></li>
-					</ol>
-					<div class="carousel-inner">
-						<div class="item active">
-							<img alt="" src="http://www.bootcss.com/p/layoutit/img/1.jpg" />
-							<div class="carousel-caption">
-								<h4>棒球</h4>
-								<p>棒球运动是一种以棒打球为主要特点，集体性、对抗性很强的球类运动项目，在美国、日本尤为盛行。</p>
-							</div>
-						</div>
-						<div class="item">
-							<img alt="" src="http://www.bootcss.com/p/layoutit/img/2.jpg" />
-							<div class="carousel-caption">
-								<h4>冲浪</h4>
-								<p>
-									冲浪是以海浪为动力，利用自身的高超技巧和平衡能力，搏击海浪的一项运动。运动员站立在冲浪板上，或利用腹板、跪板、充气的橡皮垫、划艇、皮艇等驾驭海浪的一项水上运动。
-								</p>
-							</div>
-						</div>
-						<div class="item">
-							<img alt="" src="http://www.bootcss.com/p/layoutit/img/3.jpg" />
-							<div class="carousel-caption">
-								<h4>自行车</h4>
-								<p>
-									以自行车为工具比赛骑行速度的体育运动。1896年第一届奥林匹克运动会上被列为正式比赛项目。环法赛为最著名的世界自行车锦标赛。
-								</p>
-							</div>
-						</div>
-					</div>
-					<a data-slide="prev" href="#carousel-704339"
-						class="left carousel-control">‹</a> <a data-slide="next"
-						href="#carousel-704339" class="right carousel-control">›</a>
-				</div>
+			<div class="carousel slide" id="carousel-193625">
+				${slide } 
+				<a class="left carousel-control" data-slide="prev"
+					href="#carousel-193625">&lsaquo;</a> <a
+					class="right carousel-control" data-slide="next"
+					href="#carousel-193625">&rsaquo;</a>
 			</div>
 		</div>
 	</div>
@@ -135,10 +141,8 @@ body {
 					<ul id="navigation" class="nav nav-list">${type }</ul>
 				</div>
 			</div>
-			
-			<div class="span9">
-			    ${article }
-			</div>
+
+			<div class="span9">${article }</div>
 		</div>
 	</div>
 

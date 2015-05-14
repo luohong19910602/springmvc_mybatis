@@ -7,6 +7,7 @@ import net.itaem.article.entity.ArticleType;
 import net.itaem.menu.entity.Menu;
 import net.itaem.privilege.entity.Privilege;
 import net.itaem.role.entity.Role;
+import net.itaem.slide.entity.Slide;
 import net.itaem.user.entity.User;
 import net.itaem.view.IToGridJson;
 import net.itaem.web.entity.Navigation;
@@ -267,6 +268,26 @@ public class LigerUiToGridJson implements IToGridJson {
 		json.put("desc", nav.getDesc());
 		json.put("sortFlag", nav.getSortFlag());
 		
+		return json.toString();
+	}
+
+	@Override
+	public String slideListToGrid(List<Slide> slideList) {
+		JSONObject result = new JSONObject();
+		JSONArray json = new JSONArray();
+		for(Slide slide: slideList){
+			json.add(slideToGrid(slide));
+		}
+		result.put("Rows", json);
+		return result.toString();
+	}
+
+	private String slideToGrid(Slide slide) {
+		JSONObject json = new JSONObject();
+		json.put("id", slide.getId());
+		json.put("title", slide.getTitle());
+		json.put("imgUrl", slide.getImgUrl());	
+		json.put("desc", slide.getDesc());
 		return json.toString();
 	}
 }
