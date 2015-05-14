@@ -2,12 +2,13 @@ package net.itaem.article.service.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import net.itaem.article.dao.IArticleDao;
 import net.itaem.article.entity.Article;
+import net.itaem.article.entity.ArticleAndType;
 import net.itaem.article.service.IArticleService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class ArticleServiceImpl implements IArticleService {
@@ -50,5 +51,15 @@ public class ArticleServiceImpl implements IArticleService {
 	@Override
 	public void update(Article article) {
 		articleDao.update(article);
+	}
+
+	@Override
+	public Article top(String articleTypeId) {
+	    return articleDao.top(articleTypeId);	
+	}
+
+	@Override
+	public void setTop(ArticleAndType articleAndType) {
+		articleDao.setTop(articleAndType);
 	}
 }

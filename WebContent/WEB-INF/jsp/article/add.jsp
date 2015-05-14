@@ -100,16 +100,14 @@ KindEditor.ready(function(K) {
 
 			<p class="subtit">文章简要介绍</p>
 			<div class="section">
-				<textarea cols="120" rows="5" id="summary" name="summary">
-					</textarea>
+				<textarea cols="120" rows="5" id="summary" name="summary"></textarea>
 			</div>
 
 			<p class="subtit">文章内容</p>
 
 			<div class="section">
 				<textarea name="content" cols="150" rows="50"
-					style="width: 900px; height: 600px; visibility: hidden;">
-		        </textarea>
+					style="width: 900px; height: 600px; visibility: hidden;"></textarea>
 			</div>
 
 			<div id="moreDiv">

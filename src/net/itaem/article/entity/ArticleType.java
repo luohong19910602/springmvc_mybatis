@@ -17,8 +17,14 @@ public class ArticleType extends BaseEntity {
 	private String name;
 	private String desc;
 	private List<Article> articleList;
+	private List<ArticleAndType> articleAndTypeList;
 	
-	
+	public List<ArticleAndType> getArticleAndTypeList() {
+		return articleAndTypeList;
+	}
+	public void setArticleAndTypeList(List<ArticleAndType> articleAndTypeList) {
+		this.articleAndTypeList = articleAndTypeList;
+	}
 	public String getUserId() {
 		return userId;
 	}

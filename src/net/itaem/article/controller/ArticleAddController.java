@@ -1,6 +1,7 @@
 package net.itaem.article.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.itaem.article.entity.Article;
+import net.itaem.article.entity.ArticleAndType;
 import net.itaem.article.entity.ArticleType;
 import net.itaem.article.service.IArticleService;
 import net.itaem.article.service.IArticleTypeService;
@@ -32,7 +34,7 @@ public class ArticleAddController extends BaseController {
 	IArticleService articleService;
 	@Autowired
 	IArticleTypeService articleTypeService;
-	
+
 	/**
 	 * 跳转到添加文章界面
 	 * */
@@ -43,7 +45,7 @@ public class ArticleAddController extends BaseController {
 		int i=0;
 		sb.append("<tr>");
 		for(ArticleType type: articleTypeList){
-			String str = "<td><input id='hk_tag_' name='typeId' type='radio' value='"+type.getId()+"'>"
+			String str = "<td><input id='hk_tag_' name='typeId' type='checkbox' value='"+type.getId()+"'>"
 					+ "<label for='chk_tag_'>"+type.getName()+"</label></td>";
 			sb.append(str);
 			i++;
@@ -55,10 +57,10 @@ public class ArticleAddController extends BaseController {
 		sb.append("</tr>");
 		req.setAttribute("typeList", sb.toString());
 		System.out.println(sb.toString());
-	
+
 		return "article/add";
 	}
-	
+
 	/**
 	 * 移动端列出用户的日志类别
 	 * */
@@ -71,12 +73,11 @@ public class ArticleAddController extends BaseController {
 		}
 		String userId = super.getLoginUser(req).getId();
 		List<ArticleType> articleTypeList = articleTypeService.listByUserId(userId);
-		System.out.println(articleTypeList);
 		StringBuilder sb = new StringBuilder();
 		int i=0;
 		sb.append("<tr>");
 		for(ArticleType type: articleTypeList){
-			String str = "<td><input id='hk_tag_' name='typeId' type='radio' value='"+type.getId()+"'>"
+			String str = "<td><input id='hk_tag_' name='typeId' type='checkbox' value='"+type.getId()+"'>"
 					+ "<label for='chk_tag_'>"+type.getName()+"</label></td>";
 			sb.append(str);
 			i++;
@@ -87,43 +88,56 @@ public class ArticleAddController extends BaseController {
 		}
 		sb.append("</tr>");
 		req.setAttribute("typeList", sb.toString());
-		System.out.println(sb.toString());
 		req.getRequestDispatcher("/kindeditor/jsp/index.jsp").forward(req, resp);
 	}
-	
-	
+
+
 	@RequestMapping("/article/addSubmit.do")
 	public String addSubmit(HttpServletRequest req, HttpServletResponse resp, Article article) throws ServletException, IOException{
 		User user = super.getLoginUser(req);
+
 		article.setUserId(user.getId());
 		article.setId(UUIDUtil.uuid());
 		String name = super.getLoginUserName(req, null);
 		article.setCreator(name);
 		article.setCreatedTime(DateUtil.getNowDate(null));
-		articleService.add(article);
+
+		//设置多对多关系
+		List<ArticleAndType> aatList = new ArrayList<ArticleAndType>();
+		String[] types = req.getParameterValues("typeId");
 		
+		if(types != null){
+			for(String type: types){
+				aatList.add(new ArticleAndType(UUIDUtil.uuid(), article.getId(), type));
+			}
+			article.setArticleAndTypeList(aatList);
+		}
+
+		System.out.println("-->" + article.getArticleAndTypeList());
+		articleService.add(article);
+
 		req.setAttribute("content", article.getContent());
 		req.setAttribute("title", article.getTitle());
-		
+
 		return "article/detail";
-		
+
 	}
-	
+
 	/**
 	 * 
 	 * */
 	@RequestMapping("/article/addSubmitByAndroid.do")
 	public void addSubmitByAndroid(HttpServletRequest req, HttpServletResponse resp, Article article) throws ServletException, IOException{
-		
+
 		article.setId(UUIDUtil.uuid());
-		
+
 		article.setCreatedTime(DateUtil.getNowDate(null));
-		
+
 		articleService.add(article);
 		JSONObject json = new JSONObject();
 		json.put("status", "success");
 		json.put("id", article.getId());
-		
+
 		println(resp, json.toString());
 	}
 }

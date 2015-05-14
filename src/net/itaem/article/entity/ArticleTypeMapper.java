@@ -72,4 +72,20 @@ public interface ArticleTypeMapper {
 			@Result(property = "userId", column = "user_id")
 	})
 	List<ArticleType> listByUserId(String userId);
+	
+	@Select(value = "select * from sys_article_type,sys_article_article_type "
+			+ "where sys_article_type.id=sys_article_article_type.article_type_id"
+			+ " and sys_article_article_type.article_id=#{articleTypeId}")  
+	@Results(value = { 
+			@Result(id = true, property = "id", column = "id"),  
+			@Result(property = "name", column = "article_type_name"),
+			@Result(property = "desc", column = "article_type_desc"),
+			@Result(property = "createdTime", column = "article_type_created_time"),
+			@Result(property = "creator", column = "article_type_creator"),
+			@Result(property = "updatedTime", column = "article_type_updated_time"),
+			@Result(property = "updator", column = "article_type_updator"),
+			@Result(property = "delFlag", column = "article_type_del_flag"),
+			@Result(property = "userId", column = "user_id")
+	})
+	List<ArticleType> listByArticleId(String articleId);
 } 

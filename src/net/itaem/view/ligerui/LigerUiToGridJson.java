@@ -9,6 +9,7 @@ import net.itaem.privilege.entity.Privilege;
 import net.itaem.role.entity.Role;
 import net.itaem.user.entity.User;
 import net.itaem.view.IToGridJson;
+import net.itaem.web.entity.Navigation;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -222,29 +223,49 @@ public class LigerUiToGridJson implements IToGridJson {
 	@Override
 	public String articleListToGrid(List<Article> articleList) {
 		JSONObject json = new JSONObject();
-
 		JSONArray children = new JSONArray();
-
 		for(Article article: articleList){
 			children.add(articleToGrid(article));
 		}
-
 		json.put("Rows", children);
-
 		return json.toString();
 	}
 
-	private Object articleToGrid(Article article) {
+	private String articleToGrid(Article article) {
 		JSONObject json = new JSONObject();
 
 		json.put("id", article.getId());
 		json.put("title", article.getTitle());
 		json.put("summary", article.getSummary());		
-		
-		if(article.getType() != null)
-			json.put("typeId", article.getType().getName());
+//		json.put("top", article.getTop());
+        
+		if(article.getArticleTypeList() != null && article.getArticleTypeList().size() > 0){
+//			json.put("typeId", article.getType().getName());
+			System.out.println("json" + article.getArticleAndTypeList());
+		}
 
 		return json.toString();
 	}
 
+	@Override
+	public String navigationListToGrid(List<Navigation> navList) {
+		JSONObject result = new JSONObject();
+		JSONArray json = new JSONArray();
+		for(Navigation nav: navList){
+			json.add(navigationToGrid(nav));
+		}
+		result.put("Rows", json);
+		return result.toString();
+	}
+    
+	private String navigationToGrid(Navigation nav){
+		JSONObject json = new JSONObject();
+
+		json.put("id", nav.getId());
+		json.put("name", nav.getName());
+		json.put("desc", nav.getDesc());
+		json.put("sortFlag", nav.getSortFlag());
+		
+		return json.toString();
+	}
 }

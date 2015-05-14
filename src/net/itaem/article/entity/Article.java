@@ -1,5 +1,7 @@
 package net.itaem.article.entity;
 
+import java.util.List;
+
 import net.itaem.base.entity.BaseEntity;
 
 /**
@@ -13,12 +15,32 @@ public class Article extends BaseEntity {
     private String content;  //文章内容
     private int viewCount;    //访问次数
     private int reference;  //转载次数
-    private ArticleType type;  //文章所属类别
-    private String typeId;  //文章类别
     private String userId;  //文章所属用户
     private String summary; //文章简介
     
+    private boolean isTop;
     
+    public boolean isTop() {
+		return isTop;
+	}
+	public void setTop(boolean isTop) {
+		this.isTop = isTop;
+	}
+	private List<ArticleType> articleTypeList;  //文章类别集合
+    private List<ArticleAndType> articleAndTypeList;  //中间表
+    
+	public List<ArticleAndType> getArticleAndTypeList() {
+		return articleAndTypeList;
+	}
+	public void setArticleAndTypeList(List<ArticleAndType> articleAndTypeList) {
+		this.articleAndTypeList = articleAndTypeList;
+	}
+	public List<ArticleType> getArticleTypeList() {
+		return articleTypeList;
+	}
+	public void setArticleTypeList(List<ArticleType> articleTypeList) {
+		this.articleTypeList = articleTypeList;
+	}
 	public String getSummary() {
 		return summary;
 	}
@@ -31,20 +53,6 @@ public class Article extends BaseEntity {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public ArticleType getType() {
-		return type;
-	}
-	public void setType(ArticleType type) {
-		this.type = type;
-	}
-	public String getTypeId() {
-		return typeId;
-	}
-	public void setTypeId(String typeId) {
-		this.typeId = typeId;
-	}
-	
-	
     public String getTitle() {
 		return title;
 	}
@@ -75,13 +83,5 @@ public class Article extends BaseEntity {
 	}
 	public void setReference(int reference) {
 		this.reference = reference;
-	}
-	
-	@Override
-	public String toString() {
-		return "Article [title=" + title + ", url=" + url + ", content="
-				+ content + ", viewCount=" + viewCount + ", reference="
-				+ reference + ", type=" + type + ", typeId=" + typeId
-				+ ", userId=" + userId + ", summary=" + summary + "]";
 	}
 }

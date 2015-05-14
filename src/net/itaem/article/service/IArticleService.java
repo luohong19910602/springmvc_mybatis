@@ -3,6 +3,7 @@ package net.itaem.article.service;
 import java.util.List;
 
 import net.itaem.article.entity.Article;
+import net.itaem.article.entity.ArticleAndType;
 
 public interface IArticleService {
 
@@ -24,4 +25,11 @@ public interface IArticleService {
 	public void update(Article article);
 	
 	public List<Article> findByUserId(String userId);
+
+	public Article top(String articleTypeId);
+
+	/**
+	 * 将文章设置为置顶文章
+	 * */
+	public void setTop(ArticleAndType articleAndType);
 }

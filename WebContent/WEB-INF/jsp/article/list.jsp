@@ -76,6 +76,7 @@
 <script type="text/javascript">
 	var grid = null;
 	
+	
 	$(function() {
 		grid = $("#maingrid")
 				.ligerGrid(
@@ -83,33 +84,54 @@
 							columns : [ {
 								display : 'title',
 								name : 'title',
-								width : 200,
+								width : 100,
 								align: 'left',
 								render:function(obj){
 									return "<a target=_blank href=${baseURL}/article/detail.do?id=" + obj.id + ">" + obj.title+ "</a>";
 								}
-							}, {
+							}, 
+							{
+								display : '访问url',
+								name : 'id',
+								width : 300,
+								align: 'left',
+								render:function(obj){
+									return "<a target=_blank href=${baseURL}/article/detail.do?id=" + obj.id + ">${baseURL}/article/detail.do?id=" + obj.id + "</a>";
+								}
+							}, 
+							{
 								display : '简介',
 								name : 'summary',
-								width : 400,
+								width : 300,
 								align:"left"
 							},
+							
 							{
-								display : 'type',
-								name : 'typeId',
-								width : 100,
-								align:"center"
+								display : '是否置顶',
+								name : 'top',
+								width : 50,
+								align:"center",
+								render:function(obj){
+									if(obj.top == 1){
+										return "<span style='color:red;font-weight:bold;'>是</a>";
+									}else{
+										return "否";
+									}
+								}
 							},
+							
 							{
 								display : '操作',
 								name : 'id',
 								width : 100,
 								align:"center",
 								render:function(obj){
-									return "<a target=_blank href=${baseURL}/article/edit.do?id=" + obj.id + ">" + "更新" + "</a>";
+									var result = "<a target=_blank href=${baseURL}/article/edit.do?id=" + obj.id + ">" + "更新" + "</a>";
+								    return result;
 								}
 							}
 							],
+							
 							dataAction : "server",
 							url : "${baseURL}/article/listJson.do",
 							height : "98%",
@@ -117,6 +139,7 @@
 							width : "98%",
 							rownumbers : true,
 							checkbox : true,
+							groupColumnName:'typeName',
 							autoCheckChildren: false,
 							tree: { 
 								columnName: 'name',
@@ -127,6 +150,14 @@
 								items : [
 										{
 											text : "<a href=${baseURL}/article/add.do target=blank'>添加文章</a>",
+											icon : 'add'
+										},
+										{
+											line : true
+										},
+										{
+											text : "置顶",
+											click : topArticle,
 											icon : 'add'
 										},
 										{
@@ -237,18 +268,42 @@
 			window.open("${baseURL}/article/detail.do?id=" + id, "hello", false);
 		}
 		
-		function updateArticle() {
-			var id = getSelectedRow();
+		function topArticle() {
+			var selectedRows = grid.getSelectedRows();
+			var ids = "";
+			var articleTypeIds = "";
+			for ( var row in selectedRows) {
+				ids += "," + selectedRows[row].id;
+				articleTypeIds += "," + selectedRows[row].typeId;
+			}
+			var id = ids.substring(1, ids.length);
+			var articleTypeId = articleTypeIds.substring(1, ids.length);
+			
 			if(id.indexOf(",") != -1){
-				alert("不能同时更新多个文章");
+				alert("不能同时置顶多个文章");
 				return;
 			}
 			
 			if(!id || id.length==0){
-				alert("请选择要更新的文章");
+				alert("请选择要置顶的文章");
 				return;
 			}
-			window.open("${baseURL}/article/detail.do?id=" + id, "hello", false);
+			
+			$.ajax({
+				type : "POST",
+				url : "${baseURL}/article/top.do?articleTypeId="+ articleTypeId +"&id=" + id,
+				error : function(request) {
+					alert("error");
+				},
+				success : function(data) {
+					grid.reload(); //reload grid data
+					$.ligerDialog.tip( //show delete success tip
+					{
+						title : '提示信息',
+						content : '置顶成功'
+					});
+				}
+			});
 		}
 	});
 	

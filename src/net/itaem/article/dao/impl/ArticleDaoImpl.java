@@ -6,6 +6,8 @@ import javax.annotation.Resource;
 
 import net.itaem.article.dao.IArticleDao;
 import net.itaem.article.entity.Article;
+import net.itaem.article.entity.ArticleAndType;
+import net.itaem.article.entity.ArticleAndTypeMapper;
 import net.itaem.article.entity.ArticleMapper;
 import net.itaem.article.entity.ArticleTypeMapper;
 
@@ -16,8 +18,12 @@ public class ArticleDaoImpl implements IArticleDao {
     
 	@Resource(name = "articleMapper")
 	private ArticleMapper articleMapper;
+	
 	@Resource(name = "articleTypeMapper")
 	private ArticleTypeMapper articleTypeMapper;
+	
+	@Resource(name = "articleAndTypeMapper")
+	private ArticleAndTypeMapper articleAndTypeMapper;
 	
 	@Override
 	public List<Article> listBy(String articleTypeId) {
@@ -29,7 +35,7 @@ public class ArticleDaoImpl implements IArticleDao {
 		List<Article> articleList = articleMapper.listAll();
 		
 		for(Article article: articleList){
-			article.setType(articleTypeMapper.findBy(article.getTypeId()));
+			article.setArticleTypeList(articleTypeMapper.listByArticleId(article.getId()));
 		}
 		return articleList;
 	}
@@ -37,6 +43,12 @@ public class ArticleDaoImpl implements IArticleDao {
 	@Override
 	public void add(Article article) {
 		articleMapper.add(article);
+		if(article.getArticleAndTypeList() != null && article.getArticleAndTypeList().size() > 0){
+		    System.out.println("try to add");
+			for(ArticleAndType aat: article.getArticleAndTypeList()){
+		    	articleAndTypeMapper.add(aat);
+		    }
+		}
 	}
 
 	@Override
@@ -60,5 +72,20 @@ public class ArticleDaoImpl implements IArticleDao {
 	@Override
 	public void update(Article article) {
 		articleMapper.update(article);
+	}
+
+	@Override
+	public Article top(String articleTypeId) {
+		return articleMapper.top(articleTypeId);
+	}
+
+	/**
+	 * 第一步移除原来的top文章
+	 * 第二部设置当前的article为top文章
+	 * */
+	@Override
+	public void setTop(ArticleAndType articleAndType) {
+		articleAndTypeMapper.seUnTop(articleAndType);
+		articleAndTypeMapper.setTop(articleAndType);
 	}
 }

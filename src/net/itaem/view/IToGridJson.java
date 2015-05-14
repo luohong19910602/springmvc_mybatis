@@ -8,6 +8,7 @@ import net.itaem.menu.entity.Menu;
 import net.itaem.privilege.entity.Privilege;
 import net.itaem.role.entity.Role;
 import net.itaem.user.entity.User;
+import net.itaem.web.entity.Navigation;
 
 /**
  * 将数据变成liger ui grid组件的json字符串
@@ -100,5 +101,7 @@ public interface IToGridJson {
 	 * @return 返回liger ui grid json数据
 	 * */
 	public String articleListToGrid(List<Article> articleList);
+	
+	public String navigationListToGrid(List<Navigation> navList);
 	
 }

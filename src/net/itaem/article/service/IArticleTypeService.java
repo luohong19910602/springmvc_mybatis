@@ -15,4 +15,6 @@ public interface IArticleTypeService {
 	public void update(ArticleType articleType);
 	
 	public List<ArticleType> listByUserId(String userId);
+
+	public ArticleType findById(String type);
 }

@@ -40,6 +40,9 @@
 		    <mvc:exclude-mapping path="/user/logout.do"/>
 		    <mvc:exclude-mapping path="/random.jsp"/>
 		    <mvc:exclude-mapping path="/info.jsp"/>
+		    <mvc:exclude-mapping path="/install.do"/>
+		    <mvc:exclude-mapping path="/installSubmit.do"/>
+		    
 			<bean class="net.itaem.base.interceptor.CheckRequestPermission"></bean>
 		</mvc:interceptor>
 		

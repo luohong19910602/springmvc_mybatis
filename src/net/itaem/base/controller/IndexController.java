@@ -1,5 +1,13 @@
 package net.itaem.base.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import net.itaem.web.entity.Navigation;
+import net.itaem.web.service.INavigationService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -10,7 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class IndexController {
 
 	@RequestMapping("/index.do")
-	public String index(){
+	public String index(HttpServletRequest req){
+		
 		return "index";
 	}
 }

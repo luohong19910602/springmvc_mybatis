@@ -37,7 +37,11 @@ public class ArticleTypeServiceImpl implements IArticleTypeService{
 
 	@Override
 	public List<ArticleType> listByUserId(String userId) {
-		// TODO Auto-generated method stub
 		return articleTypeDao.listByUserId(userId);
+	}
+
+	@Override
+	public ArticleType findById(String type) {
+		return articleTypeDao.findById(type);
 	}
 }

@@ -52,4 +52,9 @@ public class ArticleTypeDaoImpl implements IArticleTypeDao {
 		return articleTypeMapper.listByUserId(userId);
 	}
 
+	@Override
+	public ArticleType findById(String type) {
+		return articleTypeMapper.findBy(type);
+	}
+
 }
