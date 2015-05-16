@@ -86,7 +86,7 @@ public class PrivilegeServiceImpl implements IPrivilegeService {
 		//角色权限
 		List<Role> roleList = roleDao.listByUserId(userId);
 		List<Privilege> result = new ArrayList<Privilege>();
-		
+
 		if(roleList != null && roleList.size() > 0){
 			for(Role role: roleList){
 				List<Privilege> priList = listByRoleId(role.getId());
@@ -102,7 +102,7 @@ public class PrivilegeServiceImpl implements IPrivilegeService {
 
 		//用户权限
 		List<Privilege> priList = privilegeDao.listByUserId(userId);
-		
+
 		if(priList != null && priList.size() > 0){
 			for(Privilege pri: priList){
 				if(!result.contains(pri)){
@@ -112,7 +112,7 @@ public class PrivilegeServiceImpl implements IPrivilegeService {
 				}
 			}
 		}
-		
+
 		return result;
 	}
 

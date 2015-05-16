@@ -87,7 +87,6 @@
 <script type="text/javascript">
 	//设置menuId到表单中
 	$(function() {
-		
 		$("#roleNames").ligerComboBox({
             resize: true,
             width: 400,
@@ -97,7 +96,6 @@
 		});
 		
 		$("form").ligerForm();
-		
 		
 		//提交表单
 		$("#Button1").click(function(){
@@ -113,6 +111,7 @@
                 },
                 success: function(data) {
                     alert("更新用户信息成功");
+                    
                 }
             });
 		});

@@ -90,7 +90,7 @@ public class UserListController extends BaseController{
 	public String getUserInfo(String userId, HttpServletRequest req){
 		req.setAttribute("userId", userId);
 		User user = userService.listBy(userId);
-
+        
 		if(user != null)
 			req.setAttribute("userInfo", user);
 

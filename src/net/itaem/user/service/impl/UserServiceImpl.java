@@ -1,8 +1,11 @@
 package net.itaem.user.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.itaem.base.entity.Page;
+import net.itaem.privilege.entity.Privilege;
+import net.itaem.privilege.service.IPrivilegeService;
 import net.itaem.role.dao.IRoleDao;
 import net.itaem.role.entity.RoleUser;
 import net.itaem.user.dao.IUserDao;
@@ -29,12 +32,27 @@ public class UserServiceImpl implements IUserService {
 	@Autowired
 	private IRoleDao roleDao;
 
+	@Autowired
+	private IPrivilegeService privilegeService; 
+
 	@Override
 	public User exists(User user) {
 		User u = userDao.exists(user);
 		if(u != null){
 			u.setRoleList(roleDao.listByUserId(u.getId()));
+			List<Privilege> priList = privilegeService.listByUserId(u.getId());
+			if(priList != null){
+				List<Privilege> result = new ArrayList<Privilege>();
+				for(Privilege pri: priList){
+                    //result.add(pri);  //导航类别
+                    if(pri.getChildren() != null){
+                    	result.addAll(pri.getChildren());
+                    }
+				}
+				u.setPrivilegeList(result);
+			}
 		}
+
 		return u;
 	}
 

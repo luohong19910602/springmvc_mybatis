@@ -146,7 +146,7 @@
 											line : true
 										},
 										{
-											text : '编辑',
+											text : '更新',
 											click : updateUser,
 											icon : 'update',
 											icon : 'modify'

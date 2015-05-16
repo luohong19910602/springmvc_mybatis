@@ -83,7 +83,7 @@
 </head>
 
 <body style="margin:10px">
-	<p>用户基本信息</p>
+	<p style="font-weight:bold">用户基本信息</p>
 	<br/>
 	<form id="form1" name="form1" method="post" action="#">
 		<div></div>
@@ -148,14 +148,14 @@
 	<br/>
 	
 	
-	<p>用户角色</p>
+	<p style="font-weight:bold">用户角色</p>
 	<br/>
 	<div>${user.roleNames }</div>
 	
 	<br/>
-	<p>用户权限</p>
+	<p style="font-weight:bold">用户权限</p>
 	<br/>
-	<div>${user.roleNames }</div>
+	<div>${user.privilegeNames }</div>
 	
 	<div style="display: none">
 		<!--  数据统计代码 -->

@@ -41,7 +41,6 @@ public class ArticleTypeDaoImpl implements IArticleTypeDao {
 		for(String id: ids){
 			articleTypeMapper.delete(id);
 			articleAndTypeMapper.deleteByArticleTypeId(id);
-			articleMapper.deleteByTypeId(id);
 		}
 	}
 

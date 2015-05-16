@@ -99,7 +99,6 @@
 		//add new role
 		function addNewRole(){
 			var url = "${baseURL}/role/add.do";
-
 			$.ligerDialog.open({
 				height : 400,
 				width : 600,
@@ -120,7 +119,6 @@
 		//add new child role
 		function addChildRole() {
 			var url = "${baseURL}/role/add.do?roleId=" + actionNodeId;
-
 			$.ligerDialog.open({
 				height : 400,
 				width : 600,
@@ -140,7 +138,7 @@
 
 		function deleteRole() {
 			var url = "${baseURL}/role/delete.do?roleId=" + actionNodeId;
-
+            alert("确定删除该角色吗？");
 			$.ajax({
 				cache : true,
 				type : "POST",
@@ -162,6 +160,7 @@
 		//将树的数据展示出来
 		tree = $("#tree1").ligerTree({
 			idFieldName : 'id',
+			checkbox: false,
 			onSelect : openRole,
 			onContextmenu : function(node, e) {
 				actionNodeId = node.data.id; //补货menu id
@@ -325,14 +324,27 @@ h4 {
 </head>
 <body style="padding: 10px">
 	<div id="layout1">
-		<div position="left" title="菜单">
+		<div position="left" title="角色列表">
 			<ul id="tree1" style="margin-top: 3px;">
 		</div>
 
-		<div position="center" title="资源" id="framecenter">
-			<div tabid="home" title="我的主页" style="width: 100%; height: 100%">
-				<iframe width="100%" height="100%" frameborder="0" name="home"
-					id="home" src="${baseURL}/ligerUI/welcome.htm"></iframe>
+		<div position="center" title="角色管理" id="framecenter">
+			<div tabid="home"  title="操作手册" style="width: 100%; height: 100%">
+				<div style="margin-left:20px; margin-top:10px;">
+				    <h3>角色管理包含：权限管理，菜单管理，用户管理</h3>
+				    <br>
+				    <p>权限管理主要是设置该角色可以访问的url，这里面的url集合已经在权限管理模块配置好，直接选择即可</p>
+				    <br>
+				    <p>菜单管理主要是设置该角色可以访问的菜单，这里面的菜单集合已经在菜单管理模块配置好，直接选择即可</p>
+				    <br>
+				    <p>用户管理主要是设置该角色下面的所属用户，这里面的用户集合已经在用户管理模块配置好，直接选择即可</p>
+				    <br>
+				    <p style="font-weight:bold">操作步骤</p>
+				    <br>
+                    <p>第一步：点击左侧的角色，选中需要管理的角色</p>
+                    <br>
+                    <p>第二部，在右侧角色管理界面中，打开权限、菜单、用户管理等界面，进行进一步操作即可</p>
+				</div>				
 			</div>
 		</div>
 

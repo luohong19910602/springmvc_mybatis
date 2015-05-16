@@ -114,7 +114,6 @@ body {
 					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="brand" href="#">Project name</a>
 				<div class="nav-collapse collapse">
 					<ul class="nav">${nav}</ul>
 				</div>

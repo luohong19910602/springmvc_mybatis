@@ -24,7 +24,6 @@ public class PrivilegeDaoImpl implements IPrivilegeDao {
 	@Resource(name = "privilegeMapper")
 	private PrivilegeMapper privilegeMapper;
 
-
 	@Override
 	public List<Privilege> listAll() {
 		String sql = "select * from sys_privilege where privilege_del_flag = 0";
@@ -143,6 +142,7 @@ public class PrivilegeDaoImpl implements IPrivilegeDao {
     
 	/**
 	 * 列出用户的全部权限
+	 * 包括角色的权限
 	 * */
 	@Override
 	public List<Privilege> listByUserId(String userId) {

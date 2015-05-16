@@ -61,9 +61,6 @@ public interface ArticleMapper {
 	@Update("update sys_article set article_del_flag='1' where id=#{id}")
 	void delete(String id);
 	
-	@Update("update sys_article set article_del_flag='1' where article_type_id=#{typeId}")
-	void deleteByTypeId(String typeId);
-	
 	@Insert("insert into sys_article(id,article_summary,user_id,article_title,article_content,article_created_time,article_creator,article_updated_time,article_updator)"
 			+ " values(#{id},#{summary},#{userId},#{title},#{content},#{createdTime},#{creator},#{updatedTime},#{updator})")
 	void add(Article article);

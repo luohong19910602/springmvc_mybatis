@@ -88,13 +88,11 @@
 				text : '增加子菜单',
 				click : addMenu,
 				icon : 'add'
-			},
-			{
+			}, {
 				text : '增加新菜单',
 				click : addSiblingMenu,
 				icon : 'add'
-			}
-			, {
+			}, {
 				text : '修改菜单',
 				click : itemclick
 			}, {
@@ -105,7 +103,7 @@
 				line : true
 			} ]
 		});
-		
+
 		//将树的数据展示出来
 		tree = $("#tree1").ligerTree({
 			onContextmenu : function(node, e) {
@@ -119,8 +117,8 @@
 			},
 			onSelect : openResource,
 			idFieldName : 'id',
-			checkbox: false,
-			isExpand: true,
+			checkbox : false,
+			isExpand : true,
 			url : "${baseURL}/menu/listJson.do"
 		});
 
@@ -153,7 +151,7 @@
 				}
 			});
 		}
-		
+
 		//添加兄弟菜单
 		function addSiblingMenu() {
 			var url = "${baseURL}/menu/add.do";
@@ -173,8 +171,6 @@
 				}
 			});
 		}
-		
-		
 
 		//删除menu
 		function deleteMenu(menu) {
@@ -209,7 +205,7 @@
 			if (!flag) { //add a new tab
 				tabid = new Date().getTime();
 				$(menu.target).attr("tabid", tabid);
-				addTab(tabid, menu.data.text + "-->的资源", url);
+				addTab(tabid, menu.data.text, url);
 			} else { //refresh the tab
 				selectTab(tabid);
 				refreshTab(tabid);
@@ -337,23 +333,24 @@ h4 {
 </head>
 <body style="padding: 10px">
 	<div id="layout1">
-		<div position="left" title="菜单">
-			<!-- 这里内嵌一个页面，为菜单的树 
-			<iframe  frameborder="no" border="0" marginwidth="200px" marginheight="500px" 
-			scrolling="yes" allowtransparency="yes" 
-			src="${baseURL}/menu/content.do" 
-			width="200px"></iframe>
-			-->
-			<ul id="tree1" style="margin-top: 3px;">
+		<div position="left" title="菜单列表">
+			<ul id="tree1" style="margin-top: 3px;"></ul>
 		</div>
 
-		<div position="center" title="资源" id="framecenter">
-			<div tabid="home" title="我的主页" style="width: 100%; height: 100%">
-				<iframe width="100%" height="100%" frameborder="0" name="home"
-					id="home" src="${baseURL}/ligerUI/welcome.htm"></iframe>
+		<div position="center" title="菜单资源列表" id="framecenter">
+			<div tabid="home" title="操作手册" style="width: 100%; height: 100%">
+				<div style="margin-left:20px; margin-top:10px;">
+				    <p>菜单主要是设置该菜单下面的可访问url，这里面的url集合已经在权限管理模块配置好，直接选择即可</p>
+				    <br>
+				    <p style="font-weight:bold">操作步骤</p>
+				    <br>
+				    <p>第一步：点击左侧的菜单，选中需要管理的菜单</p>
+				    <br>
+				    <p>第二步：操作右侧的url管理界面</p>
+				</div>	
 			</div>
 		</div>
-
-		<div style="display: none;"></div>
+	</div>
+	<div style="display: none;"></div>
 </body>
 </html>
