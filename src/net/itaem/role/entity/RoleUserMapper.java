@@ -28,5 +28,8 @@ public interface RoleUserMapper {
 	 * */
 	@Delete("delete from sys_role_user where role_id=#{roleId} and user_id=#{userId}")
 	public void delete(RoleUser roleUser);
+	
+	@Delete("delete from sys_role_user where user_id=#{userId}")
+	public void deleteByUserId(String userId);
   
 }

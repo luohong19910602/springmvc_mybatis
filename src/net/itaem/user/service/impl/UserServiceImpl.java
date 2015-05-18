@@ -16,6 +16,7 @@ import net.itaem.user.service.IUserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -66,7 +67,7 @@ public class UserServiceImpl implements IUserService {
 		return userDao.listAll(page);
 	}
 
-	@Transactional
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = {Exception.class})
 	@Override
 	public void add(User user) {
 		userDao.add(user);
@@ -151,5 +152,11 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public void update(User user) {
 		userDao.update(user);
+		if(user.getRoleUsers() != null){
+			roleDao.deleteRoleUserByUserId(user.getId());
+			for(RoleUser roleUser: user.getRoleUsers()){
+				roleDao.addRoleUser(roleUser);
+			}
+		}
 	}
 }

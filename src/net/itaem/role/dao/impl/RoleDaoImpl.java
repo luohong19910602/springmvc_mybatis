@@ -146,4 +146,9 @@ public class RoleDaoImpl implements IRoleDao {
 		return roleMapper.listByUserId(userId);
 	}
 
+	@Override
+	public void deleteRoleUserByUserId(String userId) {
+		roleUserMapper.deleteByUserId(userId);
+	}
+
 }

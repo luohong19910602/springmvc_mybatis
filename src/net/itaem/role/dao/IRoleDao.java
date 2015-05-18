@@ -59,4 +59,9 @@ public interface IRoleDao {
 	public void addRoleUser(RoleUser roleUser);
 	
 	public void deleteRoleUser(RoleUser roleUser);
+	
+	/**
+	 * 删除user的role-user中间表数据
+	 * */
+	public void deleteRoleUserByUserId(String userId);
 }

@@ -15,5 +15,4 @@ public class UserForgotPassword {
 	@Autowired
 	private IUserService userService;
 	
-	
 }

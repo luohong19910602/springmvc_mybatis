@@ -100,7 +100,6 @@ public class UserRoleController extends BaseController {
 	@RequestMapping("/user/getUserRoleJson.do")
 	public void getUserRoleJson(String userId, HttpServletResponse resp) throws IOException{
 		List<Role> roleList = roleService.listByUserId(userId);
-
 		ResponseUtil.println(resp, gridJson.roleListToGrid(roleList));
 	}
 }
