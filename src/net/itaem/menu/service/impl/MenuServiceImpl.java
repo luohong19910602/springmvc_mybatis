@@ -99,9 +99,11 @@ public class MenuServiceImpl implements IMenuService {
 
 	@Override
 	public List<Menu> listByUserId(String userId) {
+		if(userId == null || "".equals(userId)) return null;
+		
 		List<Role> roleList = roleDao.listByUserId(userId);
 		List<Menu> result = new ArrayList<Menu>();
-
+		
 		//user menu
 		List<Menu> userMenuList = menuDao.listByUserId(userId);
 		if(userMenuList != null && userMenuList.size() > 0){
@@ -128,12 +130,9 @@ public class MenuServiceImpl implements IMenuService {
 	}
 
 	/**
-	 * 合并两个menu
-	 * 这时候这两个menu其实是同等的，通过id来判断，但是其他内容都可以不相同
-	 * 所以需要将一个menu的子menu添加到另个一个menu对象中，同时资源列表也是
-	 * 由于两个菜单的层次关系不一定一致，所以这里还需要递归的处理
-	 * @param menu1
-	 * @param menu2
+	 * 递归合并两个menu
+	 * @param menu1 待合并的menu1
+	 * @param menu2 待合并的menu2
 	 * */
 	private void merge(Menu menu1, Menu menu2){
 		if(!menu1.equals(menu2)) return;
@@ -143,7 +142,6 @@ public class MenuServiceImpl implements IMenuService {
         
 		if(menu1.getChildren() != null && menu1.getChildren().size() > 0 
 				&& menu2.getChildren() != null && menu2.getChildren().size() > 0){  //递归搞定其他的menu合并
-
 			for(Menu m1: menu1.getChildren()){
 				for(Menu m2: menu2.getChildren()){
 					if(m1.equals(m2)){

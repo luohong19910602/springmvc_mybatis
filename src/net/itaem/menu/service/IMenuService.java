@@ -44,7 +44,17 @@ public interface IMenuService {
 	 * */
 	public List<Menu> listBy(String roleId);
 	
+	/**
+	 * 查询用户菜单列表
+	 * @param user 需要查询的用户
+	 * @return 指定用户的菜单列表
+	 * */
 	public List<Menu> listBy(User user);
 	
+	/**
+	 * 查询用户菜单列表
+	 * @param userId 需要查询的用户
+	 * @return 指定用户的菜单列表
+	 * */
 	public List<Menu> listByUserId(String userId);
 }

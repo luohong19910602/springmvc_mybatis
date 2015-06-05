@@ -66,8 +66,12 @@ public class RoleDaoImpl implements IRoleDao {
 
 	/**
 	 * 从集合中挑选出自己的子角色
+	 * 这里面会使用递归遍历，也就是一层一层的设置角色之间的父子关系
+	 * @param role 父亲角色
+	 * @param roleList 待遍历的角色列表
 	 * */
 	private void setChildren(Role role, List<Role> roleList) {
+        if(roleList == null || role == null || roleList.size() == 0) return;
         
 		for(Role child: roleList){
         	if(child.getParentId().equals(role.getId())){

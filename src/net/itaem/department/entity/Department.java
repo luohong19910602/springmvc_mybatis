@@ -20,4 +20,5 @@ public class Department extends BaseEntity {
     private Department parent;  //上级部门
     private List<Department> subDepartment;  //子部门
     private User leader;  //部门直属领导
+    
 }

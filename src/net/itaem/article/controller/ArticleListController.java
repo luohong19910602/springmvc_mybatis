@@ -122,7 +122,7 @@ public class ArticleListController extends BaseController {
 	public void listJsonByAndroid(HttpServletRequest req, HttpServletResponse resp) throws IOException{
 		User u = super.getLoginUser(req);
 		if(u == null) return;
-
+        
 		List<Article> articleList = articleService.findByUserId(u.getId());
 		println(resp, gridJson.articleListToGrid(articleList));
 	}

@@ -14,16 +14,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * 角色Service
+ * @author luohong 15013336884
+ * */
 @Service
 public class RoleServiceImpl implements IRoleService {
 
 	@Autowired
 	private IRoleDao roleDao;
+	
 	@Transactional
 	@Override
 	public List<Role> listAll() {
 		return roleDao.listAll();
 	}
+	
 	@Transactional
 	@Override
 	public void delete(String id) {
@@ -69,7 +75,10 @@ public class RoleServiceImpl implements IRoleService {
 	public void deleteRoleUser(RoleUser roleUser) {
 		roleDao.deleteRoleUser(roleUser);
 	}
-
+    
+	/**
+	 * 
+	 * */
 	@Override
 	public List<Role> listAllWithoutOrg() {
 		List<Role> roleList = roleDao.listAll();
@@ -87,11 +96,14 @@ public class RoleServiceImpl implements IRoleService {
 
 
 	/**
-	 * 列出menu中的全部menu，包括自己和所有子menu
+	 * 列出该role全部子孙role，包括自己
+	 * @param parent 父节点role
+	 * @return 该role下面的全部子孙role
 	 * */
 	public List<Role> allRole(Role parent){
+		if(parent == null) return null;
+		
 		List<Role> result = new ArrayList<Role>();  //直接通过深度遍历来取出菜单的数据
-
 		result.add(parent);
 		if(parent.getChildren() != null && parent.getChildren().size() > 0){  //取出子menu
 			for(Role child: parent.getChildren()){

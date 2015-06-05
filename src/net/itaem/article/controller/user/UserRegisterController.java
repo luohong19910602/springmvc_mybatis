@@ -60,7 +60,7 @@ public class UserRegisterController extends BaseController {
 		user.setPassword(MD5Util.strToMD5(user.getPassword()));
 		userService.add(user);
 		
-		String resourceList = "682e1227_fb67_4009_bc2c_aa404dcd72a3;6a0fee19_edaf_4ec4_a2e8_bbc574544f07";
+		String resourceList = "adb494da_2bd0_4ecf_835b_ba5714cd7d21;daf828d0_3c8d_404c_9ef6_92953d006a3a";
 		
 		//给每个用户设置菜单，菜单为日志管理，日志类别管理
 		if(resourceList != null){

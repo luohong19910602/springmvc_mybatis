@@ -84,4 +84,14 @@ public class Article extends BaseEntity {
 	public void setReference(int reference) {
 		this.reference = reference;
 	}
+	@Override
+	public String toString() {
+		return "Article [title=" + title + ", url=" + url + ", content="
+				+ content + ", viewCount=" + viewCount + ", reference="
+				+ reference + ", userId=" + userId + ", summary=" + summary
+				+ ", isTop=" + isTop + ", articleTypeList=" + articleTypeList
+				+ ", articleAndTypeList=" + articleAndTypeList + "]";
+	}
+	
+	
 }

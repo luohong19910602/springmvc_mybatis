@@ -27,10 +27,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * */
 @Controller
 public class AddMenuController extends BaseController {
-	
+
 	@Autowired
 	private IMenuService menuService;
-	
+
 	/**
 	 * 跳转到添加menu界面
 	 * @param menuId
@@ -41,7 +41,7 @@ public class AddMenuController extends BaseController {
 	public String add(String parentId, HttpServletRequest req){
 		if(StringUtils.isNotEmpty(parentId))
 			req.setAttribute("parentId", parentId);
-		
+
 		return "menu/add";
 	}
 
@@ -59,12 +59,13 @@ public class AddMenuController extends BaseController {
 		menu.setId(UUIDUtil.uuid());
 		menu.setCreatedTime(DateUtil.getNowDate(null));
 		User u = (User) req.getSession().getAttribute("user");
-		menu.setCreator(u.getName());
+		if(u != null)
+			menu.setCreator(u.getName());
 		//默认图片
 		menu.setPic("http://localhost/springmvc_mybatis/ligerUI/lib/ligerUI/skins/icons/archives.gif");
-		
+
 		menuService.add(menu);
-		
+
 		println(resp, JsonUtil.createJson("success", "add a new menu is successful"));
 	}
 

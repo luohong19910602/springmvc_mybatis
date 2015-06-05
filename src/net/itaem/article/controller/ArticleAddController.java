@@ -56,7 +56,6 @@ public class ArticleAddController extends BaseController {
 		}
 		sb.append("</tr>");
 		req.setAttribute("typeList", sb.toString());
-		System.out.println(sb.toString());
 
 		return "article/add";
 	}
@@ -71,6 +70,7 @@ public class ArticleAddController extends BaseController {
 			println(resp, JsonUtil.createJson("error", "请登录"));
 			return;
 		}
+
 		String userId = super.getLoginUser(req).getId();
 		List<ArticleType> articleTypeList = articleTypeService.listByUserId(userId);
 		StringBuilder sb = new StringBuilder();
@@ -107,7 +107,7 @@ public class ArticleAddController extends BaseController {
 		//设置多对多关系
 		List<ArticleAndType> aatList = new ArrayList<ArticleAndType>();
 		String[] types = req.getParameterValues("typeId");
-		
+
 		if(types != null){
 			for(String type: types){
 				aatList.add(new ArticleAndType(UUIDUtil.uuid(), article.getId(), type));
@@ -129,10 +129,20 @@ public class ArticleAddController extends BaseController {
 	 * */
 	@RequestMapping("/article/addSubmitByAndroid.do")
 	public void addSubmitByAndroid(HttpServletRequest req, HttpServletResponse resp, Article article) throws ServletException, IOException{
-
 		article.setId(UUIDUtil.uuid());
 
 		article.setCreatedTime(DateUtil.getNowDate(null));
+
+		//设置多对多关系
+		List<ArticleAndType> aatList = new ArrayList<ArticleAndType>();
+		String[] types = req.getParameterValues("typeId");
+
+		if(types != null){
+			for(String type: types){
+				aatList.add(new ArticleAndType(UUIDUtil.uuid(), article.getId(), type));
+			}
+			article.setArticleAndTypeList(aatList);
+		}
 
 		articleService.add(article);
 		JSONObject json = new JSONObject();

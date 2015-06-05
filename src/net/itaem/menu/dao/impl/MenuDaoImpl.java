@@ -164,15 +164,7 @@ public class MenuDaoImpl implements IMenuDao{
 				}else{
 					int index = result.indexOf(tree);
 					Menu child = result.get(index);  
-                    
 					merge(child, tree);
-					//add child
-//					if(child != null){
-//						child.addSubMenu(tree.getChildren());
-//					}
-//					
-//					//add resource list
-//					child.addResourceList(tree.getResourceList());
 				}
 			}
 		}
@@ -206,16 +198,21 @@ public class MenuDaoImpl implements IMenuDao{
 		return result;
 	}
 	
+	
 	/**
 	 * 
+	 * 形成一个用户的menu树，并且返回最大的树根节点
+	 * 这里会同时设置该用户该menu的所属URL
 	 * */
 	private Menu routeByUserId(Menu menu, String userId){
 		if(menu == null){
 			return null;
 		}
-
+        
 		List<Menu> route = new LinkedList<Menu>();
+		
 		if(menu.getParentId() != null && !"".equals(menu.getId())){
+			//递归向上遍历menu树，直到根节点
 			Menu parent = menuMapper.findBy(menu.getParentId());;
 			while(parent != null){
 				route.add(0, parent);
@@ -224,18 +221,16 @@ public class MenuDaoImpl implements IMenuDao{
 				}
 				parent = menuMapper.findBy(parent.getParentId());
 			}
-
+			route.add(route.size(), menu);        
+			
+			//设置该menu的URL列表
 			UserMenu userMenu = new UserMenu();
 			userMenu.setUserId(userId);
 			userMenu.setMenuId(menu.getId());
-			
 			menu.setResourceList(menuMapper.findByUserAndMenu(userMenu));
-
-			//自己添加到最后
-			route.add(route.size(), menu);
-
+			
+			//形成menu树
 			if(route.size() > 1){
-				//形成menu树
 				for(int i=0; i<route.size()-1; i++){
 					route.get(i).addSubMenu(route.get(i+1));
 				}
@@ -243,19 +238,23 @@ public class MenuDaoImpl implements IMenuDao{
 
 			//取出第一个menu，直接返回即可
 			return route.get(0);
-		}else{
+			
+		}else{  //该节点无父亲结点，直接设置该menu的URL列表，并且返回
+			
 			//设置该menu的资源列表
 			UserMenu userMenu = new UserMenu();
 			userMenu.setUserId(userId);
 			userMenu.setMenuId(menu.getId());
 			menu.setResourceList(menuMapper.findByUserAndMenu(userMenu));
-
 			return menu;
 		}
 	}
 
 	/**
-	 * 将一个子menu，一直遍历父亲menu，直到没有父亲menu
+	 * 形成一个角色的menu树，并且返回最大的树根节点
+	 * 这里会同时设置menu的所属URL
+	 * 递归遍历的流程：判断给menu是否有父亲节点，如果有，一直遍历到最大的父亲结点，
+	 * 然后将
 	 * */
 	private Menu route(Menu menu, String roleId){
 		if(menu == null){
@@ -272,19 +271,16 @@ public class MenuDaoImpl implements IMenuDao{
 				}
 				parent = menuMapper.findBy(parent.getParentId());
 			}
-
+			route.add(route.size(), menu);
+			
 			//设置该menu的资源列表
 			RoleMenu roleMenu = new RoleMenu();
 			roleMenu.setMenuId(menu.getId());
 			roleMenu.setRoleId(roleId);
-
 			menu.setResourceList(menuMapper.findByRoleAndMenu(roleMenu));
 
-			//自己添加到最后
-			route.add(route.size(), menu);
-
+			//形成menu树
 			if(route.size() > 1){
-				//形成menu树
 				for(int i=0; i<route.size()-1; i++){
 					route.get(i).addSubMenu(route.get(i+1));
 				}

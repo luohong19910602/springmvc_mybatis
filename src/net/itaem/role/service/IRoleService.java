@@ -7,6 +7,10 @@ import net.itaem.role.entity.RoleMenu;
 import net.itaem.role.entity.RolePrivilege;
 import net.itaem.role.entity.RoleUser;
 
+/**
+ * 角色Service接口
+ * @author luohong 15013336884
+ * */
 public interface IRoleService {
 
 	/**
@@ -32,6 +36,10 @@ public interface IRoleService {
 	 * */
 	public void delete(String id);
 
+	/**
+	 * 添加一个角色
+	 * @param role
+	 * */
 	public void add(Role role);
 
 	/**
@@ -52,6 +60,10 @@ public interface IRoleService {
 	 * */
 	public void addRoleMenus(RoleMenu[] roleMenus);
 
+	/**
+	 * 删除所属菜单roleMenu
+	 * @param roleMenu
+	 * */
 	public void deleteRoleMenu(RoleMenu roleMenu);
 
 	/**
@@ -64,9 +76,16 @@ public interface IRoleService {
 	 * */
 	public void deleteRolePrivilege(RolePrivilege rolePrivilege);
 
-
+    /**
+     * 添加角色所属用户
+     * @param roleUser
+     * */
 	public void addRoleUser(RoleUser roleUser);
 
+	/**
+	 * 删除角色所属用户
+	 * @param roleUser
+	 * */
 	public void deleteRoleUser(RoleUser roleUser);
 	
 	/**

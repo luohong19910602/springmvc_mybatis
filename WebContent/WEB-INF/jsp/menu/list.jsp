@@ -174,8 +174,9 @@
 
 		//删除menu
 		function deleteMenu(menu) {
+			alert("确定删除该菜单吗？");
 			var url = "${baseURL}/menu/delete.do?menuId=" + actionNodeId;
-
+            
 			$.ajax({
 				cache : true,
 				type : "POST",

@@ -40,7 +40,10 @@ public class UserServiceImpl implements IUserService {
 	public User exists(User user) {
 		User u = userDao.exists(user);
 		if(u != null){
+			//设置用户角色列表
 			u.setRoleList(roleDao.listByUserId(u.getId()));
+			
+			//设置用户权限列表
 			List<Privilege> priList = privilegeService.listByUserId(u.getId());
 			if(priList != null){
 				List<Privilege> result = new ArrayList<Privilege>();
