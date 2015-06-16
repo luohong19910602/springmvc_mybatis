@@ -29,4 +29,5 @@ public class ArticleDeleteController extends BaseController{
 		articleService.delete(ids.split(","));
 		println(resp, "delete success");
 	}
+	
 }

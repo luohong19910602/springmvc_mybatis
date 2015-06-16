@@ -50,8 +50,8 @@ public class CheckRequestPermission implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest req, HttpServletResponse resp,
 			Object arg2) throws Exception {
-		return true;
-		//return check(req, resp);
+//		return true;
+		return check(req, resp);
 	}
 
 	private boolean check(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
@@ -129,9 +129,9 @@ public class CheckRequestPermission implements HandlerInterceptor {
 					if(child.getUrl().equalsIgnoreCase(reqUri)){
 						return true;
 					}
+
 				}
 			}
-
 			if(privilege.getUrl() == null || "".equals(privilege.getUrl())) continue;
 
 			if(privilege.getUrl().equalsIgnoreCase(reqUri)){

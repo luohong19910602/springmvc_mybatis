@@ -40,5 +40,4 @@ public interface IToTreeJson {
 	 * @see LigerUiToTree#roleToTree()
 	 * */
 	public String roleListToTreeJson(List<Role> roleList);
-
 }

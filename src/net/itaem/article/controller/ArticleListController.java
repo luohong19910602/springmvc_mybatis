@@ -109,6 +109,7 @@ public class ArticleListController extends BaseController {
 				}
 			}
 			result.put("Rows", jsonArray);
+			
 			println(resp, result.toString());	
 		}
 	}

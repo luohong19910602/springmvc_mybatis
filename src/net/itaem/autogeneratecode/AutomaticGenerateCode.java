@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 
 import net.itaem.department.entity.Department;
+import net.itaem.student.entity.Student;
 
 /**
  * 自动代码生成器
@@ -22,11 +23,17 @@ import net.itaem.department.entity.Department;
 public class AutomaticGenerateCode {
     
 	public static void main(String[] args) throws IOException{
+		generateMybaticsMapper(Student.class);
+		generateDao(Student.class);
+		generateService(Student.class);
+		generateController(Student.class);
+		generateJsp(Student.class);	
+		
 		generateMybaticsMapper(Department.class);
 		generateDao(Department.class);
 		generateService(Department.class);
 		generateController(Department.class);
-		generateJsp(Department.class);	
+		generateJsp(Student.class);		
 	}
 
 	/**
@@ -493,4 +500,5 @@ public class AutomaticGenerateCode {
 			writer.close();
 		}
 	}
+	
 }

@@ -13,7 +13,7 @@ public class DepartmentAddController{
 
     @Autowired
     private IDepartmentService departmentService;
-
+    
     @RequestMapping("/department/add.do")
     public String add(HttpServletRequest req){
         return "department/add";
@@ -21,6 +21,7 @@ public class DepartmentAddController{
 
     @RequestMapping("/department/addSubmit.do")
     public void addSubmit(Department department, HttpServletRequest req, HttpServletResponse resp){
+    
     }
 
 }
