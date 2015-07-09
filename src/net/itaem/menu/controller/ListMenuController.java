@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.itaem.autogeneratecode.privilege.GeneratePrivilege;
 import net.itaem.base.controller.BaseController;
 import net.itaem.menu.entity.Menu;
 import net.itaem.menu.service.IMenuService;
@@ -34,6 +35,7 @@ public class ListMenuController extends BaseController {
 	 * 跳转到/WEB-INF/menu/list.jsp
 	 * @return 
 	 * */
+	@GeneratePrivilege(name="跳转到menu列表界面",type="菜单管理", uri="/menu/list.do", desc="无")
 	@RequestMapping("/menu/list.do")
 	public String list(HttpServletRequest req, HttpServletResponse resp){
 		return "menu/list";
@@ -44,6 +46,7 @@ public class ListMenuController extends BaseController {
 	 * 这里的数据不包括resource数据
 	 * @throws IOException 
 	 * */
+	@GeneratePrivilege(name="列出menu的json",type="菜单管理", uri="/menu/listJson.do", desc="无")
 	@RequestMapping("/menu/listJson.do")
 	public void listJson(HttpServletResponse resp) throws IOException{
 		ResponseUtil.println(resp, listJson(false));
@@ -52,6 +55,7 @@ public class ListMenuController extends BaseController {
 	/**
 	 * 获取菜单的grid数据格式的数据，并且这里不需要resource
 	 * */
+	@GeneratePrivilege(name="列出menu的grid json",type="菜单管理", uri="/menu/listGridJson.do", desc="无")
 	@RequestMapping("/menu/listGridJson.do")
 	public void listGridJson(HttpServletResponse resp) throws IOException{
 		List<Menu> menuList = menuService.listAll(true);
@@ -64,6 +68,7 @@ public class ListMenuController extends BaseController {
 	 * 如果这个菜单本身不含有任何可以访问的资源url，那么这个菜单就不会显示出来
 	 * @throws IOException 
 	 * */
+	@GeneratePrivilege(name="列出menu的tree json",type="菜单管理", uri="/menu/listJsonWithResource.do", desc="无")
 	@RequestMapping("/menu/listJsonWithResource.do")
 	public void listJsonWithResource(HttpServletResponse resp) throws IOException{
 		List<Menu> menuList = menuService.listAll(true);

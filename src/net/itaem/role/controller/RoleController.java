@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.itaem.autogeneratecode.privilege.GeneratePrivilege;
 import net.itaem.base.controller.BaseController;
 import net.itaem.role.entity.Role;
 import net.itaem.role.service.IRoleService;
@@ -34,6 +35,7 @@ public class RoleController extends BaseController {
 	 * @param roleId
 	 * @param req
 	 * */
+	@GeneratePrivilege(name="跳转到角色的相关信息界面",type="角色管理", uri="/role/openRole.do", desc="无")
 	@RequestMapping("/role/openRole.do")
 	public String openRole(String roleId, HttpServletRequest req){
 		req.setAttribute("roleId", roleId);
@@ -47,6 +49,7 @@ public class RoleController extends BaseController {
 	 * @param req
 	 * @return baseInfo
 	 * */
+	@GeneratePrivilege(name="根据角色id，来获取角色的基本信息，并且跳转到角色基本信息界面",type="角色管理", uri="/role/getBaseInfo.do", desc="无")
 	@RequestMapping("/role/getBaseInfo.do")
 	public String getBaseInfo(String roleId, HttpServletRequest req){
 		Role role = roleService.byId(roleId);
@@ -60,6 +63,8 @@ public class RoleController extends BaseController {
 	 * 列出所有角色的数据
 	 * @throws IOException 
 	 * */
+	@GeneratePrivilege(name="列出所有角色的数据",type="角色管理", uri="/role/listJson.do", desc="无")
+	
 	@RequestMapping("/role/listJson.do")
 	public void listJson(HttpServletResponse resp) throws IOException{
 		List<Role> roleList = roleService.listAll();
@@ -67,6 +72,8 @@ public class RoleController extends BaseController {
 		ResponseUtil.println(resp, treeJson.roleListToTreeJson(roleList));
 	}
 
+	@GeneratePrivilege(name="列出所有角色的数据",type="角色管理", uri="/role/listGridJson.do", desc="无")
+	
 	@RequestMapping("/role/listGridJson.do")
 	public void listGridJson(HttpServletResponse resp) throws IOException{
 		List<Role> roleList = roleService.listAll();
@@ -77,6 +84,8 @@ public class RoleController extends BaseController {
 	/**
 	 * 跳转到角色列表界面
 	 * */
+	@GeneratePrivilege(name="跳转到角色列表界面",type="角色管理", uri="/role/list.do", desc="无")
+	
 	@RequestMapping("/role/list.do")
 	public String list(){
 		return "role/list";
@@ -86,6 +95,8 @@ public class RoleController extends BaseController {
 	 * 跳转到角色列表界面，这里主要是添加用户时调用
 	 * 
 	 * */
+	@GeneratePrivilege(name="跳转到角色列表界面，这里主要是添加用户时调用",type="角色管理", uri="/role/listByTree.do", desc="无")
+	
 	@RequestMapping("/role/listByTree.do")
 	public String listByTree(){
 		return "role/listByTree";

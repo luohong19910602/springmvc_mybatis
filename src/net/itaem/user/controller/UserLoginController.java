@@ -7,6 +7,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.itaem.autogeneratecode.privilege.GeneratePrivilege;
 import net.itaem.base.controller.BaseController;
 import net.itaem.user.entity.User;
 import net.itaem.user.service.IUserService;
@@ -41,6 +42,8 @@ public class UserLoginController extends BaseController {
 	 * @throws IOException 
 	 * @throws ServletException 
 	 * */
+	 @GeneratePrivilege(name="登录",type="用户管理", uri="/user/login.do", desc="无")
+		
 	@RequestMapping("/user/login.do")
 	public void login(User user, String randomCode, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException{
 
@@ -121,6 +124,7 @@ public class UserLoginController extends BaseController {
 	 * 移动端登录
 	 * @throws IOException 
 	 * */
+	 
 	@RequestMapping("/user/loginByAndroid.do")
 	public void loginByAndroid(User user, HttpServletResponse resp) throws IOException{
 
@@ -156,6 +160,9 @@ public class UserLoginController extends BaseController {
 	 * @param req 
 	 * @param resp
 	 * */
+	
+	@GeneratePrivilege(name="退出登录，跳转到登录界面",type="用户管理", uri="/user/logout.do", desc="无")
+	
 	@RequestMapping("/user/logout.do")
 	public void logout(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		req.getSession().removeAttribute("user");

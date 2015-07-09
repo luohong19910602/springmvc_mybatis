@@ -18,7 +18,7 @@ public interface UserMenuMapper {
 	/**
 	 * 插入一条记录
 	 * */
-	@Insert("insert into sys_user_menu (id, user_id, menu_id,resource_id) "
+	@Insert("insert into sys_user_menu (_id, _user_id, _menu_id, _resource_id) "
 			+ "values(#{id}, #{userId}, #{menuId},#{resourceId})")
 	public void add(UserMenu userMenu);
 	
@@ -26,7 +26,7 @@ public interface UserMenuMapper {
 	 * 删除usermenu
 	 * 
 	 * */
-	@Delete("delete from sys_user_menu where user_id=#{userId} and resource_id=#{resourceId} and menu_id=#{menuId}")
+	@Delete("delete from sys_user_menu where _user_id=#{userId} and _resource_id=#{resourceId} and _menu_id=#{menuId}")
 	public void delete(UserMenu userMenu);
   
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.itaem.autogeneratecode.privilege.GeneratePrivilege;
 import net.itaem.base.controller.BaseController;
 import net.itaem.privilege.entity.Privilege;
 import net.itaem.privilege.service.IPrivilegeService;
@@ -38,6 +39,8 @@ public class UserPrivilegeController extends BaseController {
 	/**
 	 * 跳转到用权限界面
 	 * */
+	@GeneratePrivilege(name="跳转到用权限界面",type="用户管理", uri="/user/getUserPrivilege.do", desc="无")
+	
 	@RequestMapping("/user/getUserPrivilege.do")
 	public String getUserPrivilege(String userId, HttpServletRequest req){
 		req.setAttribute("userId", userId);
@@ -49,6 +52,8 @@ public class UserPrivilegeController extends BaseController {
 	 * @throws IOException 
 	 * 
 	 * */
+	@GeneratePrivilege(name="获取用户权限的json数据",type="用户管理", uri="/user/getUserPrivilegeJson.do", desc="无")
+	
 	@RequestMapping("/user/getUserPrivilegeJson.do")
 	public void getUserPrivilegeJson(String userId, HttpServletResponse resp) throws IOException{
 		List<Privilege> privilegeList = privilegeService.listByUserId(userId);
@@ -59,6 +64,7 @@ public class UserPrivilegeController extends BaseController {
 	/**
 	 * 跳转到添加用户权限界面
 	 * */
+	@GeneratePrivilege(name="跳转到添加用户权限界面",type="用户管理", uri="/user/addUserPrivilege.do", desc="无")
 	@RequestMapping("/user/addUserPrivilege.do")
 	public String addUserPrivilege(String userId, HttpServletRequest req){
 		req.setAttribute("userId", userId);
@@ -71,6 +77,7 @@ public class UserPrivilegeController extends BaseController {
 	 * @param privilegeList 权限列表id
 	 * @throws IOException 
 	 * */
+	@GeneratePrivilege(name="添加用户权限",type="用户管理", uri="/user/addUserPrivilegeSubmit.do", desc="无")
 	@RequestMapping("/user/addUserPrivilegeSubmit.do")
 	public void addUserPrivilegeSubmit(String userId, String privilegeList, HttpServletResponse resp) throws IOException{
 		String[] privilegeIds = privilegeList.split(";");
@@ -81,6 +88,8 @@ public class UserPrivilegeController extends BaseController {
 	/**
 	 * 删除用户的权限，但是这里删除的权限只是属于用户的权限，不能删除用户所属角色的权限
 	 * */
+	@GeneratePrivilege(name="删除用户权限",type="用户管理", uri="/user/deleteUserPrivilege.do", desc="无")
+	
 	@RequestMapping("/user/deleteUserPrivilege.do")
 	public void deleteUserPrivilege(String privilegeIdStr, String userId, HttpServletResponse resp) throws IOException{
 		String[] privilegeIds = privilegeIdStr.split(",");

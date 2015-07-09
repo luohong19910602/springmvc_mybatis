@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.itaem.autogeneratecode.privilege.GeneratePrivilege;
 import net.itaem.base.controller.BaseController;
 import net.itaem.menu.service.IMenuService;
 import net.itaem.privilege.service.IPrivilegeService;
@@ -48,6 +49,9 @@ public class AddUserController extends BaseController {
 
 	@Autowired
 	private IPrivilegeService privilegeService;
+	
+	@GeneratePrivilege(name="跳转到添加用户界面",type="用户管理", uri="/user/add.do", desc="无")
+	
 	@RequestMapping("/user/add.do")
 	public String add(){
 		return "user/add";
@@ -63,6 +67,8 @@ public class AddUserController extends BaseController {
 	 * @param resp
 	 * @throws IOException 
 	 * */
+	@GeneratePrivilege(name="添加用户",type="用户管理", uri="/user/addSubmit.do", desc="无")
+	
 	@RequestMapping("/user/addSubmit.do")
 	public void addSubmit(User user, String roleIdList, 
 			HttpServletRequest req, HttpServletResponse resp) throws IOException{

@@ -6,6 +6,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.itaem.autogeneratecode.privilege.GeneratePrivilege;
+import net.itaem.base.controller.BaseController;
 import net.itaem.privilege.entity.Privilege;
 import net.itaem.privilege.service.IPrivilegeService;
 import net.itaem.resource.entity.Resource;
@@ -30,7 +32,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * */
 @Controller
 @RequestMapping("/resource")
-public class ResourceController {
+public class ResourceController extends BaseController {
 
 	@Autowired
 	private IResourceService resourceService;
@@ -44,6 +46,7 @@ public class ResourceController {
 	 * @param req
 	 * @return
 	 * */
+	@GeneratePrivilege(name="跳转到menu对应的url资源list界面",type="资源管理", uri="/resource/openResource.do", desc="无")
 	@RequestMapping("/openResource.do")
 	public String openResource(String menuId, HttpServletRequest req){
 		req.setAttribute("menuId", menuId);
@@ -57,6 +60,7 @@ public class ResourceController {
 	 * @param resp
 	 * @throws IOException
 	 * */
+	@GeneratePrivilege(name="取出menu对应的url资源，使用json来包装数据",type="资源管理", uri="/resource/openResourceJson.do", desc="无")
 	@RequestMapping("/openResourceJson.do")
 	public void openResourceJson(String menuId, HttpServletRequest req, HttpServletResponse resp) throws IOException{
 		List<Resource> resourceList = resourceService.listBy(menuId);
@@ -76,6 +80,7 @@ public class ResourceController {
 	 * 跳转到添加资源界面
 	 * @return
 	 * */
+	@GeneratePrivilege(name="跳转到添加资源界面",type="资源管理", uri="/resource/add.do", desc="无")
 	@RequestMapping("/add.do")
 	public String add(){
 		return "resource/add";
@@ -89,11 +94,12 @@ public class ResourceController {
 	 * @param menuId
 	 * @throws IOException 
 	 * */
+	@GeneratePrivilege(name="添加资源",type="资源管理", uri="/resource/addSubmit.do", desc="无")
 	@RequestMapping("/addSubmit.do")
 	public void addSubmit(String privilegeIdList, String menuId, HttpServletResponse resp, HttpServletRequest req) throws IOException{
         
 		if(privilegeIdList != null && !"".equals(privilegeIdList)){
-			Resource[] resources = createResources(privilegeIdList.split(";"), menuId);
+			Resource[] resources = createResources(privilegeIdList.split(";"), menuId, req);
 			/**
 			 * 添加资源
 			 * */
@@ -107,7 +113,7 @@ public class ResourceController {
 	 * @param privilegIds
 	 * @param menuId
 	 * */
-	private Resource[] createResources(String[] privilegeIds, String menuId) {
+	private Resource[] createResources(String[] privilegeIds, String menuId, HttpServletRequest req) {
 		Resource[] resources = new Resource[privilegeIds.length];
 		
 		int index = 0;
@@ -118,14 +124,18 @@ public class ResourceController {
 				Resource res = new Resource();
 				if(pri.getName() != null)
 					res.setName(pri.getName());
+				
 				if(pri.getUrl() != null)
-					res.setUrl(pri.getUrl());
-				res.setCreator("luohong");
+					res.setUrl(super.getBaseURL(req) + pri.getUrl());
+				
+				
 				res.setMenuId(menuId);
 				if(pri.getDesc() != null)
 					res.setDesc(pri.getDesc());
+				
 				res.setCreatedTime(UUIDUtil.uuid());
 				res.setId(UUIDUtil.uuid());
+				
 				resources[index++] = res;
 			}
 		}
@@ -133,6 +143,7 @@ public class ResourceController {
 		return resources;
 	}
 
+	@GeneratePrivilege(name="删除资源",type="资源管理", uri="/resource/delete.do", desc="无")
 	/**
 	 * 删除资源
 	 * @param id

@@ -1,4 +1,4 @@
-package net.itaem.autogeneratecode;
+package net.itaem.autogeneratecode.mybatis;
 
 import java.io.File;
 import java.io.FileInputStream;

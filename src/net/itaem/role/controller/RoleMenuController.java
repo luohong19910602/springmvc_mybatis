@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.itaem.autogeneratecode.privilege.GeneratePrivilege;
 import net.itaem.base.controller.BaseController;
 import net.itaem.menu.entity.Menu;
 import net.itaem.menu.service.IMenuService;
@@ -41,6 +42,7 @@ public class RoleMenuController extends BaseController {
 	/**
 	 * 跳转到添加角色菜单界面
 	 * */
+	@GeneratePrivilege(name="跳转到添加角色菜单界面",type="角色管理", uri="/role/addRoleMenu.do", desc="无")
 	@RequestMapping("/role/addRoleMenu.do")
 	public String addRoleMenu(String roleId, HttpServletRequest req){
 		req.setAttribute("roleId", roleId);
@@ -59,6 +61,8 @@ public class RoleMenuController extends BaseController {
 	 * 
 	 * @throws IOException 
 	 * */
+	@GeneratePrivilege(name="添加角色菜单",type="角色管理", uri="/role/addRoleMenuSubmit.do", desc="无")
+	
 	@RequestMapping("/role/addRoleMenuSubmit.do")
 	public void addRoleMenuSubmit(String roleId, String resourceList, HttpServletResponse resp) throws IOException{
 		if(resourceList != null){
@@ -97,7 +101,7 @@ public class RoleMenuController extends BaseController {
 	}
 
 	/**
-	 * 删除角色的菜单
+	 * 添加角色菜单
 	 * 
 	 * @param menuIdStr 这个参数包含了菜单id以及资源id的可能，
 	 * 如果是menu id，那么就删除这个menu，如果是resource，那么就删除这个resource
@@ -106,6 +110,8 @@ public class RoleMenuController extends BaseController {
 	 * @param resp
 	 * @throws IOException 
 	 * */
+	@GeneratePrivilege(name="添加角色菜单",type="角色管理", uri="/role/deleteMenu.do", desc="无")
+	
 	@RequestMapping("/role/deleteMenu.do")
 	public void deleteRoleMenu(String menuIdStr, String roleId, HttpServletResponse resp) throws IOException{
 		String[] menuIds = menuIdStr.split(",");
@@ -136,6 +142,8 @@ public class RoleMenuController extends BaseController {
 	/**
 	 * 跳转到获取角色menu界面
 	 * */
+	@GeneratePrivilege(name="跳转到获取角色menu界面",type="角色管理", uri="/role/getRoleMenu.do", desc="无")
+	
 	@RequestMapping("/role/getRoleMenu.do")
 	public String getRoleMenu(String roleId, HttpServletRequest req){
 		req.setAttribute("roleId", roleId);
@@ -147,6 +155,7 @@ public class RoleMenuController extends BaseController {
 	 * 返回角色对应menu的json数据
 	 * 
 	 * */
+	@GeneratePrivilege(name="返回角色对应menu的json数据",type="角色管理", uri="/role/getRoleMenuJson.do", desc="无")
 	@RequestMapping("/role/getRoleMenuJson.do")
 	public void getRoleMenuJson(String roleId, HttpServletRequest req, HttpServletResponse resp) throws IOException{		
 		req.setAttribute("roleId", roleId);

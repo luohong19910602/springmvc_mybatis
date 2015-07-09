@@ -37,8 +37,16 @@ public class NavigationUpdateController extends BaseController {
 	 * */
 	@RequestMapping("/navigation/update.do")
 	public String update(String id, HttpServletRequest req){
-		String articleTypeListStr = navService.findById(id).getArticleTypeListStr();
-		String[] articleTypeList = articleTypeListStr.split(Navigation.ARTICLE_TYPE_SEPORATOR);		
+		Navigation nav = navService.findById(id);
+		
+		String articleTypeListStr = null;
+		
+		if(nav != null)
+			articleTypeListStr = navService.findById(id).getArticleTypeListStr();
+		String[] articleTypeList = null;
+		if(articleTypeListStr != null)
+			articleTypeList = articleTypeListStr.split(Navigation.ARTICLE_TYPE_SEPORATOR);		
+
 		//文章类别
 		List<ArticleType> typeList = typeService.listAll();
 		StringBuilder typeBuilder = new StringBuilder();
@@ -47,13 +55,15 @@ public class NavigationUpdateController extends BaseController {
 		if(typeList != null){
 			for(ArticleType type: typeList){
 				boolean hasChecked = false;
-				for(String articleType: articleTypeList){
-					if(type.getId().equals(articleType)){
-						hasChecked = true;
-						break;
+				if(articleTypeList != null){
+					for(String articleType: articleTypeList){
+						if(type.getId().equals(articleType)){
+							hasChecked = true;
+							break;
+						}
 					}
 				}
-				
+
 				if(hasChecked){
 					typeBuilder.append("<label style='vertical-align:middle'>" + type.getName() + "</label>");
 					typeBuilder.append("<input checked='checked' name='articleTypeList' style='vertical-align:middle' value='" + type.getId() + "' type='checkbox' id='articleTypeList'/>");
@@ -72,8 +82,9 @@ public class NavigationUpdateController extends BaseController {
 
 		typeBuilder.append("</p>");
 		req.setAttribute("type", typeBuilder.toString());
-		Navigation nav = navService.findById(id);
-		req.setAttribute("navigation", nav);
+		nav = navService.findById(id);
+		if(nav != null)
+			req.setAttribute("navigation", nav);
 		return "navigation/update";
 	}
 

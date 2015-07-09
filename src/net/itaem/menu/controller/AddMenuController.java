@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.itaem.autogeneratecode.privilege.GeneratePrivilege;
 import net.itaem.base.controller.BaseController;
 import net.itaem.menu.entity.Menu;
 import net.itaem.menu.service.IMenuService;
@@ -37,6 +38,7 @@ public class AddMenuController extends BaseController {
 	 * @param req
 	 * @return
 	 * */
+	@GeneratePrivilege(name="跳转到添加menu界面",type="菜单管理", uri="/menu/add.do", desc="无")
 	@RequestMapping("/menu/add.do")
 	public String add(String parentId, HttpServletRequest req){
 		if(StringUtils.isNotEmpty(parentId))
@@ -53,6 +55,7 @@ public class AddMenuController extends BaseController {
 	 * @param desc
 	 * @throws IOException 
 	 * */
+	@GeneratePrivilege(name="添加menu",type="菜单管理", uri="/menu/addSubmit.do", desc="无")
 	@RequestMapping("/menu/addSubmit.do")
 	@Transactional
 	public void addSubmit(Menu menu, HttpServletRequest req, HttpServletResponse resp) throws IOException{

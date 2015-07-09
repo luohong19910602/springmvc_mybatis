@@ -26,8 +26,7 @@ public class PrivilegeDaoImpl implements IPrivilegeDao {
 
 	@Override
 	public List<Privilege> listAll() {
-		String sql = "select * from sys_privilege where privilege_del_flag = 0";
-		List<Privilege> privilegeList = privilegeMapper.listAll(sql);  
+		List<Privilege> privilegeList = privilegeMapper.listAll();  
 		List<Privilege> parentList = new ArrayList<Privilege>();  
 
 		if(privilegeList != null && privilegeList.size() > 0){  
@@ -146,29 +145,7 @@ public class PrivilegeDaoImpl implements IPrivilegeDao {
 	 * */
 	@Override
 	public List<Privilege> listByUserId(String userId) {
-		List<Privilege> privilegeList = privilegeMapper.listByUserId(userId);
-		List<Privilege> typeList = new ArrayList<Privilege>();  
-        
-		if(privilegeList != null && privilegeList.size() > 0){  
-			for(Privilege pri: privilegeList){
-				if(pri.getParentId() != null){
-					Privilege type = privilegeMapper.listBy(pri.getParentId());
-					if(type != null)
-						if(!typeList.contains(type))
-							typeList.add(type);
-				}
-			}
-			
-			for(Privilege pri: privilegeList){
-				for(Privilege type: typeList){
-					if(type.getId().equals(pri.getParentId())){
-						type.addSubPrivilege(pri);
-					}
-				}
-			}
-		}
-
-		return typeList;
+		return privilegeMapper.listByUserId(userId);
 	}
 
 	@Override

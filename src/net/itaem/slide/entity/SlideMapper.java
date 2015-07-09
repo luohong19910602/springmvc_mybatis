@@ -18,25 +18,25 @@ import org.springframework.stereotype.Repository;
  */  
 @Repository(value = "slideMapper")  
 public interface SlideMapper {  
-	@Select(value = "select * from sys_slide where slide_del_flag=0")  
+	@Select(value = "select * from sys_slide where _del_flag=0")  
 	@Results(value = { 
-			@Result(id = true, property = "id", column = "id"),  
-			@Result(property = "title", column = "slide_title"),
-			@Result(property = "desc", column = "slide_desc"),
-			@Result(property = "imgUrl", column = "slide_image_url"),
-			@Result(property = "createdTime", column = "slide_created_time"),
-			@Result(property = "creator", column = "slide_creator"),
-			@Result(property = "updatedTime", column = "slide_updated_time"),
-			@Result(property = "updator", column = "slide_updator"),
-			@Result(property = "delFlag", column = "slide_del_flag"),
+			@Result(id = true, property = "id", column = "_id"),  
+			@Result(property = "title", column = "_title"),
+			@Result(property = "desc", column = "_desc"),
+			@Result(property = "imgUrl", column = "_image_url"),
+			@Result(property = "createdTime", column = "_created_time"),
+			@Result(property = "creator", column = "_creator"),
+			@Result(property = "updatedTime", column = "_updated_time"),
+			@Result(property = "updator", column = "_updator"),
+			@Result(property = "delFlag", column = "_del_flag"),
 	})  
 	List<Slide> listAll();  
 	
-	@Insert("insert into sys_slide (id, slide_title, slide_image_url, "
-			+ "slide_desc, slide_created_time, slide_creator) "
+	@Insert("insert into sys_slide (_id, _title, _image_url, "
+			+ "_desc, _created_time, _creator) "
 			+ "values(#{id}, #{title}, #{imgUrl}, #{desc}, #{createdTime}, #{creator})")
 	public void add(Slide slide);
 	
-	@Update("update sys_slide set slide_del_flag='1' where id=#{id}")
+	@Update("update sys_slide set _del_flag='1' where _id=#{id}")
 	public void delete(String id);
 } 

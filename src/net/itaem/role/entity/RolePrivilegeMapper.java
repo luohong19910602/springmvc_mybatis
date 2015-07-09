@@ -16,7 +16,7 @@ public interface RolePrivilegeMapper {
 	/**
 	 * 插入一条记录
 	 * */
-	@Insert("insert into sys_role_privilege(id, role_id, privilege_id) "
+	@Insert("insert into sys_role_privilege(_id, _role_id, _privilege_id) "
 			+ "values(#{id}, #{roleId}, #{privilegeId})")
 	public void add(RolePrivilege rolePrivilege);
 	
@@ -24,7 +24,7 @@ public interface RolePrivilegeMapper {
 	 * 删除RolePrivilege
 	 * 
 	 * */
-	@Delete("delete from sys_role_privilege where role_id=#{roleId} and privilege_id=#{privilegeId}")
+	@Delete("delete from sys_role_privilege where _role_id=#{roleId} and _privilege_id=#{privilegeId}")
 	public void delete(RolePrivilege rolePrivilege);
   
 }

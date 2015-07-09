@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import net.itaem.autogeneratecode.privilege.GeneratePrivilege;
 import net.itaem.base.controller.BaseController;
 import net.itaem.privilege.entity.Privilege;
 import net.itaem.privilege.service.IPrivilegeService;
@@ -30,6 +31,8 @@ public class ListPrivilegeController extends BaseController {
 	/**
 	 * 跳转到系统模块首页
 	 * */
+	@GeneratePrivilege(name="跳转到系统模块首页",type="权限管理", uri="/privilege/list.do", desc="无")
+
 	@RequestMapping("/privilege/list.do")
 	public String list(){
 		return "privilege/list";
@@ -39,6 +42,7 @@ public class ListPrivilegeController extends BaseController {
 	 * 列出全部权限，这里维护好层次关系
 	 * 
 	 * */
+	@GeneratePrivilege(name="列出全部权限，这里维护好层次关系",type="权限管理", uri="/privilege/listJson.do", desc="无")
 	@RequestMapping("/privilege/listJson.do")
 	public void listJson(HttpServletResponse resp) throws IOException{
 		List<Privilege> privilegeList = privilegeService.listAll();
@@ -49,6 +53,7 @@ public class ListPrivilegeController extends BaseController {
 	 * 列出全部权限的json数据
 	 * 这里不维护层次关系
 	 * */
+	@GeneratePrivilege(name="列出全部权限的json数据",type="权限管理", uri="/privilege/listGridJson.do", desc="无")
 	@RequestMapping("/privilege/listGridJson.do")
 	public void listGridJson(HttpServletResponse resp) throws IOException{
 		//将数据变成json
@@ -63,6 +68,7 @@ public class ListPrivilegeController extends BaseController {
 	 * 比如：权限管理包含了列出权限、添加权限、修改权限、删除权限等几个模块
 	 * @throws IOException 
 	 * */
+	@GeneratePrivilege(name="打开全部的权限列表",type="权限管理", uri="/privilege/listTreeJson.do", desc="无")
 	@RequestMapping("/privilege/listTreeJson.do")
 	public void listTreeJson(HttpServletResponse resp) throws IOException{
 		List<Privilege> privilegeList = privilegeService.listAll();

@@ -94,35 +94,27 @@ public class MenuServiceImpl implements IMenuService {
 
 	@Override
 	public List<Menu> listBy(User user) {
+
 		return menuDao.listBy(user);
 	}
 
 	@Override
 	public List<Menu> listByUserId(String userId) {
 		if(userId == null || "".equals(userId)) return null;
-		
-		List<Role> roleList = roleDao.listByUserId(userId);
+
 		List<Menu> result = new ArrayList<Menu>();
-		
 		//user menu
 		List<Menu> userMenuList = menuDao.listByUserId(userId);
-		if(userMenuList != null && userMenuList.size() > 0){
-			result.addAll(userMenuList);
-		}
 
-		//role menu
-		if(roleList != null && roleList.size() > 0){
-			for(Role role: roleList){
-				List<Menu> roleMenuList = menuDao.listBy(role.getId());
-				if(roleMenuList != null && roleMenuList.size() > 0){
-					for(Menu menu: roleMenuList){
-						if(result.contains(menu)){
-							Menu that = result.get(result.indexOf(menu));
-							merge(that, menu);
-						}else{
-							result.add(menu);
-						}
-					}
+		System.out.println(userMenuList);
+		
+		if(userMenuList != null && userMenuList.size() > 0){
+			for(Menu menu: userMenuList){
+				if(result.contains(menu)){
+					Menu that = result.get(result.indexOf(menu));
+					merge(that, menu);
+				}else{
+					result.add(menu);
 				}
 			}
 		}
@@ -139,7 +131,7 @@ public class MenuServiceImpl implements IMenuService {
 
 		menu1.addSubMenu(menu2.getChildren());  //添加子菜单
 		menu1.addResourceList(menu2.getResourceList());  //添加资源
-        
+
 		if(menu1.getChildren() != null && menu1.getChildren().size() > 0 
 				&& menu2.getChildren() != null && menu2.getChildren().size() > 0){  //递归搞定其他的menu合并
 			for(Menu m1: menu1.getChildren()){

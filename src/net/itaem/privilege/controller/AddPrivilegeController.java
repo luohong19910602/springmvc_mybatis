@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.itaem.autogeneratecode.privilege.GeneratePrivilege;
 import net.itaem.base.controller.BaseController;
 import net.itaem.privilege.entity.Privilege;
 import net.itaem.privilege.service.IPrivilegeService;
@@ -34,6 +35,7 @@ public class AddPrivilegeController extends BaseController {
 	 * 跳转到添加新模块权限界面
 	 * @return
 	 * */
+	@GeneratePrivilege(name="跳转到添加新模块权限界面",type="权限管理", uri="/privilege/add.do", desc="无")
 	@RequestMapping("/privilege/add.do")
 	public String add(){
 		return "privilege/add";
@@ -46,6 +48,8 @@ public class AddPrivilegeController extends BaseController {
 	 * @param desc
 	 * @param resp
 	 * */
+	@GeneratePrivilege(name="添加新模块权限",type="权限管理", uri="/privilege/addSubmit.do", desc="无")
+	
 	@RequestMapping("/privilege/addSubmit.do")
 	public void addSubmit(Privilege privilege, HttpServletRequest req, HttpServletResponse resp) throws IOException{
 		if(StringUtils.isEmpty(privilege.getName())){
@@ -62,6 +66,8 @@ public class AddPrivilegeController extends BaseController {
 	/**
 	 * 跳转到添加子模块权限界面
 	 * */
+	@GeneratePrivilege(name="跳转到添加子模块权限界面",type="权限管理", uri="/privilege/addChild.do", desc="无")
+
 	@RequestMapping("/privilege/addChild.do")
 	public String addChild(String parentId, HttpServletRequest req){
 		req.setAttribute("parentId", parentId);
@@ -78,6 +84,8 @@ public class AddPrivilegeController extends BaseController {
 	 * @resp
 	 * 
 	 * */
+	@GeneratePrivilege(name="添加子模块权限",type="权限管理", uri="/privilege/addChildSubmit.do", desc="无")
+
 	@RequestMapping("/privilege/addChildSubmit.do")
 	public void addChildSubmit(Privilege privilege, HttpServletRequest req, HttpServletResponse resp) throws IOException{
 		privilege.setCreator(getLoginUserName(req, ""));

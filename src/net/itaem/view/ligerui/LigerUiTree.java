@@ -12,7 +12,6 @@ import net.sf.json.JSONObject;
  * 在每次add、delete之后，都需要计算树的level
  * 
  * 
- * 
  * @author 骆宏  
  * @date 2014-08-19 19:39 am  
  * @email 846705189@qq.com  
@@ -384,7 +383,6 @@ public class LigerUiTree implements ITree{
 			level = 2;     
 		}
 	}
-
 
 	@Override
 	public boolean isMenu() {

@@ -24,42 +24,42 @@ public interface ResourceMapper {
 	 * @param menuId 菜单id
 	 * @return the menu owner resource list
 	 * */
-	@Select(value = "select * from sys_resource where resource_menu_id =#{menuId} and resource_del_flag=0")  
+	@Select(value = "select * from sys_resource where _menu_id =#{menuId} and _del_flag=0")  
 	@Results(value = { 
-			@Result(id = true, property = "id", column = "id"),  
-			@Result(property = "name", column = "resource_name"),
-			@Result(property = "desc", column = "resource_desc"),
-			@Result(property = "url", column = "resource_url"),
-			@Result(property = "menuId", column = "resource_menu_id"),
-			@Result(property = "createdTime", column = "resource_created_time"),
-			@Result(property = "creator", column = "resource_creator"),
-			@Result(property = "updatedTime", column = "resource_updated_time"),
-			@Result(property = "updator", column = "resource_updator"),
-			@Result(property = "delFlag", column = "resource_del_flag"),
-			@Result(property = "pic", column = "resource_pic")	
+			@Result(id = true, property = "id", column = "_id"),  
+			@Result(property = "name", column = "_name"),
+			@Result(property = "desc", column = "_desc"),
+			@Result(property = "url", column = "_url"),
+			@Result(property = "menuId", column = "_menu_id"),
+			@Result(property = "createdTime", column = "_created_time"),
+			@Result(property = "creator", column = "_creator"),
+			@Result(property = "updatedTime", column = "_updated_time"),
+			@Result(property = "updator", column = "_updator"),
+			@Result(property = "delFlag", column = "_del_flag"),
+			@Result(property = "pic", column = "_pic")	
 	})  
 	List<Resource> listAll(String menuId);  
 	
-	@Insert("insert into sys_resource (id, resource_name, resource_url, resource_desc, resource_created_time, resource_creator, resource_menu_id) "
+	@Insert("insert into sys_resource (_id, _name, _url, _desc, _created_time, _creator, _menu_id) "
 			+ "values(#{id}, #{name}, #{url}, #{desc}, #{createdTime}, #{creator}, #{menuId})")
 	public void add(Resource resource);
 	
-	@Update("update sys_resource set resource_del_flag='1' where id=#{id}")
+	@Update("update sys_resource set _del_flag='1' where _id=#{id}")
 	public void delete(String id);
 	
-	@Select(value = "select * from sys_resource where id=#{id} and resource_del_flag=0")  
+	@Select(value = "select * from sys_resource where _id=#{id} and _del_flag=0")  
 	@Results(value = { 
-			@Result(id = true, property = "id", column = "id"),  
-			@Result(property = "name", column = "resource_name"),
-			@Result(property = "desc", column = "resource_desc"),
-			@Result(property = "url", column = "resource_url"),
-			@Result(property = "menuId", column = "resource_menu_id"),
-			@Result(property = "createdTime", column = "resource_created_time"),
-			@Result(property = "creator", column = "resource_creator"),
-			@Result(property = "updatedTime", column = "resource_updated_time"),
-			@Result(property = "updator", column = "resource_updator"),
-			@Result(property = "delFlag", column = "resource_del_flag"),
-			@Result(property = "pic", column = "resource_pic")	
+			@Result(id = true, property = "id", column = "_id"),  
+			@Result(property = "name", column = "_name"),
+			@Result(property = "desc", column = "_desc"),
+			@Result(property = "url", column = "_url"),
+			@Result(property = "menuId", column = "_menu_id"),
+			@Result(property = "createdTime", column = "_created_time"),
+			@Result(property = "creator", column = "_creator"),
+			@Result(property = "updatedTime", column = "_updated_time"),
+			@Result(property = "updator", column = "_updator"),
+			@Result(property = "delFlag", column = "_del_flag"),
+			@Result(property = "pic", column = "_pic")	
 	})  
 	net.itaem.resource.entity.Resource findBy(String id);
 } 

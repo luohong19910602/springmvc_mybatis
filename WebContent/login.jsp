@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+
 <%
 String scheme = request.getScheme();
 String serverName = request.getServerName();
@@ -10,7 +11,12 @@ int port = request.getServerPort();
 String baseURL = scheme + "://" + serverName + ":"+ port + contextPath;
 request.setAttribute("baseURL", baseURL);
 
-%>	
+//将baseURL放入application中
+if(application.getAttribute("baseURL") == null){
+    application.setAttribute("baseURL", baseURL);
+}
+%>
+	
 <!DOCTYPE html>
 <html>
 <head>

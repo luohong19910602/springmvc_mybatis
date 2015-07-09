@@ -41,7 +41,7 @@ public class ArticleListFrontController extends BaseController {
 
 	@Autowired
 	private INavigationService navService;
-	
+
 	@Autowired
 	private ISlideService slideService;
 
@@ -57,12 +57,13 @@ public class ArticleListFrontController extends BaseController {
 	@RequestMapping("/article/front/index.do")
 	public void index(Integer index, Integer navIndex, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		List<Navigation> navList = setNavigation(navIndex, req);
-        setSlide(req);
+		setSlide(req);
 		if(index == null) index = 0;
 		if(navIndex == null) navIndex = 0;
-		String typeListStr = navList.get(navIndex).getArticleTypeListStr();
-		setArticleType(index, navIndex, typeListStr, req);
-		
+		if(navList != null && navList.size() > 0){
+			String typeListStr = navList.get(navIndex).getArticleTypeListStr();
+			setArticleType(index, navIndex, typeListStr, req);
+		}
 		req.getRequestDispatcher("/front/article/index.jsp").forward(req, resp);   
 	}
 
@@ -106,7 +107,7 @@ public class ArticleListFrontController extends BaseController {
 				}
 			}
 		}
-		
+
 		//设置文章详细信息
 		Article article = artilceService.findById(id);
 		StringBuilder articleBuilder = new StringBuilder();
@@ -116,7 +117,7 @@ public class ArticleListFrontController extends BaseController {
 			articleBuilder.append("</div>");
 		}
 		req.setAttribute("article", articleBuilder.toString());
-		
+
 		req.getRequestDispatcher("/front/article/detail.jsp").forward(req, resp);
 	}
 
@@ -202,7 +203,7 @@ public class ArticleListFrontController extends BaseController {
 	private void setArtcile(Integer articleTypeIndex, Integer navIndex, String articleTypeId, HttpServletRequest req){
 		List<Article> articleList = artilceService.listBy(articleTypeId);
 		if(articleList != null && articleList.size() > 0){
-			
+
 			//只有一个文章，默认为置顶文章
 			if(articleList.size() == 1){
 				StringBuilder topBuilder = new StringBuilder();
@@ -212,7 +213,7 @@ public class ArticleListFrontController extends BaseController {
 				req.setAttribute("article", topBuilder.toString());
 				return;
 			}
-			
+
 			StringBuilder articleBuilder = new StringBuilder();
 			articleBuilder.append("<div class='row-fluid'>");
 			int flag = 0;
@@ -225,8 +226,8 @@ public class ArticleListFrontController extends BaseController {
 					String summary = article.getSummary();
 					articleBuilder.append("<p>" + summary + "</p>");
 					articleBuilder.append("<p><a class='btn' href='" + 
-					    super.getBaseURL(req) + "/article/front/detail.do?navIndex=" +navIndex + ""
-					    		+ "&index=" + articleTypeIndex + "&id=" + article.getId() +  "'>查看详情</a></p>");
+							super.getBaseURL(req) + "/article/front/detail.do?navIndex=" +navIndex + ""
+							+ "&index=" + articleTypeIndex + "&id=" + article.getId() +  "'>查看详情</a></p>");
 					articleBuilder.append("</div>");
 					flag++;
 					if(flag % 3 == 0 && flag - 1 != articleList.size()){	
@@ -235,9 +236,9 @@ public class ArticleListFrontController extends BaseController {
 					}
 				}
 			}
-			
+
 			articleBuilder.append("</div>");
-			
+
 			if(top != null){
 				StringBuilder topBuilder = new StringBuilder();
 				topBuilder.append("<div class='row-fluid'>");
@@ -245,56 +246,56 @@ public class ArticleListFrontController extends BaseController {
 				topBuilder.append("</div>");
 				articleBuilder.insert(0, topBuilder.toString());
 			}
-			
-			
+
+
 			req.setAttribute("article", articleBuilder.toString());
 		}
 	}
-	
+
 	/**
 	 * 设置slide
 	 * */
 	private void setSlide(HttpServletRequest req){
-	    List<Slide> slideList = slideService.listAll();
-	    if(slideList != null && slideList.size() > 0){
-	    	StringBuilder slideBuilder = new StringBuilder();
-	    	slideBuilder.append("<ol class='carousel-indicators'>");
-	    	
-	    	for(int i=0; i<slideList.size(); i++){
-	    		if(i == 0)
-	    		    slideBuilder.append("<li class='active' data-slide-to='0' data-target='#carousel-193625'></li>");
-	    		else{
-	    			slideBuilder.append("<li data-slide-to='" + i + "' data-target='#carousel-193625'></li>");
-	    		}
-	    	}
-	    	slideBuilder.append("</ol>");
-	    	
-	    	
-	    	slideBuilder.append("<div class='carousel-inner'>");
-	    	
-	    	for(int i=0; i<slideList.size(); i++){
-	    		if(i == 0){
-	    			slideBuilder.append("<div class='item active'>");
-	    			slideBuilder.append("<img src='"+slideList.get(0).getImgUrl()+"' />");
-	    			slideBuilder.append("<div class='carousel-caption'>");
-	    			slideBuilder.append("<h4>" + slideList.get(0).getTitle() + "</h4>");
-	    			slideBuilder.append("<p>"+slideList.get(0).getDesc()+"</p>");
-	    			slideBuilder.append("</div>");
-	    			slideBuilder.append("</div>");
-	    		}else{
-	    			slideBuilder.append("<div class='item'>");
-	    			slideBuilder.append("<img src='"+slideList.get(i).getImgUrl()+"' />");
-	    			slideBuilder.append("<div class='carousel-caption'>");
-	    			slideBuilder.append("<h4>" + slideList.get(i).getTitle() + "</h4>");
-	    			slideBuilder.append("<p>"+slideList.get(i).getDesc()+"</p>");
-	    			slideBuilder.append("</div>");
-	    			slideBuilder.append("</div>");
-	    		}
-	    	}
-	    	slideBuilder.append("</div>");
-	    	System.out.println(slideBuilder.toString());
-	    	req.setAttribute("slide", slideBuilder.toString());
-	    }
+		List<Slide> slideList = slideService.listAll();
+		if(slideList != null && slideList.size() > 0){
+			StringBuilder slideBuilder = new StringBuilder();
+			slideBuilder.append("<ol class='carousel-indicators'>");
+
+			for(int i=0; i<slideList.size(); i++){
+				if(i == 0)
+					slideBuilder.append("<li class='active' data-slide-to='0' data-target='#carousel-193625'></li>");
+				else{
+					slideBuilder.append("<li data-slide-to='" + i + "' data-target='#carousel-193625'></li>");
+				}
+			}
+			slideBuilder.append("</ol>");
+
+
+			slideBuilder.append("<div class='carousel-inner'>");
+
+			for(int i=0; i<slideList.size(); i++){
+				if(i == 0){
+					slideBuilder.append("<div class='item active'>");
+					slideBuilder.append("<img src='"+slideList.get(0).getImgUrl()+"' />");
+					slideBuilder.append("<div class='carousel-caption'>");
+					slideBuilder.append("<h4>" + slideList.get(0).getTitle() + "</h4>");
+					slideBuilder.append("<p>"+slideList.get(0).getDesc()+"</p>");
+					slideBuilder.append("</div>");
+					slideBuilder.append("</div>");
+				}else{
+					slideBuilder.append("<div class='item'>");
+					slideBuilder.append("<img src='"+slideList.get(i).getImgUrl()+"' />");
+					slideBuilder.append("<div class='carousel-caption'>");
+					slideBuilder.append("<h4>" + slideList.get(i).getTitle() + "</h4>");
+					slideBuilder.append("<p>"+slideList.get(i).getDesc()+"</p>");
+					slideBuilder.append("</div>");
+					slideBuilder.append("</div>");
+				}
+			}
+			slideBuilder.append("</div>");
+			System.out.println(slideBuilder.toString());
+			req.setAttribute("slide", slideBuilder.toString());
+		}
 	}
 
 }

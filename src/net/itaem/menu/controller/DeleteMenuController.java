@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
 
+import net.itaem.autogeneratecode.privilege.GeneratePrivilege;
 import net.itaem.base.controller.BaseController;
 import net.itaem.menu.service.IMenuService;
 import net.itaem.util.JsonUtil;
@@ -31,6 +32,7 @@ public class DeleteMenuController extends BaseController {
 	 * @param resp
 	 * @throws IOException 
 	 * */
+	@GeneratePrivilege(name="删除menu",type="菜单管理", uri="/menu/delete.do", desc="无")
 	@RequestMapping("/menu/delete.do")
 	public void delete(String menuId, HttpServletResponse resp) throws IOException{
 		if(menuId == null || "".equals(menuId)){

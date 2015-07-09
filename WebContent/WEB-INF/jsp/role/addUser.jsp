@@ -1,16 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%
-	String scheme = request.getScheme();
-	String serverName = request.getServerName();
-	String contextPath = request.getContextPath();
-	int port = request.getServerPort();
 
-	//网站的访问跟路径
-	String baseURL = scheme + "://" + serverName + ":" + port
-			+ contextPath;
-	request.setAttribute("baseURL", baseURL);
-%>
 
 <!DOCTYPE html>
 <html>
@@ -186,7 +176,6 @@
 	function f_selectContactOK(item, dialog) {
         var selectNode = dialog.frame.selectNode || dialog.frame.window.selectNode; 
         var nodes = selectNode();   //获取选中的id
-        //alert(data);
         
         if (!nodes || nodes.length == 0){
             alert('请选择行!');

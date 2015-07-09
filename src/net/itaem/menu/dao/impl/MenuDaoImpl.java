@@ -49,9 +49,8 @@ public class MenuDaoImpl implements IMenuDao{
 	 * */
 	@Override
 	public List<Menu> listAll(boolean containsResource) {
-		String sql = "select * from sys_menu where menu_del_flag=0";
-
-		List<Menu> menuList = menuMapper.listAll(sql);  //列出全部menu
+		
+		List<Menu> menuList = menuMapper.listAll();  //列出全部menu
 		List<Menu> parentMenuList = new ArrayList<Menu>();  //取出没有父亲结点的菜单
 
 		if(menuList != null && menuList.size() > 0){  //将这些菜单的层次关系维护好
@@ -171,30 +170,39 @@ public class MenuDaoImpl implements IMenuDao{
 		return result;
 	}
 	
-	
+	/**
+	 * 获取用户菜单数据
+	 * */
 	public List<Menu> listByUserId(String userId){
 		List<Menu> menuList = menuMapper.listByUserId(userId);
+		
+		System.out.println(menuList);
 		
 		List<Menu> result = new ArrayList<Menu>();
 		if(menuList != null && menuList.size() > 0){
 			for(Menu menu: menuList){  //遍历每个menu，然后查询该menu的父亲menu，以及resource列表
 				Menu tree = routeByUserId(menu, userId);  //形成一个menu树，并且返回最大的树根节点				
-
-				if(!result.contains(tree)){
+				if(!result.contains(tree) && tree.getResourceList() != null && tree.getResourceList().size() > 0){
 					result.add(tree);
 				}else{
 					int index = result.indexOf(tree);
+					if(index <= 0){
+						continue;
+					}
 					Menu child = result.get(index);  
 
 					//add child
 					if(child != null){
 						child.addSubMenu(tree.getChildren());
 					}
+					
 					//add resource list
 					child.addResourceList(tree.getResourceList());
 				}
 			}
 		}
+		
+		
 		return result;
 	}
 	
@@ -227,6 +235,8 @@ public class MenuDaoImpl implements IMenuDao{
 			UserMenu userMenu = new UserMenu();
 			userMenu.setUserId(userId);
 			userMenu.setMenuId(menu.getId());
+		    System.out.println(userMenu);
+		    System.out.println(menuMapper.findByUserAndMenu(userMenu));
 			menu.setResourceList(menuMapper.findByUserAndMenu(userMenu));
 			
 			//形成menu树
@@ -263,7 +273,7 @@ public class MenuDaoImpl implements IMenuDao{
 
 		List<Menu> route = new LinkedList<Menu>();
 		if(menu.getParentId() != null && !"".equals(menu.getId())){
-			Menu parent = menuMapper.findBy(menu.getParentId());;
+			Menu parent = menuMapper.findBy(menu.getParentId());
 			while(parent != null){
 				route.add(0, parent);
 				if(parent.getParentId() == null || parent.getParentId().equals("")){

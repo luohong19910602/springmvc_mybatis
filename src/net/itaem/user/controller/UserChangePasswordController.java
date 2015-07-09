@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.itaem.autogeneratecode.privilege.GeneratePrivilege;
 import net.itaem.base.controller.BaseController;
 import net.itaem.user.entity.User;
 import net.itaem.user.service.IUserService;
@@ -28,6 +29,8 @@ public class UserChangePasswordController extends BaseController {
      * 跳转到修改密码界面
      * 
      * */
+    @GeneratePrivilege(name="跳转到修改密码界面",type="用户管理", uri="/user/changePassword.do", desc="无")
+	
     @RequestMapping("/user/changePassword.do")
     public String changePassword(){
     	return "user/changePassword";
@@ -36,6 +39,8 @@ public class UserChangePasswordController extends BaseController {
     /**
      * 修改密码
      * */
+    @GeneratePrivilege(name="修改密码",type="用户管理", uri="/user/changePasswordSubmit.do", desc="无")
+	
     @RequestMapping("/user/changePasswordSubmit.do")
     public void changePasswordSubmit(HttpServletRequest req, HttpServletResponse resp) throws IOException{
         String oldPassword = req.getParameter("oldPassword");

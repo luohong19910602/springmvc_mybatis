@@ -1,11 +1,14 @@
 package net.itaem.base.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.itaem.base.entity.Page;
+import net.itaem.common.RequestUtil;
 import net.itaem.user.entity.User;
 import net.itaem.view.ILigerFactory;
 import net.itaem.view.IToGridJson;
@@ -25,7 +28,7 @@ import net.sf.json.JSONObject;
  * @email 846705189@qq.com
  * */
 public class BaseController {
-
+	
 	//这里使用工厂设计模式，所以在controller层，这几个类是松耦合的
 	ILigerFactory factory = null;
 
@@ -104,17 +107,50 @@ public class BaseController {
 	 * */
 	public Page getPage(HttpServletRequest req){
 		Page page = new Page();
-		String pageStr = req.getParameter("page");
-		String pageSizeStr = req.getParameter("pagesize");
-
-		if(pageStr != null && !"".equals(pageStr) && pageStr.matches("\\d+")){
+		
+		String pageStr = RequestUtil.getParamByName(req, "page", "-1");
+		String pageSizeStr = RequestUtil.getParamByName(req, "pagesize", "-1");
+		String sortname = RequestUtil.getParamByName(req, "sortname", "");
+		String sortorder = RequestUtil.getParamByName(req, "sortorder", "");
+		
+		/**
+		 * 拿到其他的查询条件，然后放入map中
+		 * */
+		Map<String, String> searchMap = new HashMap<String, String>();
+        Map<String, String[]> params = RequestUtil.params(req);
+        
+        for(String searchName: params.keySet()){
+        	//丢弃几个翻页以及排序的参数
+        	if(searchName.equals("page") || searchName.equals("pagesize") || searchName.equals("sortname")  || searchName.equals("sortorder")){
+        		continue;
+        	}
+        	//参数值为空，丢弃
+        	if(RequestUtil.getParamByName(req, searchName, "").equals("")){
+        		continue;
+        	}
+        	searchMap.put(searchName, RequestUtil.getParamByName(req, searchName, ""));
+        }
+        
+        if(searchMap.size() > 0){
+        	page.setSearchMap(searchMap);
+        }
+				
+		if(!"".equals(pageStr) && pageStr.matches("\\d+")){
 			page.setPage(Integer.parseInt(pageStr));
 		}
 
-		if(pageSizeStr != null && !"".equals(pageSizeStr) && pageStr.matches("\\d+")){
+		if(!"".equals(pageSizeStr) && pageStr.matches("\\d+")){
 			page.setSize(Integer.parseInt(pageSizeStr));
 		}
-
+		
+		if(!sortname.equals("")){
+			page.setSortname(sortname);
+		}
+		
+		if(!sortorder.equals("")){
+			page.setSortorder(sortorder);
+		}
+		
 		return page;
 	}
 

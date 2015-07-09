@@ -23,64 +23,64 @@ public interface ArticleMapper {
 	 * @return
 	 * */
 	@Select(value = "select * from sys_article,sys_article_article_type "
-			+ "where sys_article.id=sys_article_article_type.article_id "
-			+ "and sys_article_article_type.article_type_id=#{articleTypeId} "
-			+ "and sys_article.article_del_flag=0")  
+			+ "where sys_article._id=sys_article_article_type._article_id "
+			+ "and sys_article_article_type._article_type_id=#{articleTypeId} "
+			+ "and sys_article._del_flag=0")  
 	@Results(value = { 
-			@Result(id = true, property = "id", column = "id"),  
-			@Result(property = "title", column = "article_title"),
-			@Result(property = "content", column = "article_content"),
-			@Result(property = "url", column = "article_url"),
-			@Result(property = "viewCount", column = "article_view_count"),
-			@Result(property = "reference", column = "article_reference"),
-			@Result(property = "createdTime", column = "article_created_time"),
-			@Result(property = "creator", column = "article_creator"),
-			@Result(property = "summary", column = "article_summary"),			
-			@Result(property = "updatedTime", column = "article_updated_time"),
-			@Result(property = "updator", column = "article_updator"),
-			@Result(property = "userId", column = "user_id")
+			@Result(id = true, property = "id", column = "_id"),  
+			@Result(property = "title", column = "_title"),
+			@Result(property = "content", column = "_content"),
+			@Result(property = "url", column = "_url"),
+			@Result(property = "viewCount", column = "_view_count"),
+			@Result(property = "reference", column = "_reference"),
+			@Result(property = "createdTime", column = "_created_time"),
+			@Result(property = "creator", column = "_creator"),
+			@Result(property = "summary", column = "_summary"),			
+			@Result(property = "updatedTime", column = "_updated_time"),
+			@Result(property = "updator", column = "_updator"),
+			@Result(property = "userId", column = "_user_id")
 	})  
 	List<Article> listBy(String articleTypeId);  
 
-	@Select(value = "select * from sys_article where article_del_flag=0")  
+	@Select(value = "select * from sys_article where _del_flag=0")  
 	@Results(value = { 
-			@Result(id = true, property = "id", column = "id"),  
-			@Result(property = "title", column = "article_title"),
-			@Result(property = "content", column = "article_content"),
-			@Result(property = "url", column = "article_url"),
-			@Result(property = "viewCount", column = "article_view_count"),
-			@Result(property = "reference", column = "article_reference"),
-			@Result(property = "summary", column = "article_summary"),
-			@Result(property = "createdTime", column = "article_created_time"),
-			@Result(property = "creator", column = "article_creator"),
-			@Result(property = "updatedTime", column = "article_updated_time"),
-			@Result(property = "updator", column = "article_updator")
+			@Result(id = true, property = "id", column = "_id"),  
+			@Result(property = "title", column = "_title"),
+			@Result(property = "content", column = "_content"),
+			@Result(property = "url", column = "_url"),
+			@Result(property = "viewCount", column = "_view_count"),
+			@Result(property = "reference", column = "_reference"),
+			@Result(property = "summary", column = "_summary"),
+			@Result(property = "createdTime", column = "_created_time"),
+			@Result(property = "creator", column = "_creator"),
+			@Result(property = "updatedTime", column = "_updated_time"),
+			@Result(property = "updator", column = "_updator")
 	})  
 	List<Article> listAll();
 	
-	@Update("update sys_article set article_del_flag='1' where id=#{id}")
+	@Update("update sys_article set _del_flag='1' where _id=#{id}")
 	void delete(String id);
 	
-	@Insert("insert into sys_article(id,article_summary,user_id,article_title,article_content,article_created_time,article_creator,article_updated_time,article_updator)"
+	@Insert("insert into sys_article(_id,_summary,_user_id,_title,_content,_created_time,_creator,_updated_time,_updator)"
 			+ " values(#{id},#{summary},#{userId},#{title},#{content},#{createdTime},#{creator},#{updatedTime},#{updator})")
 	void add(Article article);
 
 	@Select(value = "select * from sys_article "
-			+ "where id=#{id} "
-			+ "and article_del_flag=0")  
+			+ "where _id=#{id} "
+			+ "and _del_flag=0")  
 	@Results(value = { 
-			@Result(id = true, property = "id", column = "id"),  
-			@Result(property = "title", column = "article_title"),
-			@Result(property = "content", column = "article_content"),
-			@Result(property = "url", column = "article_url"),
-			@Result(property = "summary", column = "article_summary"),
-			@Result(property = "viewCount", column = "article_view_count"),
-			@Result(property = "reference", column = "article_reference"),
-			@Result(property = "createdTime", column = "article_created_time"),
-			@Result(property = "creator", column = "article_creator"),
-			@Result(property = "updatedTime", column = "article_updated_time"),
-			@Result(property = "updator", column = "article_updator"),
-			@Result(property = "userId", column = "user_id")
+			@Result(id = true, property = "id", column = "_id"),  
+			@Result(property = "title", column = "_title"),
+			@Result(property = "content", column = "_content"),
+			@Result(property = "url", column = "_url"),
+			@Result(property = "summary", column = "_summary"),
+			@Result(property = "viewCount", column = "_view_count"),
+			@Result(property = "reference", column = "_reference"),
+			@Result(property = "createdTime", column = "_created_time"),
+			@Result(property = "creator", column = "_creator"),
+			@Result(property = "updatedTime", column = "_updated_time"),
+			@Result(property = "updator", column = "_updator"),
+			@Result(property = "userId", column = "_id")
 	})  
 	Article findById(String id);
 	
@@ -88,49 +88,52 @@ public interface ArticleMapper {
 	 * 根据用户id查找所有文章
 	 * */
 	@Select(value = "select * from sys_article "
-			+ "where user_id=#{userId} "
-			+ "and article_del_flag=0")  
+			+ "where _user_id=#{userId} "
+			+ "and _del_flag=0")  
 	@Results(value = { 
-			@Result(id = true, property = "id", column = "id"),  
-			@Result(property = "title", column = "article_title"),
-			@Result(property = "content", column = "article_content"),
-			@Result(property = "url", column = "article_url"),
-			@Result(property = "viewCount", column = "article_view_count"),
-			@Result(property = "reference", column = "article_reference"),
-			@Result(property = "createdTime", column = "article_created_time"),
-			@Result(property = "creator", column = "article_creator"),
-			@Result(property = "summary", column = "article_summary"),
-			@Result(property = "updatedTime", column = "article_updated_time"),
-			@Result(property = "updator", column = "article_updator"),
-			@Result(property = "userId", column = "user_id")
+			@Result(id = true, property = "id", column = "_id"),  
+			@Result(property = "title", column = "_title"),
+			@Result(property = "content", column = "_content"),
+			@Result(property = "url", column = "_url"),
+			@Result(property = "viewCount", column = "_view_count"),
+			@Result(property = "reference", column = "_reference"),
+			@Result(property = "createdTime", column = "_created_time"),
+			@Result(property = "creator", column = "_creator"),
+			@Result(property = "summary", column = "_summary"),
+			@Result(property = "userId", column = "_user_id"),	
+			@Result(property = "updatedTime", column = "_updated_time"),
+			@Result(property = "updator", column = "_updator"),
+			@Result(property = "top", column = "_top")
+			
 	})  
 	List<Article> findByUserId(String userId);
 
 	@Update("update sys_article set "
-			+ "article_title=#{title},"
-			+ "article_summary=#{summary},"
-			+ "article_content=#{content}"
-			+ " where id=#{id}")
+			+ "_title=#{title},"
+			+ "_summary=#{summary},"
+			+ "_content=#{content}"
+			+ " where _id=#{id}")
 	void update(Article article);
     
 	@Select(value = "select * "
 			+ "from sys_article,sys_article_article_type "
-			+ "where sys_article.id=sys_article_article_type.article_id "
-			+ "and sys_article_article_type.article_type_id=#{articleTypeId} "
-			+ "and sys_article_article_type.article_top=1")  
+			+ "where sys_article._id=sys_article_article_type._article_id "
+			+ "and sys_article_article_type._article_type_id=#{articleTypeId} "
+			+ "and sys_article_article_type._top=1")  
 	@Results(value = { 
-			@Result(id = true, property = "id", column = "id"),  
-			@Result(property = "title", column = "article_title"),
-			@Result(property = "content", column = "article_content"),
-			@Result(property = "url", column = "article_url"),
-			@Result(property = "viewCount", column = "article_view_count"),
-			@Result(property = "reference", column = "article_reference"),
-			@Result(property = "createdTime", column = "article_created_time"),
-			@Result(property = "creator", column = "article_creator"),
-			@Result(property = "summary", column = "article_summary"),
-			@Result(property = "updatedTime", column = "article_updated_time"),
-			@Result(property = "updator", column = "article_updator"),
-			@Result(property = "userId", column = "user_id")
+			@Result(id = true, property = "id", column = "——id"),  
+			@Result(property = "title", column = "_title"),
+			@Result(property = "content", column = "_content"),
+			@Result(property = "url", column = "_url"),
+			@Result(property = "viewCount", column = "_view_count"),
+			@Result(property = "reference", column = "_reference"),
+			@Result(property = "createdTime", column = "_created_time"),
+			@Result(property = "creator", column = "_creator"),
+			@Result(property = "summary", column = "_summary"),
+			@Result(property = "updatedTime", column = "_updated_time"),
+			@Result(property = "updator", column = "_updator"),
+			@Result(property = "userId", column = "_user_id"),
+			@Result(property = "top", column = "_top")
 	})  
 	Article top(String articleTypeId);
     

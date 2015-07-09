@@ -17,7 +17,6 @@ public interface IPrivilegeDao {
 
 	public Privilege listBy(String privilegeId);
 	
-	
 	public List<Privilege> listByUserId(String userId);
 	
 	public List<Privilege> listByRoleId(String roleId);

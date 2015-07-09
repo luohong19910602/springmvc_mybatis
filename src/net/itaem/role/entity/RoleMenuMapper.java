@@ -18,7 +18,7 @@ public interface RoleMenuMapper {
 	/**
 	 * 插入一条记录
 	 * */
-	@Insert("insert into sys_role_menu (id, role_id, menu_id,resource_id) "
+	@Insert("insert into sys_role_menu (_id, _role_id, _menu_id,_resource_id) "
 			+ "values(#{id}, #{roleId}, #{menuId},#{resourceId})")
 	public void add(RoleMenu roleMenu);
 	
@@ -27,13 +27,13 @@ public interface RoleMenuMapper {
 	 * 
 	 * */
 	@Delete("delete from sys_role_menu where "
-			+ "role_id=#{roleId} and resource_id=#{resourceId} and menu_id=#{menuId}")
+			+ "_role_id=#{roleId} and _resource_id=#{resourceId} and _menu_id=#{menuId}")
 	public void deleteResource(RoleMenu roleMenu);
     
 	/**
 	 * 删除用户可以访问的menu
 	 * */
 	@Delete("delete from sys_role_menu where "
-			+ "role_id=#{roleId} and menu_id=#{menuId}")
+			+ "_role_id=#{roleId} and _menu_id=#{menuId}")
 	public void deleteMenu(RoleMenu roleMenu);
 }

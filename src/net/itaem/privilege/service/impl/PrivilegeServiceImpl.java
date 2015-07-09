@@ -78,42 +78,69 @@ public class PrivilegeServiceImpl implements IPrivilegeService {
 	}
 
 	/**
-	 * 这里需要先获取每个角色的权限，然后将用户的权限合并
-	 * 最后再和用户的权限合并，形成一个用户的全部权限
+	 * 列出用户的全部权限
+	 * 
 	 * */
 	@Override
 	public List<Privilege> listByUserId(String userId) {
-		//角色权限
-		List<Role> roleList = roleDao.listByUserId(userId);
-		List<Privilege> result = new ArrayList<Privilege>();
-
-		if(roleList != null && roleList.size() > 0){
-			for(Role role: roleList){
-				List<Privilege> priList = listByRoleId(role.getId());
-				if(priList != null && priList.size() > 0){
-					for(Privilege pri: priList){
-						if(!result.contains(pri)){
-							result.add(pri);			
-						}			
+		List<Privilege> privilegeList = privilegeDao.listByUserId(userId);
+		
+		List<Privilege> typeList = new ArrayList<Privilege>();  
+		 
+		if(privilegeList != null && privilegeList.size() > 0){  
+			//找到所有的权限类别
+			for(Privilege pri: privilegeList){
+				if(pri.getParentId() != null){
+					Privilege type = privilegeDao.listBy(pri.getParentId());
+					
+					if(type != null)
+						if(!typeList.contains(type))
+							typeList.add(type);
+				}
+			}
+			
+			//将权限按照类别信息分类
+			for(Privilege pri: privilegeList){
+				for(Privilege type: typeList){
+					if(type.getId().equals(pri.getParentId())){
+						type.addSubPrivilege(pri);
 					}
 				}
 			}
 		}
-
-		//用户权限
-		List<Privilege> priList = privilegeDao.listByUserId(userId);
-
-		if(priList != null && priList.size() > 0){
-			for(Privilege pri: priList){
-				if(!result.contains(pri)){
-					result.add(pri);			
-				}else{
-					result.get(result.indexOf(pri)).addSubPrivilegeList(pri.getChildren());;
-				}
-			}
-		}
-
-		return result;
+		
+		return typeList;
+//		//角色权限
+//		List<Role> roleList = roleDao.listByUserId(userId);
+//		List<Privilege> result = new ArrayList<Privilege>();
+//
+//		if(roleList != null && roleList.size() > 0){
+//			for(Role role: roleList){
+//				List<Privilege> priList = listByRoleId(role.getId());
+//				if(priList != null && priList.size() > 0){
+//					for(Privilege pri: priList){
+//						if(!result.contains(pri)){
+//							result.add(pri);			
+//						}			
+//					}
+//				}
+//			}
+//		}
+//
+//		//用户权限
+//		List<Privilege> priList = privilegeDao.listByUserId(userId);
+//
+//		if(priList != null && priList.size() > 0){
+//			for(Privilege pri: priList){
+//				if(!result.contains(pri)){
+//					result.add(pri);			
+//				}else{
+//					result.get(result.indexOf(pri)).addSubPrivilegeList(pri.getChildren());;
+//				}
+//			}
+//		}
+//
+//		return result;
 	}
 
 	@Override

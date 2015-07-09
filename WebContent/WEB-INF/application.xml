@@ -26,7 +26,7 @@
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName">
-			<value>com.mysql.jdbc.Driver</value>
+			<value>${driverClass}</value>
 		</property>
 		<property name="url">
 			<value>${database}</value>

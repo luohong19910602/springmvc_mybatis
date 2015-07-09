@@ -19,52 +19,52 @@ import org.apache.ibatis.annotations.Update;
 @Resource(name = "navigationMapper")
 public interface NavigationMapper {
 	
-	@Select(value = "select * from sys_navigation where navigation_del_flag = 0 order by navigation_sort_flag asc")  
+	@Select(value = "select * from sys_navigation where _del_flag = 0 order by _sort_flag asc")  
 	@Results(value = { 
-			@Result(id = true, property = "id", column = "id"),  
-			@Result(property = "name", column = "navigation_name"),
-			@Result(property = "desc", column = "navigation_desc"),
-			@Result(property = "sortFlag", column = "navigation_sort_flag"),
-			@Result(property = "createdTime", column = "navigation_created_time"),
-			@Result(property = "articleTypeListStr", column = "navigation_article_type_list"),
-			@Result(property = "creator", column = "navigation_creator"),
-			@Result(property = "updatedTime", column = "navigation_updated_time"),
-			@Result(property = "updator", column = "navigation_updator"),
-			@Result(property = "delFlag", column = "navigation_del_flag")
+			@Result(id = true, property = "id", column = "_id"),  
+			@Result(property = "name", column = "_name"),
+			@Result(property = "desc", column = "_desc"),
+			@Result(property = "sortFlag", column = "_sort_flag"),
+			@Result(property = "createdTime", column = "_created_time"),
+			@Result(property = "articleTypeListStr", column = "_article_type_list"),
+			@Result(property = "creator", column = "_creator"),
+			@Result(property = "updatedTime", column = "_updated_time"),
+			@Result(property = "updator", column = "_updator"),
+			@Result(property = "delFlag", column = "_del_flag")
 	})  
 	List<Navigation> listAll();  
 	
-	@Update("update sys_navigation set navigation_del_flag=1 where id=#{id}")
+	@Update("update sys_navigation set _del_flag=1 where _id=#{id}")
 	void delete(String id);
 
-	@Insert("insert into sys_navigation(id, navigation_article_type_list,navigation_name, navigation_desc, navigation_sort_flag, navigation_created_time, navigation_creator) "
+	@Insert("insert into sys_navigation(_id, _article_type_list,_name, _desc, _sort_flag, _created_time, _creator) "
 			+ "values (#{id}, #{articleTypeListStr}, #{name}, #{desc},#{sortFlag}, #{createdTime}, #{creator})")
 	void add(Navigation navigation);
 	
-	@Select(value = "select max(navigation_sort_flag) from sys_navigation where navigation_del_flag = 0")  
+	@Select(value = "select max(_sort_flag) from sys_navigation where _del_flag = 0")  
 	Integer maxSortFlag();
 
-	@Update("update sys_navigation set navigation_article_type_list=#{articleTypeListStr}, "
-			+ "navigation_name=#{name}, "
-			+ "navigation_desc=#{desc}, "
-			+ "navigation_sort_flag=#{sortFlag}, "
-			+ "navigation_updated_time=#{updatedTime}, "
-			+ "navigation_updator=#{updator} "
-			+ "where id=#{id}")
+	@Update("update sys_navigation set _article_type_list=#{articleTypeListStr}, "
+			+ "_name=#{name}, "
+			+ "_desc=#{desc}, "
+			+ "_sort_flag=#{sortFlag}, "
+			+ "_updated_time=#{updatedTime}, "
+			+ "_updator=#{updator} "
+			+ "where _id=#{id}")
 	void update(Navigation nav);
 
-	@Select(value = "select * from sys_navigation where navigation_del_flag = 0 and id=#{id}")  
+	@Select(value = "select * from sys_navigation where _del_flag = 0 and _id=#{id}")  
 	@Results(value = { 
-			@Result(id = true, property = "id", column = "id"),  
-			@Result(property = "name", column = "navigation_name"),
-			@Result(property = "desc", column = "navigation_desc"),
-			@Result(property = "sortFlag", column = "navigation_sort_flag"),
-			@Result(property = "createdTime", column = "navigation_created_time"),
-			@Result(property = "articleTypeListStr", column = "navigation_article_type_list"),
-			@Result(property = "creator", column = "navigation_creator"),
-			@Result(property = "updatedTime", column = "navigation_updated_time"),
-			@Result(property = "updator", column = "navigation_updator"),
-			@Result(property = "delFlag", column = "navigation_del_flag")
+			@Result(id = true, property = "id", column = "_id"),  
+			@Result(property = "name", column = "_name"),
+			@Result(property = "desc", column = "_desc"),
+			@Result(property = "sortFlag", column = "_sort_flag"),
+			@Result(property = "createdTime", column = "_created_time"),
+			@Result(property = "articleTypeListStr", column = "_article_type_list"),
+			@Result(property = "creator", column = "_creator"),
+			@Result(property = "updatedTime", column = "_updated_time"),
+			@Result(property = "updator", column = "_updator"),
+			@Result(property = "delFlag", column = "_del_flag")
 	})  
 	Navigation findById(String id);
 }

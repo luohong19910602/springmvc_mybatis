@@ -18,37 +18,37 @@ import org.springframework.stereotype.Repository;
 public interface ArticleAndTypeMapper {  
 
 	@Select(value = "select * from sys_article_article_type "
-			+ "where article_type_id=#{articleTypeId}")  
+			+ "where _article_type_id=#{articleTypeId}")  
 	@Results(value = { 
-			@Result(id = true, property = "id", column = "id"),  
-			@Result(id = true, property = "articleId", column = "article_id"),  
-			@Result(id = true, property = "articleTypeId", column = "article_type_id")
+			@Result(id = true, property = "id", column = "_id"),  
+			@Result(id = true, property = "articleId", column = "_article_id"),  
+			@Result(id = true, property = "articleTypeId", column = "_article_type_id")
 	})  
 	List<ArticleAndType> listByArticleTypeId(String articleTypeId);  
     
 	@Select(value = "select * from sys_article_article_type "
-			+ "where article_id=#{articleId}")  
+			+ "where _article_id=#{articleId}")  
 	@Results(value = { 
-			@Result(id = true, property = "id", column = "id"),  
-			@Result(id = true, property = "articleId", column = "article_id"),  
-			@Result(id = true, property = "articleTypeId", column = "article_type_id")
+			@Result(id = true, property = "id", column = "_id"),  
+			@Result(id = true, property = "articleId", column = "_article_id"),  
+			@Result(id = true, property = "articleTypeId", column = "_article_type_id")
 	})  
 	List<ArticleAndType> listByArticleId(String articleId);  
     
-	@Insert("insert into sys_article_article_type(id,article_id,article_type_id)"
+	@Insert("insert into sys_article_article_type(_id,_article_id,_article_type_id)"
 			+ " values(#{id},#{articleId}, #{articleTypeId})")
 	void add(ArticleAndType articleAndType);
 	
-	@Delete("delete from sys_article_article_type where article_id=#{articleId}")
+	@Delete("delete from sys_article_article_type where _article_id=#{articleId}")
     void deleteByArticleId(String articleId);
 	
-	@Delete("delete from sys_article_article_type where article_type_id=#{articleTypeId}")
+	@Delete("delete from sys_article_article_type where _article_type_id=#{articleTypeId}")
 	void deleteByArticleTypeId(String articleTypeId);
 	
-	@Update("update sys_article_article_type set article_top=1 where article_id=#{articleId} and article_type_id=#{articleTypeId}")
+	@Update("update sys_article_article_type set _top=1 where _article_id=#{articleId} and _article_type_id=#{articleTypeId}")
 	void setTop(ArticleAndType articleAndType);
 	
-	@Update("update sys_article_article_type set article_top=0 where article_type_id=#{articleTypeId}")
+	@Update("update sys_article_article_type set _top=0 where _article_type_id=#{articleTypeId}")
 	void seUnTop(ArticleAndType articleAndType);
 	
 } 

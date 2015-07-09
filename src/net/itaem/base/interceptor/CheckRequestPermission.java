@@ -8,6 +8,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.itaem.common.RequestUtil;
 import net.itaem.privilege.entity.Privilege;
 import net.itaem.privilege.service.IPrivilegeService;
 import net.itaem.user.entity.User;
@@ -50,7 +51,10 @@ public class CheckRequestPermission implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest req, HttpServletResponse resp,
 			Object arg2) throws Exception {
-//		return true;
+		if(req.getSession().getServletContext().getAttribute("baseURL") == null){
+			req.getSession().getServletContext().setAttribute("baseURL", RequestUtil.contxtPath(req));
+		}
+		
 		return check(req, resp);
 	}
 
@@ -62,8 +66,7 @@ public class CheckRequestPermission implements HandlerInterceptor {
 			String[] cooks = null;  
 			String loginName = null;
 			String password = null;
-			
-			System.out.println("使用cookie登录中...");
+
 			if (cookies != null) {
 				System.out.println(cookies);
 				for (Cookie coo : cookies) {
@@ -73,7 +76,7 @@ public class CheckRequestPermission implements HandlerInterceptor {
 						if (cooks.length == 2) {  
 							loginName = cooks[0];  
 							password = cooks[1];
-							
+
 							User user = new User();
 							user.setLoginName(loginName);
 							user.setPassword(password);
@@ -97,8 +100,7 @@ public class CheckRequestPermission implements HandlerInterceptor {
 		if(isSuperUser(req)){
 			return true;
 		}
-        
-		System.out.println("难道是已经登录了？");
+
 		//判断用户是否具备访问权限
 		if(canAccess(req)){
 			return true;
@@ -107,34 +109,50 @@ public class CheckRequestPermission implements HandlerInterceptor {
 			return false;
 		}
 	}
-	
-	
+
+
 
 	/**
 	 * 判断用户的请求是否合法
 	 * 这里会获取出用户可以访问的全部权限，然后逐一比较每一个权限，
 	 * 由于权限使用了类别来归类，所以这里会遍历每个权限的子权限，
 	 * 但是不需要使用递归，因为权限的嵌套关系最多为两层
+	 * 
+	 * 这里面会缓存登陆用户的所有权限信息，只要该用户登陆过一次，那么系统就将权限信息设置到session中
 	 * */
+	@SuppressWarnings("unchecked")
 	private boolean canAccess(HttpServletRequest req) {
 		User u = (User) req.getSession().getAttribute("user");
 		if(u == null) return false;
 
-		List<Privilege> privilegeList =privilegeService.listByUserId(u.getId());
+        
+		List<Privilege> privilegeList = null;
+		privilegeList = (List<Privilege>) req.getSession().getAttribute("privilegeList");
+		
+		if(privilegeList == null){
+			//设置权限信息到session中...
+			privilegeList = privilegeService.listByUserId(u.getId());
+			req.getSession().setAttribute("privilegeList", privilegeList);
+		}
+		
 		String reqUri = req.getRequestURL().toString();
 
+		/**
+		 * 由于获取到的用户权限是由类别来组织的，所以这里面需要使用两层循环
+		 * */
 		for(Privilege privilege: privilegeList){
 			if(privilege.getChildren() != null && privilege.getChildren().size() > 0){
 				for(Privilege child: privilege.getChildren()){
-					if(child.getUrl().equalsIgnoreCase(reqUri)){
+					if(reqUri.lastIndexOf(child.getUrl()) != -1){
 						return true;
 					}
-
 				}
 			}
+			
+			//该权限是权限类别，所以直接continue
 			if(privilege.getUrl() == null || "".equals(privilege.getUrl())) continue;
 
-			if(privilege.getUrl().equalsIgnoreCase(reqUri)){
+			if(privilege.getUrl().lastIndexOf(reqUri) != -1){
 				return true;
 			}
 		}
@@ -145,7 +163,9 @@ public class CheckRequestPermission implements HandlerInterceptor {
 	 * 判断请求的用户是否是超级用户
 	 * */
 	private boolean isSuperUser(HttpServletRequest req) {
+
 		User u = (User) req.getSession().getAttribute("user");
+
 		return u != null && u.getSuperUserFlag() == User.SUPER_USER;
 	}
 

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.itaem.autogeneratecode.privilege.GeneratePrivilege;
 import net.itaem.base.controller.BaseController;
 import net.itaem.role.entity.RoleUser;
 import net.itaem.role.service.IRoleService;
@@ -41,6 +42,7 @@ public class RoleUserController extends BaseController {
 	 * @param req
 	 * @return 返回添加用户的界面
 	 * */
+	@GeneratePrivilege(name="跳转到添加用户界面",type="角色管理",uri="/role/addUser.do",desc="无")
 	@RequestMapping("/role/addUser.do")
 	public String addUser(String roleId, HttpServletRequest req){
 		req.setAttribute("roleId", roleId);
@@ -55,10 +57,13 @@ public class RoleUserController extends BaseController {
 	 * @throws IOException 
 	 * 
 	 * */
+	@GeneratePrivilege(name="添加用户",type="角色管理",uri="/role/addUserSubmit.do",desc="无")
 	@RequestMapping("/role/addUserSubmit.do")
 	public void addUserSubmit(String userList, String roleId, HttpServletResponse resp) throws IOException{
 		if(userList == null) return;
 		if(roleId == null) return;
+		
+		
 		String[] userIds = userList.split(",");
 		
 		for(String userId: userIds){
@@ -67,6 +72,8 @@ public class RoleUserController extends BaseController {
 			roleUser.setUserId(userId);
 			roleUser.setRoleId(roleId);
 			roleUser.setId(UUIDUtil.uuid());
+			
+			System.out.println(roleUser);
 
 			roleService.addRoleUser(roleUser);
 		}
@@ -80,6 +87,8 @@ public class RoleUserController extends BaseController {
 	 * @param roleId 角色id
 	 * @param resp
 	 * */
+	@GeneratePrivilege(name="从角色中删除用户列表",type="角色管理",uri="/role/deleteRoleUser.do",desc="无")
+	
 	@RequestMapping("/role/deleteRoleUser.do")
 	public void deleteRoleUser(String userIdStr, String roleId, HttpServletResponse resp) throws IOException{
 		if(userIdStr == null) return;
@@ -98,6 +107,8 @@ public class RoleUserController extends BaseController {
 	/**
 	 * 跳转到角色下面用户的界面
 	 * */
+	@GeneratePrivilege(name="跳转到角色下面用户的界面",type="角色管理",uri="/role/getRoleUser.do",desc="无")
+	
 	@RequestMapping("/role/getRoleUser.do")
 	public String getRoleUser(String roleId, HttpServletRequest req){
 		req.setAttribute("roleId", roleId);
@@ -107,6 +118,8 @@ public class RoleUserController extends BaseController {
 	/**
 	 * 获取角色下面的用户的json数据
 	 * */
+	@GeneratePrivilege(name="获取角色下面的用户的json数据",type="角色管理",uri="/role/getRoleUserJson.do",desc="无")
+	
 	@RequestMapping("/role/getRoleUserJson.do")
 	public void getRoleUserJson(String roleId, HttpServletResponse resp) throws IOException{
 		List<User> userList = userService.listByRoleId(roleId);

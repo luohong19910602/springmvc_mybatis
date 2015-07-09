@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
 
+import net.itaem.autogeneratecode.privilege.GeneratePrivilege;
 import net.itaem.base.controller.BaseController;
 import net.itaem.privilege.service.IPrivilegeService;
 import net.itaem.util.JsonUtil;
@@ -32,6 +33,9 @@ public class DeletePrivilegeController extends BaseController {
 	 * @param resp
 	 * @throws IOException 
 	 * */
+	@GeneratePrivilege(name="删除模块",type="权限管理", uri="/privilege/delete.do", desc="无")
+
+
 	@RequestMapping("/privilege/delete.do")
 	public void delete(String idsStr, HttpServletResponse resp) throws IOException{
 		if(StringUtils.isEmpty(idsStr)){

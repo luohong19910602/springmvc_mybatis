@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.itaem.autogeneratecode.privilege.GeneratePrivilege;
 import net.itaem.base.controller.BaseController;
 import net.itaem.menu.entity.Menu;
 import net.itaem.menu.service.IMenuService;
@@ -70,10 +71,14 @@ public class UserMenuController extends BaseController {
 	 * @throws IOException 
 	 * @throws ServletException 
 	 * */
+	@GeneratePrivilege(name="构建用户的菜单数据，这里的数据应该直接从数据库中获取即可",type="用户管理", uri="/user/getUserMenuJson.do", desc="无")
+	
 	@RequestMapping("/user/getUserMenuJson.do")
 	public void getUserMenuJson(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+		System.out.println("hello");
 		//判断用户是否登录
 		boolean isLogin = isLogin(req);
+		
 		if(!isLogin){
 			req.getRequestDispatcher("/login.jsp").forward(req, resp);
 			return;
@@ -130,6 +135,9 @@ public class UserMenuController extends BaseController {
 	/**
 	 * 跳转到添加用户菜单界面
 	 * */
+	@GeneratePrivilege(name="跳转到添加用户菜单界面",type="用户管理", uri="/user/addUserMenu.do", desc="无")
+	
+	
 	@RequestMapping("/user/addUserMenu.do")
 	public String addUserMenu(String userId, HttpServletRequest req){
 		req.setAttribute("userId", userId);
@@ -141,6 +149,8 @@ public class UserMenuController extends BaseController {
 	 * @param userId 用户id
 	 * @param resourceList 资源列表id
 	 * */
+	@GeneratePrivilege(name="添加用户菜单",type="用户管理", uri="/user/addUserMenuSubmit.do", desc="无")
+	
 	@RequestMapping("/user/addUserMenuSubmit.do")
 	public void addUserMenuSubmit(String userId, String resourceList, HttpServletResponse resp){
 		if(resourceList != null){
@@ -185,6 +195,8 @@ public class UserMenuController extends BaseController {
 	/**
 	 * 删除用户菜单
 	 * */
+	@GeneratePrivilege(name="删除用户菜单",type="用户管理", uri="/user/deleteUserMenu.do", desc="无")
+	
 	@RequestMapping("/user/deleteUserMenu.do")
 	public void deleteRoleMenu(String menuIdStr, String userId, HttpServletResponse resp) throws IOException{
 		String[] menuIds = menuIdStr.split(",");
@@ -211,6 +223,8 @@ public class UserMenuController extends BaseController {
 	/**
 	 * 跳转到用户菜单界面
 	 * */
+	@GeneratePrivilege(name="跳转到用户菜单界面",type="用户管理", uri="/user/getUserMenu.do", desc="无")
+	
 	@RequestMapping("/user/getUserMenu.do")
 	public String getUserMenu(String userId, HttpServletRequest req){
 		req.setAttribute("userId", userId);
@@ -222,6 +236,8 @@ public class UserMenuController extends BaseController {
 	 * 获得用户的json数据
 	 * @throws IOException 
 	 * */
+	@GeneratePrivilege(name="获得用户的json数据",type="用户管理", uri="/user/getUserMenuJsonByUserId.do", desc="无")
+	
 	@RequestMapping("/user/getUserMenuJsonByUserId.do")
 	public void getUserMenuJsonByUserId(String userId, HttpServletResponse resp) throws IOException{
 		List<Menu> menuList = menuService.listByUserId(userId);

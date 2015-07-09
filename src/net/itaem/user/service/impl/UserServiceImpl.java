@@ -39,6 +39,7 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public User exists(User user) {
 		User u = userDao.exists(user);
+		
 		if(u != null){
 			//设置用户角色列表
 			u.setRoleList(roleDao.listByUserId(u.getId()));

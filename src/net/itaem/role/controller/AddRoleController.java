@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.itaem.autogeneratecode.privilege.GeneratePrivilege;
 import net.itaem.base.controller.BaseController;
 import net.itaem.role.entity.Role;
 import net.itaem.role.service.IRoleService;
@@ -34,6 +35,7 @@ public class AddRoleController extends BaseController {
 	 * 跳转到添加子角色界面
 	 * @param roleId
 	 * */
+	@GeneratePrivilege(name="跳转到添加子角色界面",type="角色管理", uri="/role/add.do", desc="无")
 	@RequestMapping("/role/add.do")
 	public String add(String roleId, HttpServletRequest req){
 		if(StringUtils.isNotEmpty(roleId))
@@ -46,6 +48,7 @@ public class AddRoleController extends BaseController {
 	 * @param roleId
 	 * @throws IOException 
 	 * */
+	@GeneratePrivilege(name="添加子角色",type="角色管理", uri="/role/addSubmit.do", desc="无")
 	@RequestMapping("/role/addSubmit.do")
 	public void addSubmit(Role role, HttpServletRequest req, HttpServletResponse resp) throws IOException{
         //validate the role name if no null

@@ -1,17 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<%
-	String scheme = request.getScheme();
-	String serverName = request.getServerName();
-	String contextPath = request.getContextPath();
-	int port = request.getServerPort();
-
-	//网站的访问跟路径
-	String baseURL = scheme + "://" + serverName + ":" + port
-			+ contextPath;
-	request.setAttribute("baseURL", baseURL);
-%>
 
 <!DOCTYPE html>
 
@@ -255,8 +244,16 @@
 		
 	});
 	
+	
 	function f_search(){
-		grid.setParm("loginName", "hong");
+		var username = document.getElementById("username").value;
+		var tel = document.getElementById("tel").value;
+		var email = document.getElementById("email").value;
+		
+		grid.setParm("username", username);
+		grid.setParm("tel", tel);
+		grid.setParm("email", email);
+		
 		grid.reload();
 	}
 	
@@ -266,6 +263,15 @@
 <body>
 	<div class="l-loading" style="display: block" id="pageloading"></div>
 	<div class="l-clear"></div>
+	<br/>
+	<div style="margin-left: 20px;" id="searchbar">
+		名字：<input id="username" type="text" /> 
+		手机号码：<input id="tel" type="text" />
+		手机邮箱：<input id="email" type="text" />
+		<input id="btnOK" type="button" value="button" onclick="f_search()" />
+	</div>
+    <br/>
+    
 	<div id="maingrid"></div>
 	<div style="display: none;"></div>
 </body>

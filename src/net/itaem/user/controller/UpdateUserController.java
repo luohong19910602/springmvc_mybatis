@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.itaem.autogeneratecode.privilege.GeneratePrivilege;
 import net.itaem.base.controller.BaseController;
 import net.itaem.role.entity.RoleUser;
 import net.itaem.user.entity.User;
@@ -35,6 +36,8 @@ public class UpdateUserController extends BaseController {
 	/**
 	 * 跳转到编辑用户的界面
 	 * */
+	@GeneratePrivilege(name="跳转到编辑用户的界面",type="用户管理", uri="/user/edit.do", desc="无")
+	
 	@RequestMapping("/user/edit.do")
 	public String edit(String userId, HttpServletRequest req){
 		req.setAttribute("userId", userId);
@@ -52,6 +55,8 @@ public class UpdateUserController extends BaseController {
 	 * @param roleIdList 角色信息列表
 	 * @throws IOException 
 	 * */
+	@GeneratePrivilege(name="更新用户信息",type="用户管理", uri="/user/editSubmit.do", desc="无")
+	
 	@RequestMapping("/user/editSubmit.do")
 	public void editSubmit(User user, String roleIdList, HttpServletResponse resp) throws IOException{
 		//valid the input user info

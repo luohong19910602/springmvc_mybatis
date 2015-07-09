@@ -47,7 +47,6 @@
 		    
 			<bean class="net.itaem.base.interceptor.CheckRequestPermission"></bean>
 		</mvc:interceptor>
-		
 	</mvc:interceptors>
 
 	<!-- 视图解释类 -->

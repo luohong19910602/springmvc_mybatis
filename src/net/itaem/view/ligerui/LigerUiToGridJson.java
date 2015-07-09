@@ -68,7 +68,7 @@ public class LigerUiToGridJson implements IToGridJson {
 
 	public String userToGrid(User user) {
 		JSONObject json = new JSONObject();
-
+ 
 		json.put("id", user.getId());
 		json.put("name", user.getName());
 		json.put("email", user.getEmail());
@@ -85,6 +85,15 @@ public class LigerUiToGridJson implements IToGridJson {
 
 
 	public String menuListToGrid(List<Menu> menuList){
+		if(menuList == null){
+			
+			JSONObject json = new JSONObject();
+			json.put("Rows", 0);
+			json.put("Total", 0);
+			
+			return json.toString();
+		}
+		
 		JSONObject json = new JSONObject();
 
 		JSONArray children = new JSONArray();

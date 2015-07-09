@@ -11,6 +11,8 @@ public class Navigation extends BaseEntity implements Comparable<Navigation>{
 	private String desc;  //备注
 	private int sortFlag;   //排序标志，系统会更具当前的标志默认生成下一个sortFlag
 	private String articleTypeListStr;  //导航关联的文章类别，使用!@!分割
+	
+	
 
 	public String getArticleTypeListStr() {
 		return articleTypeListStr;
