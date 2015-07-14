@@ -1,6 +1,7 @@
 package net.itaem.role.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,15 +11,18 @@ import net.itaem.autogeneratecode.privilege.GeneratePrivilege;
 import net.itaem.base.controller.BaseController;
 import net.itaem.privilege.entity.Privilege;
 import net.itaem.privilege.service.IPrivilegeService;
+import net.itaem.role.controller.vo.PrivilegeVo;
 import net.itaem.role.entity.RolePrivilege;
 import net.itaem.role.service.IRoleService;
 import net.itaem.util.ResponseUtil;
 import net.itaem.util.UUIDUtil;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 /**
@@ -35,7 +39,7 @@ public class RolePrivilegeController extends BaseController {
 
 	@Autowired
 	private IPrivilegeService privilegeService;
-	
+
 	/**
 	 * 删除角色的权限
 	 * @param menuIdStr
@@ -44,7 +48,7 @@ public class RolePrivilegeController extends BaseController {
 	 * @throws IOException 
 	 * */
 	@GeneratePrivilege(name="删除角色的权限",type="角色管理", uri="/role/deletePrivilege.do", desc="无")
-	
+
 	@RequestMapping("/role/deletePrivilege.do")
 	public void deleteRolePrivilege(String privilegeIdStr, String roleId, HttpServletResponse resp) throws IOException{
 		String[] privilegeIds = privilegeIdStr.split(",");
@@ -68,7 +72,6 @@ public class RolePrivilegeController extends BaseController {
 	 * 跳转到角色权限界面
 	 * */
 	@GeneratePrivilege(name="跳转到角色权限界面",type="角色管理", uri="/role/getRolePrivilege.do", desc="无")
-	
 	@RequestMapping("/role/getRolePrivilege.do")
 	public String getRolePrivilege(String roleId, HttpServletRequest req){
 		req.setAttribute("roleId", roleId);
@@ -79,20 +82,43 @@ public class RolePrivilegeController extends BaseController {
 	 * 获取角色权限的json数据
 	 * */
 	@GeneratePrivilege(name="获取角色权限的json数据",type="角色管理", uri="/role/getRolePrivilegeJson.do", desc="无")
-	
 	@RequestMapping("/role/getRolePrivilegeJson.do")
 	public void getRolePrivilegeJson(String roleId, HttpServletResponse resp) throws IOException{
 		List<Privilege> privilegeList = privilegeService.listByRoleId(roleId);
-		
 		if(privilegeList != null)
 			ResponseUtil.println(resp, gridJson.privilegeListToGrid(privilegeList, privilegeList.size()));
 	}
 	
 	/**
+	 * 将Privilege变成liger ui grid json数据
+	 * @param privilegeList
+	 * @return
+	 * */
+	public String privilegeToGrid(Privilege privilege){
+		JSONObject json = new JSONObject();
+
+		json.put("id", privilege.getId());
+		json.put("name", privilege.getName());
+		json.put("url", privilege.getUrl());
+		json.put("desc", privilege.getDesc());
+
+		if(privilege.getChildren() != null && privilege.getChildren().size() > 0){
+			JSONArray children = new JSONArray();
+
+			for(Privilege child: privilege.getChildren()){
+				children.add(privilegeToGrid(child));
+			}
+
+			json.put("children", children);
+		}
+		return json.toString();
+	}
+
+	/**
 	 * 跳转到添加角色菜单界面
 	 * */
 	@GeneratePrivilege(name="跳转到添加角色菜单界面",type="角色管理", uri="/role/addRolePrivilege.do", desc="无")
-	
+
 	@RequestMapping("/role/addRolePrivilege.do")
 	public String addRolePrivilege(String roleId, HttpServletRequest req){
 		req.setAttribute("roleId", roleId);
@@ -104,7 +130,7 @@ public class RolePrivilegeController extends BaseController {
 	 * @throws IOException 
 	 * */
 	@GeneratePrivilege(name="添加角色菜单",type="角色管理", uri="/role/addRolePrivilegeSubmit.do", desc="无")
-	
+
 	@RequestMapping("/role/addRolePrivilegeSubmit.do")
 	public void addRolePrivilegeSubmit(String roleId, String privilegeIdList, HttpServletResponse resp) throws IOException{
 

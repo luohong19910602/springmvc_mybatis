@@ -54,7 +54,7 @@ public class CheckRequestPermission implements HandlerInterceptor {
 		if(req.getSession().getServletContext().getAttribute("baseURL") == null){
 			req.getSession().getServletContext().setAttribute("baseURL", RequestUtil.contxtPath(req));
 		}
-		
+
 		return check(req, resp);
 	}
 
@@ -81,7 +81,6 @@ public class CheckRequestPermission implements HandlerInterceptor {
 							user.setLoginName(loginName);
 							user.setPassword(password);
 							user = userService.exists(user);
-							System.out.println(user);
 							if(user != null && user.getId() != null && !"".equals(user.getId())){
 								req.getSession().setAttribute("user", user);
 								System.out.println("has been login");
@@ -92,7 +91,8 @@ public class CheckRequestPermission implements HandlerInterceptor {
 					}
 				}  
 			}
-			req.getRequestDispatcher("/login.jsp").forward(req, resp);
+
+			resp.sendRedirect(RequestUtil.contxtPath(req));
 			return false;
 		}
 
@@ -125,16 +125,16 @@ public class CheckRequestPermission implements HandlerInterceptor {
 		User u = (User) req.getSession().getAttribute("user");
 		if(u == null) return false;
 
-        
+
 		List<Privilege> privilegeList = null;
 		privilegeList = (List<Privilege>) req.getSession().getAttribute("privilegeList");
-		
+
 		if(privilegeList == null){
 			//设置权限信息到session中...
 			privilegeList = privilegeService.listByUserId(u.getId());
 			req.getSession().setAttribute("privilegeList", privilegeList);
 		}
-		
+
 		String reqUri = req.getRequestURL().toString();
 
 		/**
@@ -148,7 +148,7 @@ public class CheckRequestPermission implements HandlerInterceptor {
 					}
 				}
 			}
-			
+
 			//该权限是权限类别，所以直接continue
 			if(privilege.getUrl() == null || "".equals(privilege.getUrl())) continue;
 

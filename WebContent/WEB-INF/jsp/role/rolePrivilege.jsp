@@ -93,6 +93,7 @@
 							tree: {
 								columnName: "name"
 							},
+							isChecked: f_isChecked,
 							rownumbers : true,
 							checkbox : true,
 							toolbar : {
@@ -112,6 +113,7 @@
 										} ]
 							}
 						});
+		
 
 		$("#pageloading").hide();
 
@@ -120,7 +122,7 @@
 			//alert("add privilege");
 			//f_open();
 			$.ligerDialog.open({
-				height : 300,
+				height : 400,
 				width : 600,
 				title : '添加角色权限',
 				url : "${baseURL}/role/addRolePrivilege.do?roleId=${roleId}",
@@ -169,6 +171,15 @@
 			return ids;
 		}
 	});
+	
+	//将用户已有的权限打上勾，代表该权限已经拥有
+	function f_isChecked(rowdata)
+    {
+		alert(rowdata.id);
+       //if (rowdata.CustomerID.indexOf('AN') == 0) 
+       //     return true;
+        return true;
+    }
 </script>
 </head>
 

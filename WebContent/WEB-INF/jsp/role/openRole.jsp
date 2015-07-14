@@ -33,7 +33,7 @@
                             panels: [{
                                 title: '角色的权限',
                                 width: '100%',
-                                height: 400,
+                                height: 500,
                                 url: '${baseURL}/role/getRolePrivilege.do?roleId=${roleId}'
                             }
                             ]
@@ -45,7 +45,7 @@
                             panels: [{
                                 title: '角色的菜单',
                                 width: '100%',
-                                height: 400,
+                                height: 500,
                                 url: '${baseURL}/role/getRoleMenu.do?roleId=' + roleId
                             }
                             ]
@@ -57,7 +57,7 @@
                             panels: [{
                                 title: '角色的用户',
                                 width: '100%',
-                                height: 400,
+                                height: 500,
                                 url: '${baseURL}/role/getRoleUser.do?roleId=${roleId}'
                             }
                             ]
@@ -66,16 +66,6 @@
                 ]
             }); 
             manager.collapseAll();
-            //默认情况下关闭一些pannel，只显示基本信息的pannel
-            /*
-            var panels = manager.getPanels();
-            $(panels).each(function (i,o)
-            {
-                var panel = o.panel; 
-                if(i != 0)
-                    panel.collapse();
-            });
-            */
         }); 
     </script>
 

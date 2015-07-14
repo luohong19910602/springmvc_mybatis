@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.itaem.autogeneratecode.privilege.GeneratePrivilege;
 import net.itaem.base.controller.BaseController;
+import net.itaem.base.entity.Page;
 import net.itaem.role.entity.RoleUser;
 import net.itaem.role.service.IRoleService;
 import net.itaem.user.entity.User;
@@ -116,14 +117,17 @@ public class RoleUserController extends BaseController {
 	}
 
 	/**
+	 * 
 	 * 获取角色下面的用户的json数据
+	 * 
 	 * */
 	@GeneratePrivilege(name="获取角色下面的用户的json数据",type="角色管理",uri="/role/getRoleUserJson.do",desc="无")
-	
 	@RequestMapping("/role/getRoleUserJson.do")
 	public void getRoleUserJson(String roleId, HttpServletResponse resp) throws IOException{
 		List<User> userList = userService.listByRoleId(roleId);
-        int total = userService.countAll();
+		
+		int total = userService.countAll();
+        
 		ResponseUtil.println(resp, gridJson.userListToGrid(userList, total));
 	}
 }

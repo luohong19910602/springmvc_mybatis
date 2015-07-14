@@ -49,13 +49,13 @@ public class UserLoginController extends BaseController {
 
 		if(StringUtils.isEmpty(user.getLoginName())){
 			req.setAttribute("error", "用户名不能为空");
-			req.getRequestDispatcher("/login.jsp").forward(req, resp);
+			resp.sendRedirect(getBaseURL(req));
 			return;
 		}
 
 		if(StringUtils.isEmpty(user.getPassword())){
 			req.setAttribute("error", "密码不能为空");
-			req.getRequestDispatcher("/login.jsp").forward(req, resp);
+			resp.sendRedirect(getBaseURL(req));
 			return;
 		}
 
@@ -63,19 +63,21 @@ public class UserLoginController extends BaseController {
 
 		if(StringUtils.isEmpty(rand)){
 			req.setAttribute("error", "验证码不能为空");
-			req.getRequestDispatcher("/login.jsp").forward(req, resp);
+			resp.sendRedirect(getBaseURL(req));
 			return;
 		}
 
 		if(StringUtils.isEmpty(randomCode)){
 			req.setAttribute("error", "验证码不能为空");
-			req.getRequestDispatcher("/login.jsp").forward(req, resp);
+			
+			resp.sendRedirect(getBaseURL(req));
 			return;
 		}
 
 		if(!rand.equalsIgnoreCase(randomCode)){
 			req.setAttribute("error", "验证码不正确");
-			req.getRequestDispatcher("/login.jsp").forward(req, resp);
+			
+			resp.sendRedirect(getBaseURL(req));
 			return;
 		}
 
@@ -111,11 +113,12 @@ public class UserLoginController extends BaseController {
 		if(u != null && u.getId() != null && !"".equals(u.getId())){
 			//将用户保存在session中
 			req.getSession().setAttribute("user", u);
+			
 			req.getRequestDispatcher("/WEB-INF/jsp/index.jsp").forward(req, resp);
 			return;
 		}else{
 			req.setAttribute("error", "用户不存在");			
-			req.getRequestDispatcher("/login.jsp").forward(req, resp);
+			resp.sendRedirect(getBaseURL(req));
 			return;
 		}
 	}

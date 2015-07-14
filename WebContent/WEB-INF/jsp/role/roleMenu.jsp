@@ -117,7 +117,7 @@
 		//添加角色菜单
 		function addMenu() {
 			$.ligerDialog.open({
-				height : 300,
+				height : 400,
 				width : 600,
 				title : '添加角色菜单',
 				url : '${baseURL}/role/addRoleMenu.do?roleId=${roleId}',
