@@ -17,8 +17,15 @@ public class Article extends BaseEntity {
     private int reference;  //转载次数
     private String userId;  //文章所属用户
     private String summary; //文章简介
+    private int commentCount;  //评论次数
     
-    private boolean isTop;
+    public int getCommentCount() {
+		return commentCount;
+	}
+	public void setCommentCount(int commentCount) {
+		this.commentCount = commentCount;
+	}
+	private boolean isTop;
     
     public boolean isTop() {
 		return isTop;
@@ -89,9 +96,8 @@ public class Article extends BaseEntity {
 		return "Article [title=" + title + ", url=" + url + ", content="
 				+ content + ", viewCount=" + viewCount + ", reference="
 				+ reference + ", userId=" + userId + ", summary=" + summary
-				+ ", isTop=" + isTop + ", articleTypeList=" + articleTypeList
+				+ ", commentCount=" + commentCount + ", isTop=" + isTop
+				+ ", articleTypeList=" + articleTypeList
 				+ ", articleAndTypeList=" + articleAndTypeList + "]";
 	}
-	
-	
 }

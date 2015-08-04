@@ -3,6 +3,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.itaem.article.entity.Article;
+import net.itaem.util.JdbcUtils;
+import net.itaem.util.UUIDUtil;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -14,67 +18,17 @@ import org.jsoup.select.Elements;
  * */
 public class JsoupDemo {
 
-	public static class Article{
-		private String title;  //标题
-		private String desc;  //简介
-		private String content;  //内容
-		private String viewCount;  //浏览次数
-		private String url;  //原文链接
-		private String commentCount;  //评论次数
-
-		public String getUrl() {
-			return url;
-		}
-		public void setUrl(String url) {
-			this.url = url;
-		}
-		public String getCommentCount() {
-			return commentCount;
-		}
-		public void setCommentCount(String commentCount) {
-			this.commentCount = commentCount;
-		}
-		public String getTitle() {
-			return title;
-		}
-		public void setTitle(String title) {
-			this.title = title;
-		}
-		public String getDesc() {
-			return desc;
-		}
-		public void setDesc(String desc) {
-			this.desc = desc;
-		}
-		public String getContent() {
-			return content;
-		}
-		public void setContent(String content) {
-			this.content = content;
-		}
-		public String getViewCount() {
-			return viewCount;
-		}
-		public void setViewCount(String viewCount) {
-			this.viewCount = viewCount;
-		}
-		@Override
-		public String toString() {
-			return "Article [title=" + title + ", desc=" + desc + ", content="
-					+ content + ", viewCount=" + viewCount + ", url=" + url
-					+ ", commentCount=" + commentCount + "]";
-		}
-	}
-
 	public static final String CSDN_CONTEXT = "http://blog.csdn.net";
 
-	public static void main(String[] args) throws IOException {
-		List<String> pageList = parseAllArticlePageList("http://blog.csdn.net/u010469003");
-		List<Article> articleList = new ArrayList<JsoupDemo.Article>();
-		for(String page: pageList){
-			articleList.addAll(parseArticleList(page));
+	public static void main(String[] args) throws IOException, InterruptedException {
+		for(int i=0; i<100; i++){
+			List<String> pageList = parseAllArticlePageList("http://blog.csdn.net/u010469003");
+			List<Article> articleList = new ArrayList<Article>();
+			for(String page: pageList){
+				Thread.sleep(5000);
+				articleList.addAll(parseArticleList(page));
+			}
 		}
-
 	}
 
 	/**
@@ -86,13 +40,15 @@ public class JsoupDemo {
 			return new ArrayList<String>();
 		}
 
+		JdbcUtils.init("jdbc:mysql://localhost:3306/luohong_spring", "root", "1234");
+		JdbcUtils.executeUpdate("delete from sys_article");
+
 		List<String> urls = new ArrayList<String>();
 		Document doc = doc(url);
 
 		Elements arcticlePageList = doc.select("#papelist").select("a");
 		urls.add(url);
 		for(Element page: arcticlePageList){
-
 			urls.add(CSDN_CONTEXT + page.attr("href"));
 		}
 		return urls;
@@ -120,6 +76,8 @@ public class JsoupDemo {
 	 * @return url 文章页码对应的文章
 	 * */
 	public static List<Article> parseArticleList(String url){
+
+         
 		try {  
 			Elements arcticleListDiv = doc(url).select("#article_list");
 			List<Article> articleList = new ArrayList<Article>();
@@ -130,30 +88,33 @@ public class JsoupDemo {
 					Article art = new Article();
 
 					art.setTitle(article.select(".article_title").select("h1").text().trim());
-					art.setDesc(article.select(".article_description").text().trim());
+					art.setSummary(article.select(".article_description").text().trim());
 
 					String urlStr = CSDN_CONTEXT + article.select(".article_manage").get(0).select(".link_view").select("a").attr("href").trim();
 					art.setUrl(urlStr);
 
 					String linkViews = article.select(".article_manage").get(0).select(".link_view").text().trim();
 					linkViews = linkViews.substring(linkViews.indexOf("(")+1, linkViews.lastIndexOf(")"));
-					art.setViewCount(linkViews);
+					art.setViewCount(Integer.valueOf(linkViews));
 
 					String linkComments = article.select(".article_manage").get(0).select(".link_comments").text().trim();
 					linkComments = linkComments.substring(linkComments.indexOf("(")+1, linkComments.lastIndexOf(")"));
-					art.setCommentCount(linkComments);
+					art.setCommentCount(Integer.valueOf(linkComments));
 
 					art.setContent(parseArticleContent(urlStr));
+					art.setId(UUIDUtil.uuid());
+
 					articleList.add(art);
-					
-					System.out.println(art);
+                    System.out.println(art);
+//					JdbcUtils.executeUpdate("insert into sys_article(_id, _url,_summary, _title, _content) "
+//							+ "values('"+art.getId()+"','"+art.getUrl() +"','"+art.getSummary() + "','"+art.getTitle()+"','"+art.getContent()+"')");
 				}
 			}  
 			return articleList;
 		} catch (Exception e) {  
 			e.printStackTrace();  
 		}  
-		return new ArrayList<JsoupDemo.Article>();
+		return new ArrayList<Article>();
 	}
 
 	/**
